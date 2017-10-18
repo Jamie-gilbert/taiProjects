@@ -1,23 +1,34 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.springmvc_mybatis.mapper.UserMapper">
-	<resultMap type="User" id="userResult">
-		<result column="id" property="id" />
-		<result column="name" property="name" />
-		<result column="pwd" property="password" />
-		<result column="create_time" property="time" />
-	</resultMap>
-	<select id="login" resultMap="userResult">
+    <resultMap type="User" id="userResult">
+        <result column="yhid" property="yhid"/>
+        <result column="yhbh" property="yhbh"/>
+        <result column="yhxm" property="yhxm"/>
+        <result column="kl" property="kl"/>
+        <result column="sfzhm" property="sfzhm"/>
+        <result column="xb" property="xb"/>
+        <result column="lxdh" property="lxdh"/>
+        <result column="jbjgid" property="jbjgid"/>
+        <result column="jbr" property="jbr"/>
+        <result column="jbsj" property="jbsj"/>
+        <result column="bz" property="bz"/>
+    </resultMap>
+    <select id="login" resultMap="userResult">
 		select * from
-		user
+		be3.sys_user
 		where
-		name=#{name}
-		and pwd=#{password}
+		yhbh=#{yhbh}
+		and kl=#{kl}
 	</select>
+    <insert id="register">
 
-	<select id="getAllUsers" resultMap="userResult">
+	INSERT  INTO be3.sys_user(yhid,yhbh,kl,yhxm,sfzhm,xb,lxdh,jbjgid,jbr,jbsj,bz)
+	VALUES (#{yhid},#{yhbh},#{kl},#{yhxm},#{sfzhm},#{xb},#{lxdh},#{jbjgid},#{jbr},#{jbsj},#{bz})
+    </insert>
+    <select id="getAllUsers" resultMap="userResult">
 		select *
-		from user
+		from be3.sys_user
 	</select>
 </mapper>
-<!-- error ,,,,resultMap wrong to resultType... -->
+        <!-- error ,,,,resultMap wrong to resultType... -->

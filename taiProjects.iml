@@ -51,5 +51,6 @@
     <orderEntry type="library" name="Spring-4.3.12.RELEASE" level="project" />
     <orderEntry type="library" name="aopalliance-1.0" level="project" />
     <orderEntry type="library" name="jsp-api" level="project" />
+    <orderEntry type="library" name="ojdbc14" level="project" />
   </component>
 </module>

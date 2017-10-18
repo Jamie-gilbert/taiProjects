@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Demo_SpringMVC_MyBatis.iml" filepath="$PROJECT_DIR$/Demo_SpringMVC_MyBatis.iml" />
+      <module fileurl="file://$PROJECT_DIR$/taiProjects.iml" filepath="$PROJECT_DIR$/taiProjects.iml" />
     </modules>
   </component>
 </project>
