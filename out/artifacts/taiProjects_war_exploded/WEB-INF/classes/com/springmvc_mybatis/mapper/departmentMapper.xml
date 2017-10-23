@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springmvc_mybatis.mapper.DepartmentMapper">
+    <resultMap type="Department" id="departmentResult">
+        <result column="dwid" property="dwid"/>
+        <result column="dwbh" property="dwbh"/>
+        <result column="dwmc" property="dwmc"/>
+        <result column="jbjgid" property="jbjgid"/>
+        <result column="sfzhm" property="sfzhm"/>
+        <result column="tblb" property="tblb"/>
+        <result column="tblbmc" property="tblbmc"/>
+        <result column="dwmcpy" property="dwmcpy"/>
+
+    </resultMap>
+    <select id="queryByKey" resultMap="departmentResult">
+SELECT * FROM (
+SELECT A.* ,ROWNUM RN FROM
+		(select * from
+		si3.orgn_reg
+		where
+		dwbh LIKE  concat(concat('%',#{dwbh}),'%')
+		and dwmc LIKE concat(concat('%',#{dwmc}),'%')
+		AND  dwmcpy LIKE concat(concat('%',#{dwmcpy}),'%')) A
+		WHERE ROWNUM &lt;= #{next}
+		) WHERE RN >=#{pre}
+
+
+	</select>
+
+    <select id="queryByDWID" resultMap="departmentResult">
+        select * from
+        si3.orgn_reg
+        where
+        dwid =#{dwid}
+    </select>
+    <update id="modifyDepartment">
+        UPDATE  si3.orgn_reg SET dwmc=#{dwmc},tblb=#{tblb},tblbmc=#{tblbmc}
+        WHERE dwid=#{dwid}
+    </update>
+</mapper>
+        <!-- error ,,,,resultMap wrong to resultType... -->

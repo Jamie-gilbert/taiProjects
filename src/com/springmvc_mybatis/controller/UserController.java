@@ -32,7 +32,7 @@ public class UserController {
             return "fail";
         } else {
             model.addAttribute("user", user_login);
-            return "success";
+            return "department";
         }
     }
 
