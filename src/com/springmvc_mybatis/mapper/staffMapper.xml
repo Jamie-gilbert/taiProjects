@@ -38,8 +38,7 @@ SELECT * FROM (
   SELECT A.* ,ROWNUM RN FROM
 		(select * from
 		si3.per_reg
-		where DWID =#{dwid} AND
-		cbrylb =#{cbrylb}
+		where  cbrylb =#{cbrylb} AND  DWID =#{dwid}
 		) A
 		WHERE ROWNUM &lt;= #{next}
 		) WHERE RN >=#{pre}

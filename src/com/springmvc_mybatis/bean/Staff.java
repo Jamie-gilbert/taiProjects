@@ -15,7 +15,7 @@ public class Staff implements Serializable {
     private String XB;
     private String CSRQ;
     private String SFXZ;
-    private String CBRYLB;
+    private String cbrylb;
     private String MZ;
     private String TBLB;
     private String TBLBMC;
@@ -130,12 +130,12 @@ public class Staff implements Serializable {
         this.SFXZ = SFXZ;
     }
 
-    public String getCBRYLB() {
-        return CBRYLB;
+    public String getCbrylb() {
+        return cbrylb;
     }
 
-    public void setCBRYLB(String CBRYLB) {
-        this.CBRYLB = CBRYLB;
+    public void setCbrylb(String cbrylb) {
+        this.cbrylb = cbrylb;
     }
 
     public String getMZ() {

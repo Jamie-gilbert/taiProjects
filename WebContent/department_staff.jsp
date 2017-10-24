@@ -25,7 +25,7 @@
             <button id="retiree" class="btn btn-primary" data-toggle="button">退休人员</button>
         </div>
         <div class="col-xs-4 col-md-4">
-            <button id="unemployed " class="btn btn-primary" data-toggle="button">离职人员</button>
+            <button id="unemployed" class="btn btn-primary" data-toggle="button">离职人员</button>
         </div>
     </div>
 
@@ -40,15 +40,17 @@
     var page = 1;
     var count = 10;
     $("#officer").click(function () {
-        type = "A0A";
+        type = "AOA";
         getStaff();
     });
     $("#retiree").click(function () {
-        type = "A0C";
+        type = "AOC";
         getStaff();
     });
+
     $("#unemployed").click(function () {
-        type = "A0F";
+
+        type = "AOF";
         getStaff();
     });
 
