@@ -53,5 +53,6 @@
     <orderEntry type="library" name="jsp-api" level="project" />
     <orderEntry type="library" name="ojdbc14" level="project" />
     <orderEntry type="library" name="mybatis-3.2.7" level="project" />
+    <orderEntry type="library" name="pinyin4j-2.5.0" level="project" />
   </component>
 </module>

@@ -209,6 +209,7 @@ var Alert, Confirm;
             return function () {
                 if (arguments.length != 1) return;
                 var msg = typeof arguments[0] === 'string' && arguments[0] || arguments[0].msg || '',
+                    title = typeof arguments[0] === 'string' && arguments[0] || arguments[0].title || '',
                     onOk = typeof arguments[0] === 'object' && typeof arguments[0].onOk === 'function' && arguments[0].onOk,
                     onCancel = typeof arguments[0] === 'object' && typeof arguments[0].onCancel === 'function' && arguments[0].onCancel,
                     width = typeof arguments[0] === 'object' && arguments[0].width || 400,
@@ -222,12 +223,12 @@ var Alert, Confirm;
                     };
 
                 //延迟初始化modal
-                if(!modal) {
+                if (!modal) {
                     modal = new Modal({
-                        'title': '操作提示',
+                        'title': '提示',
                         onModalShow: _onModalShow,
                         onModalHide: _onModalHide,
-                        onContentReady: function(){
+                        onContentReady: function () {
                             this.$modalBody.css({
                                 'padding-top': '30px',
                                 'padding-bottom': '30px'

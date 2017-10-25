@@ -106,10 +106,11 @@ public class DepartmentController {
         return "modify_department_info";
     }
 
-
     private boolean isEnglish(String charaString) {
 
         return charaString.matches("^[a-zA-Z]*");
 
     }
+
+
 }
