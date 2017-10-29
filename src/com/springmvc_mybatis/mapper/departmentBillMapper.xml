@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springmvc_mybatis.mapper.DepartmentBillMapper">
+    <resultMap type="DepartmentBill" id="departmentBillResult">
+        <result column="jbjgid" property="jbjgid"/>
+        <result column="zdlsh" property="zdlsh"/>
+        <result column="dwid" property="dwid"/>
+        <result column="djzt" property="djzt"/>
+        <result column="djlb" property="djlb"/>
+        <result column="txr" property="txr"/>
+        <result column="txsj" property="txsj"/>
+        <result column="qrr" property="qrr"/>
+        <result column="qrsj" property="qrsj"/>
+        <result column="zje" property="zje"/>
+        <result column="bz" property="bz"/>
+
+    </resultMap>
+    <select id="queryBills" resultMap="departmentBillResult">
+SELECT * FROM (
+SELECT A.* ,ROWNUM RN FROM
+		(select * from
+		si3.bill_genl
+		where
+		dwid =#{dwid}
+		and txsj =
+		AND  djzt =#{djzt}) A
+		WHERE ROWNUM &lt;= #{next}
+		) WHERE RN >=#{pre}
+
+
+	</select>
+
+
+</mapper>
+        <!-- error ,,,,resultMap wrong to resultType... -->

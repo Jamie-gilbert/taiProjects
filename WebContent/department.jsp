@@ -42,6 +42,7 @@
 <div class="container-fluid">
 
 <a href="/department/querybydwid.action?dwid=111">修改单位信息(入参：dwid，这里先写死(111))</a>
+<a href="../department_bils.jsp?dwid=111">查询单据(入参：dwid，这里先写死(111))</a>
 </div>
 
 <script type="text/javascript">

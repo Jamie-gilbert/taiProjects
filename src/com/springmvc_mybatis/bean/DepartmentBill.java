@@ -1,6 +1,9 @@
 package com.springmvc_mybatis.bean;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
+import java.util.Date;
 
 public class DepartmentBill implements Serializable {
     private String jbjgid;
@@ -9,10 +12,12 @@ public class DepartmentBill implements Serializable {
     private String djzt;
     private String djlb;
     private String txr;
-    private String txsj;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date txsj;
     private String qrr;
-    private String qrsj;
-    private String zje;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date qrsj;
+    private double zje;
     private String bz;
 
     public String getJbjgid() {
@@ -63,12 +68,20 @@ public class DepartmentBill implements Serializable {
         this.txr = txr;
     }
 
-    public String getTxsj() {
+    public Date getTxsj() {
         return txsj;
     }
 
-    public void setTxsj(String txsj) {
+    public void setTxsj(Date txsj) {
         this.txsj = txsj;
+    }
+
+    public Date getQrsj() {
+        return qrsj;
+    }
+
+    public void setQrsj(Date qrsj) {
+        this.qrsj = qrsj;
     }
 
     public String getQrr() {
@@ -79,19 +92,12 @@ public class DepartmentBill implements Serializable {
         this.qrr = qrr;
     }
 
-    public String getQrsj() {
-        return qrsj;
-    }
 
-    public void setQrsj(String qrsj) {
-        this.qrsj = qrsj;
-    }
-
-    public String getZje() {
+    public double getZje() {
         return zje;
     }
 
-    public void setZje(String zje) {
+    public void setZje(double zje) {
         this.zje = zje;
     }
 
