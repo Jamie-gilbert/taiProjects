@@ -17,11 +17,11 @@
             <form class="form-horizontal" action="user/login.action" method="post">
                 <span class="heading">用户登录 </span>
                 <div class="form-group">
-                    <input type="text" class="form-control"  placeholder="用户名">
+                    <input type="text" class="form-control" id="userName" name="username" placeholder="用户名">
                     <i class="fa fa-user"></i>
                 </div>
                 <div class="form-group help">
-                    <input type="password" class="form-control" id="inputPassword3" placeholder="密　码">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="密　码">
                     <i class="fa fa-lock"></i>
                     <a href="#" class="fa fa-question-circle"></a>
                 </div>
