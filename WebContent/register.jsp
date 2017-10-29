@@ -11,13 +11,13 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" type="text/css">
+    <script type="text/javascript" src="bootstrap/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
     <title>注册</title>
-    <script src="../js/jquery.js"></script>
-    <script src="../js/bootstrap.js"></script>
-
-    <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
 </head>
 <body>
+<%@include file="commonTop.jsp"%>
 <form action="/user/register.action" method="post">
     <table>
         <tr>
@@ -59,10 +59,11 @@
     </table>
     <table>
         <tr>
-            <td><input type="submit" name="submit" value="确定"></td>
+            <td><input class="btn btn-default" type="submit" name="submit" value="确定"></td>
             <td><input value="取消" type="button" name="cancle" id="cancle"></td>
         </tr>
     </table>
 </form>
+<%@include file="commonBottom.jsp"%>
 </body>
 </html>
