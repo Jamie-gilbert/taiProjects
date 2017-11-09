@@ -11,31 +11,41 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>人员</title>
+    <title>人员信息</title>
     <link rel="stylesheet" href="../css/bootstrap.css">
 
 </head>
 <body>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-xs-4 col-md-4">
-            <button id="officer" class="btn btn-primary" data-toggle="button">在职人员</button>
+        <div class="col-xs-3 col-md-3">
+            <div class="input-group">
+                <span class="input-group-addon">个人编号:</span>
+                <input type="text" class="form-control" id="grbh"/>
+            </div>
         </div>
-        <div class="col-xs-4 col-md-4">
-            <button id="retiree" class="btn btn-primary" data-toggle="button">退休人员</button>
+        <div class="col-xs-3 col-md-3">
+            <div class="input-group">
+                <span class="input-group-addon">个人姓名:</span>
+                <input type="text" class="form-control" id="grxm"/>
+            </div>
         </div>
-        <div class="col-xs-4 col-md-4">
-            <button id="unemployed" class="btn btn-primary" data-toggle="button">离职人员</button>
+        <div class="col-xs-3 col-md-3">
+            <div class="input-group">
+                <span class="input-group-addon">身份证号:</span>
+                <input type="text" class="form-control" id="grsfzhm"/>
+            </div>
+        </div>
+        <div class="col-xs-3 col-md-3">
+            <button class="btn btn-primary" data-toggle="button" id="query">查询</button>
         </div>
     </div>
-
     <div class="row">
-        <div class="col-xs-4 col-md-4">
-            <button id="add_staff" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">添加人员</button>
+        <div class="col-xs-3 col-md-3">
+            <button class="btn btn-primary" onclick="setData()" data-toggle="modal" data-target="#exampleModal">修改
+            </button>
         </div>
     </div>
-
-
 </div>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
@@ -44,7 +54,7 @@
             <div class="modal-header">
                 <button type="button" class="close" id="btnClose" data-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">×</span></button>
-                <h4 class="modal-title" id="exampleModalLabel">添加人员</h4>
+                <h4 class="modal-title" id="exampleModalLabel">修改人员信息</h4>
             </div>
             <div class="modal-body">
                 <form>
@@ -161,7 +171,6 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" id="clear">清 空</button>
                 <button type="button" class="btn btn-primary" id="save">保 存</button>
             </div>
         </div>
@@ -172,35 +181,63 @@
 <script src="../js/bootstrap.js"></script>
 <script src="../js/dialog.js"></script>
 <script type="text/javascript">
-    var type = "";
-    var dwid = <%=request.getParameter("dwid")%>;
-    var page = 1;
-    var count = 10;
-    $("#officer").click(function () {
-        type = "AOA";
+    var currentList;
+    var grbh;
+
+    function setData() {
+
+        //选择数据的坐标，在0到count之间
+        var currentIndex = 0;
+        grbh = currentList[currentIndex].GRBH;
+        $("#xm").val(currentList[currentIndex].XM);
+        $("#cym").val(currentList[currentIndex].CYM);
+        $("#xb").val(currentList[currentIndex].XB);
+        $("#sfzhm").val(currentList[currentIndex].SFZHM);
+        $("#csrq").val(currentList[currentIndex].CSRQ);
+        $("#sfxz").val(currentList[currentIndex].SFXZ);
+        $("#cbrylb").val(currentList[currentIndex].cbrylb);
+        $("#mz").val(currentList[currentIndex].MZ);
+        $("#tblb").val(currentList[currentIndex].TBLB);
+        $("#tblbmc").val(currentList[currentIndex].TBLBMC);
+        $("#cjgzsj").val(currentList[currentIndex].CJGZSJ);
+        $("#jfly").val(currentList[currentIndex].JFLY);
+        $("#hkxz").val(currentList[currentIndex].HKXZ);
+        $("#dz").val(currentList[currentIndex].DZ);
+        $("#dh").val(currentList[currentIndex].DH);
+        $("#grsf").val(currentList[currentIndex].GRSF);
+        $("#rwsj").val(currentList[currentIndex].RWSJ);
+        $("#drsj").val(currentList[currentIndex].DRSJ);
+        $("#zyyy").val(currentList[currentIndex].ZYYY);
+        $("#jyyy").val(currentList[currentIndex].JYYY);
+        $("#bz").val(currentList[currentIndex].BZ);
+        $("#ryid").val(currentList[currentIndex].RYID);
+        $("#rydjid").val(currentList[currentIndex].RYDJID);
+        $("#czbm").val(currentList[currentIndex].CZBM);
+        $("#ygrbh").val(currentList[currentIndex].YGRBH);
+        $("#jbjgid").val(currentList[currentIndex].JBJGID);
+    };
+    $("#query").click(function () {
         getStaff();
     });
-    $("#retiree").click(function () {
-        type = "AOC";
-        getStaff();
-    });
-
-    $("#unemployed").click(function () {
-
-        type = "AOF";
-        getStaff();
-    });
-
 
     function getStaff() {
+        var page = 1;
+        var count = 10;
+        var grbh = $("#grbh").val();
+        var grxm = $("#grxm").val();
+        var grsfzhm = $("#grsfzhm").val();
         $.ajax({
             type: "POST",
-            url: "staff/queryStaff.action",
-            data: {"dwid": dwid, "page": page, "count": count, "type": type},
+            url: "staff/queryStaffInfo.action",
+            data: {
+                "grsfzhm": grsfzhm, "page": page,
+                "count": count, "grbh": grbh, "grxm": grxm
+            },
             async: false,
             dataType: "JSON",
             success: function (data, status) {
-                console.log(data);
+                currentList = data.data;
+                console.log(data.data);
             },
             error: function (err, status) {
                 console.log(err);
@@ -208,36 +245,9 @@
         });
     }
 
-    $("#clear").click(function () {
 
-        $("#xm").val("");
-        $("#cym").val("");
-        $("#xb").val("");
-        $("#sfzhm").val("");
-        $("#csrq").val("");
-        $("#sfxz").val("");
-        $("#cbrylb").val("");
-        $("#mz").val("");
-        $("#tblb").val("");
-        $("#tblbmc").val("");
-        $("#cjgzsj").val("");
-        $("#jfly").val("");
-        $("#hkxz").val("");
-        $("#dz").val("");
-        $("#dh").val("");
-        $("#grsf").val("");
-        $("#rwsj").val("");
-        $("#drsj").val("");
-        $("#zyyy").val("");
-        $("#jyyy").val("");
-        $("#bz").val("");
-        $("#ryid").val("");
-        $("#rydjid").val("");
-        $("#czbm").val("");
-        $("#ygrbh").val("");
-        $("#jbjgid").val("");
-    });
     $("#save").click(function () {
+
         var xm = $("#xm").val();
         var cym = $("#cym").val();
         var xb = $("#xb").val();
@@ -268,20 +278,20 @@
 
         $.ajax({
             type: "POST",
-            url: "staff/saveStaff.action",
+            url: "staff/modifyStaff.action",
             data: {
                 "xm": xm, "cym": cym, "xb": xb, "sfzhm": sfzhm, "csrq": csrq
                 , "sfxz": sfxz, "cbrylb": cbrylb, "mz": mz, "tblb": tblb, "tblbmc": tblbmc,
                 "cjgzsj": cjgzsj, "jfly": jfly, "hkxz": hkxz, "dz": dz, "dh": dh,
                 "grsf": grsf, "rwsj": rwsj, "drsj": drsj, "zyyy": zyyy, "jyyy": jyyy, "bz": bz,
-                "dwid": dwid, "cbrylb": type, "ryid": ryid, "rydjid": rydjid, "czbm": czbm,
-                "ygrbh": ygrbh, "jbjgid": jbjgid
+                "cbrylb": cbrylb, "ryid": ryid, "rydjid": rydjid, "czbm": czbm,
+                "ygrbh": ygrbh, "jbjgid": jbjgid, "grbh": grbh
             },
             dataType: "JSON",
             async: false,
             success: function (data, status) {
                 Alert({
-                    msg: '保存成功',
+                    msg: '修改成功',
                     title: "提示",
                     onOk: function () {
                         $('#exampleModal').modal('hide');

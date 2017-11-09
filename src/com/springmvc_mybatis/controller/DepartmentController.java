@@ -3,6 +3,7 @@ package com.springmvc_mybatis.controller;
 import com.springmvc_mybatis.bean.Department;
 import com.springmvc_mybatis.json.JSONObject;
 import com.springmvc_mybatis.mapper.DepartmentMapper;
+import com.springmvc_mybatis.utils.PinYinUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,8 +35,9 @@ public class DepartmentController {
         String dwmc = request.getParameter("dwmc");
         String dwmcpy = "";
         if (dwmc != null) {
-            if (isEnglish(dwmc)) {
+            if (PinYinUtil.isEnglish(dwmc)) {
                 dwmcpy = dwmc;
+                dwmc = "";
             }
         } else {
             dwmc = "";
@@ -104,12 +106,6 @@ public class DepartmentController {
         Department department = departmentMapper.queryByDWID(dwid);
         model.addAttribute("department", department);
         return "modify_department_info";
-    }
-
-    private boolean isEnglish(String charaString) {
-
-        return charaString.matches("^[a-zA-Z]*");
-
     }
 
 

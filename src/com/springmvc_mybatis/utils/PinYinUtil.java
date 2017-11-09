@@ -66,5 +66,9 @@ public class PinYinUtil {
         }
         return pybf.toString();
     }
+    public static boolean isEnglish(String charaString) {
 
+        return charaString.matches("^[a-zA-Z]*");
+
+    }
 }

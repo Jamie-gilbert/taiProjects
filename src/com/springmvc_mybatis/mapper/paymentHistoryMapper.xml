@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springmvc_mybatis.mapper.PaymentHistoryMapper">
+    <resultMap type="PaymentHistory" id="paymentHistoryResult">
+        <id column="RYID" property="RYID"/>
+        <result column="JFLSID" property="JFLSID"/>
+        <result column="RYID" property="RYID"/>
+        <result column="RYDJID" property="RYDJID"/>
+        <result column="DWID" property="DWID"/>
+        <result column="XZBZ" property="XZBZ"/>
+        <result column="FSRQ" property="FSRQ"/>
+        <result column="JFRQ" property="JFRQ"/>
+        <result column="QSNY" property="QSNY"/>
+        <result column="ZZNY" property="ZZNY"/>
+        <result column="DWJFJS" property="DWJFJS"/>
+        <result column="DWJFBL" property="DWJFBL"/>
+        <result column="GRJFBL" property="GRJFBL"/>
+        <result column="DWJFE" property="DWJFE"/>
+        <result column="GRJFE" property="GRJFE"/>
+        <result column="DWJFZE" property="DWJFZE"/>
+        <result column="GRJFZE" property="GRJFZE"/>
+        <result column="ZDLSH" property="ZDLSH"/>
+        <result column="JBJGID" property="JBJGID"/>
+        <result column="BZ" property="BZ"/>
+        <result column="JBR" property="JBR"/>
+        <result column="JBSJ" property="JBSJ"/>
+        <result column="LX" property="LX"/>
+        <association property="staff" javaType="com.springmvc_mybatis.bean.Staff">
+            <id column="RYID" property="RYID"/>
+            <result column="RYID" property="RYID"/>
+            <result column="RYDJID" property="RYDJID"/>
+            <result column="DWID" property="DWID"/>
+            <result column="CZBM" property="CZBM"/>
+            <result column="YGRBH" property="YGRBH"/>
+            <result column="GRBH" property="GRBH"/>
+            <result column="SFZHM" property="SFZHM"/>
+            <result column="XM" property="XM"/>
+            <result column="CYM" property="CYM"/>
+            <result column="XB" property="XB"/>
+            <result column="CSRQ" property="CSRQ"/>
+            <result column="SFXZ" property="SFXZ"/>
+            <result column="cbrylb" property="cbrylb"/>
+            <result column="MZ" property="MZ"/>
+            <result column="TBLB" property="TBLB"/>
+            <result column="TBLBMC" property="TBLBMC"/>
+            <result column="CJGZSJ" property="CJGZSJ"/>
+            <result column="JFLY" property="JFLY"/>
+            <result column="HKXZ" property="HKXZ"/>
+            <result column="DZ" property="DZ"/>
+            <result column="DH" property="DH"/>
+            <result column="GRSF" property="GRSF"/>
+            <result column="RWSJ" property="RWSJ"/>
+            <result column="DRSJ" property="DRSJ"/>
+            <result column="ZYYY" property="ZYYY"/>
+            <result column="JYYY" property="JYYY"/>
+            <result column="JBJGID" property="JBJGID"/>
+            <result column="BZ" property="BZ"/>
+            <result column="XMPY" property="XMPY"/>
+        </association>
+    </resultMap>
+    <select id="queryBills" resultMap="departmentBillResult">
+SELECT * FROM (
+SELECT A.* ,ROWNUM RN FROM
+		(select * from
+		si3.aged_pay_his his, si3.per_reg per
+		where
+		dwid =#{dwid}
+		AND  his.RYID =per.RYID) A
+		WHERE ROWNUM &lt;= #{next}
+		) WHERE RN >=#{pre}
+	</select>
+    <select id="queryBillsWithoutInterest" resultMap="departmentBillResult">
+
+    </select>
+</mapper>

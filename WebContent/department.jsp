@@ -43,6 +43,8 @@
 
 <a href="/department/querybydwid.action?dwid=111">修改单位信息(入参：dwid，这里先写死(111))</a>
 <a href="../department_bils.jsp?dwid=111">查询单据(入参：dwid，这里先写死(111))</a>
+<a href="../dempartment_interest.jsp?dwid=111">单位计息(入参：dwid，这里先写死(111))</a>
+<a href="../staff_info.jsp?dwid=111">人员操作 查询人员信息</a>
 </div>
 
 <script type="text/javascript">
@@ -55,7 +57,7 @@
             var count = 10;
             $.ajax({
                 type: "POST",
-                url: "department/querybykey.action",
+                url: "../department/querybykey.action",
                 data: {"dwbh": dwbh, "dwmc": dwmc, "page": page, "count": count},
                 async: false,
                 dataType: "json",

@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -48,22 +49,31 @@ public class DepartmentBillController {
         try {
             if (time != null && !"".equals(time)) {
                 date = simpleDateFormat.parse(time);
-            }else {
-                date=simpleDateFormat.parse("1800-12-12");
+            } else {
+                date = simpleDateFormat.parse("1800-12-12");
 
             }
         } catch (ParseException e) {
             e.printStackTrace();
         }
         List<DepartmentBill> departmentBills = departmentBillMapper.queryBills(dwid, date, type, pre, next);
-        PrintWriter out = null;
-        out = response.getWriter();
+        PrintWriter out = response.getWriter();
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("errorCode", "0");
         jsonObject.put("errorText", "");
-        jsonObject.put("data",departmentBills);
+        jsonObject.put("data", departmentBills);
         out.write(jsonObject.toString());
         out.flush();
         out.close();
+    }
+
+
+    private float calInterest(int year, float payment) {
+        float finalInterest = 0f;
+        float scale = 0.03f;
+        Calendar calendar = Calendar.getInstance();
+        int currentYear = calendar.get(Calendar.YEAR);
+        finalInterest = payment * scale * (currentYear - year);
+        return finalInterest;
     }
 }
