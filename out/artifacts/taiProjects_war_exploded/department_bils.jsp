@@ -54,7 +54,7 @@
         var dwid =<%=request.getParameter("dwid")%>;
         $.ajax({
             type: "POST",
-            url: "",
+            url: "departmentBills/querydepartmentbils.action",
             data: {
                 "time": time, "page": page,
                 "count": count, "type": type,
@@ -63,10 +63,10 @@
             dataType: "JSON",
             async: false,
             success: function (data, status) {
-
+                console.log(data)
             },
             error: function (err, status) {
-
+                console.log(err)
             }
         });
     }

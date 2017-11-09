@@ -1,7 +1,29 @@
-body .top_jsp{
-    -webkit-box-reflect:above;
+.top_body .top_jsp{
+    height: 7%;
+    width:100% ;
+    background:-moz-linear-gradient(bottom,#F7F7FF, #fff);
+    border-bottom: 2px solid #9797FF;
 }
 
-body .top_jsp{
-
+.top_body .top_jsp .logo {
+    float: left;
+    margin-left: 75px;
 }
+
+.top_body .top_jsp .sysTime {
+    float: right;
+    margin-top: 20px;
+    margin-right: 20px;
+    font-family: 楷体;
+    font-size: 15px;
+    color: black;
+    font-weight: 900;
+}
+
+.top_body .top_jsp .logo .font_top {
+    font-family: 楷体;
+    font-size: 30px;
+    color: #00b4ef;
+    font-weight: 900;
+}
+

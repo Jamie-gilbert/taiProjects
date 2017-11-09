@@ -1,5 +1,9 @@
+html {
+    overflow: hidden;
+}
+
 body {
-    background:-moz-linear-gradient(top,#b8c4cb,#f6f6f8);
+    background:-moz-linear-gradient(bottom,#0000ff, #fff);
 }
 
 body .container {
@@ -136,4 +140,8 @@ form a {
     .form-horizontal .btn{
         padding: 10px 20px;
     }
+}
+
+body .blank {
+    height:1000px;
 }

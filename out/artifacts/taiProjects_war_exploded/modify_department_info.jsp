@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="../css/bootstrap.css">
 </head>
 <body>
-
+<%@include file="commonTop.jsp"%>
 <div class="container-fluid">
 
     <div class="row">
