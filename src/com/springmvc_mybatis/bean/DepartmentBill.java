@@ -20,16 +20,6 @@ public class DepartmentBill implements Serializable {
     private double zje;
     private String bz;
 
-    private Staff staff;
-
-    public Staff getStaff() {
-        return staff;
-    }
-
-    public void setStaff(Staff staff) {
-        this.staff = staff;
-    }
-
     public String getJbjgid() {
         return jbjgid;
     }

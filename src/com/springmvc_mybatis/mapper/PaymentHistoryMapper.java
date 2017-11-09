@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface PaymentHistoryMapper {
 
-    List<PaymentHistory> queryPayhistories(@Param(value = "dwid") String dwid,
+    List<PaymentHistory> queryBillsWithoutInterest(@Param(value = "dwid") String dwid,
                                            @Param(value = "pre") String pre,
                                            @Param(value = "next") String next);
 }

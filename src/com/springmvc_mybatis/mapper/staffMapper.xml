@@ -31,7 +31,6 @@
         <result column="JBJGID" property="JBJGID"/>
         <result column="BZ" property="BZ"/>
         <result column="XMPY" property="XMPY"/>
-
     </resultMap>
     <select id="queryStaff" resultMap="staffResult">
 SELECT * FROM (
@@ -77,6 +76,5 @@ SELECT * FROM (
 
 
     </select>
-
 </mapper>
         <!-- queryStaffInfo -->

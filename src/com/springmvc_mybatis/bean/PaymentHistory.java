@@ -1,38 +1,45 @@
 package com.springmvc_mybatis.bean;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
+import java.util.Date;
 
 public class PaymentHistory implements Serializable {
-    private String FLSID;
+    private String JFLSID;
     private String RYID;
     private String RYDJID;
     private String DWID;
     private String XZBZ;
-    private String FSRQ;
-    private String JFRQ;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date FSRQ;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date JFRQ;
     private String QSNY;
     private String ZZNY;
-    private String DWJFJS;
-    private String DWJFBL;
-    private String GRJFBL;
-    private String DWJFE;
-    private String GRJFE;
-    private String DWJFZE;
-    private String GRJFZE;
+    private double DWJFJS;
+    private double GRJFJS;
+    private double DWJFBL;
+    private double GRJFBL;
+    private double DWJFE;
+    private double GRJFE;
+    private double DWJFZE;
+    private double GRJFZE;
     private String ZDLSH;
     private String JBJGID;
     private String BZ;
     private String JBR;
-    private String JBSJ;
-    private String LX;
-    private Staff staff;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date JBSJ;
+    private double LX;
+//    private Staff staff;
 
-    public String getFLSID() {
-        return FLSID;
+    public String getJFLSID() {
+        return JFLSID;
     }
 
-    public void setFLSID(String FLSID) {
-        this.FLSID = FLSID;
+    public void setJFLSID(String JFLSID) {
+        this.JFLSID = JFLSID;
     }
 
     public String getRYID() {
@@ -67,19 +74,19 @@ public class PaymentHistory implements Serializable {
         this.XZBZ = XZBZ;
     }
 
-    public String getFSRQ() {
+    public Date getFSRQ() {
         return FSRQ;
     }
 
-    public void setFSRQ(String FSRQ) {
+    public void setFSRQ(Date FSRQ) {
         this.FSRQ = FSRQ;
     }
 
-    public String getJFRQ() {
+    public Date getJFRQ() {
         return JFRQ;
     }
 
-    public void setJFRQ(String JFRQ) {
+    public void setJFRQ(Date JFRQ) {
         this.JFRQ = JFRQ;
     }
 
@@ -99,59 +106,67 @@ public class PaymentHistory implements Serializable {
         this.ZZNY = ZZNY;
     }
 
-    public String getDWJFJS() {
+    public double getDWJFJS() {
         return DWJFJS;
     }
 
-    public void setDWJFJS(String DWJFJS) {
+    public void setDWJFJS(double DWJFJS) {
         this.DWJFJS = DWJFJS;
     }
 
-    public String getDWJFBL() {
+    public double getGRJFJS() {
+        return GRJFJS;
+    }
+
+    public void setGRJFJS(double GRJFJS) {
+        this.GRJFJS = GRJFJS;
+    }
+
+    public double getDWJFBL() {
         return DWJFBL;
     }
 
-    public void setDWJFBL(String DWJFBL) {
+    public void setDWJFBL(double DWJFBL) {
         this.DWJFBL = DWJFBL;
     }
 
-    public String getGRJFBL() {
+    public double getGRJFBL() {
         return GRJFBL;
     }
 
-    public void setGRJFBL(String GRJFBL) {
+    public void setGRJFBL(double GRJFBL) {
         this.GRJFBL = GRJFBL;
     }
 
-    public String getDWJFE() {
+    public double getDWJFE() {
         return DWJFE;
     }
 
-    public void setDWJFE(String DWJFE) {
+    public void setDWJFE(double DWJFE) {
         this.DWJFE = DWJFE;
     }
 
-    public String getGRJFE() {
+    public double getGRJFE() {
         return GRJFE;
     }
 
-    public void setGRJFE(String GRJFE) {
+    public void setGRJFE(double GRJFE) {
         this.GRJFE = GRJFE;
     }
 
-    public String getDWJFZE() {
+    public double getDWJFZE() {
         return DWJFZE;
     }
 
-    public void setDWJFZE(String DWJFZE) {
+    public void setDWJFZE(double DWJFZE) {
         this.DWJFZE = DWJFZE;
     }
 
-    public String getGRJFZE() {
+    public double getGRJFZE() {
         return GRJFZE;
     }
 
-    public void setGRJFZE(String GRJFZE) {
+    public void setGRJFZE(double GRJFZE) {
         this.GRJFZE = GRJFZE;
     }
 
@@ -187,27 +202,28 @@ public class PaymentHistory implements Serializable {
         this.JBR = JBR;
     }
 
-    public String getJBSJ() {
+    public Date getJBSJ() {
         return JBSJ;
     }
 
-    public void setJBSJ(String JBSJ) {
+    public void setJBSJ(Date JBSJ) {
         this.JBSJ = JBSJ;
     }
 
-    public String getLX() {
+    public double getLX() {
         return LX;
     }
 
-    public void setLX(String LX) {
+    public void setLX(double LX) {
         this.LX = LX;
     }
 
-    public Staff getStaff() {
-        return staff;
-    }
 
-    public void setStaff(Staff staff) {
-        this.staff = staff;
-    }
+    //    public Staff getStaff() {
+//        return staff;
+//    }
+//
+//    public void setStaff(Staff staff) {
+//        this.staff = staff;
+//    }
 }
