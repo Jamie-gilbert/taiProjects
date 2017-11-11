@@ -84,12 +84,5 @@ public class DepartmentBillController {
     }
 
 
-    private float calInterest(int year, float payment) {
-        float finalInterest = 0f;
-        float scale = 0.03f;
-        Calendar calendar = Calendar.getInstance();
-        int currentYear = calendar.get(Calendar.YEAR);
-        finalInterest = payment * scale * (currentYear - year);
-        return finalInterest;
-    }
+
 }
