@@ -38,15 +38,16 @@ public class DepartmentBillController {
         response.setCharacterEncoding("UTF-8");
 
         String dwid = request.getParameter("dwid");
-        String page = request.getParameter("page");
-        String count = request.getParameter("count");
         String type = request.getParameter("type");
         String time = request.getParameter("time");
 
-        int pageNum = Integer.parseInt(page);
+        String page = request.getParameter("pageNumber");
+        String count = request.getParameter("pageSize");
+
         int countNum = Integer.parseInt(count);
-        String pre = String.valueOf(1 + (pageNum - 1) * countNum);
-        String next = String.valueOf(pageNum * countNum);
+        int pageNum = Integer.parseInt(page);
+//        String pre = String.valueOf(1 + (pageNum - 1) * countNum);
+//        String next = String.valueOf(pageNum * countNum);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = null;
         try {
@@ -62,7 +63,7 @@ public class DepartmentBillController {
         List<DepartmentBill> departmentBills = new ArrayList<>();
         int counts = departmentBillMapper.queryCount(dwid, date, type);
         if (counts > 0) {
-            departmentBills = departmentBillMapper.queryBills(dwid, date, type, pre, next);
+            departmentBills = departmentBillMapper.queryBills(dwid, date, type, page, String.valueOf(countNum+pageNum));
         }
 
         PrintWriter out = response.getWriter();

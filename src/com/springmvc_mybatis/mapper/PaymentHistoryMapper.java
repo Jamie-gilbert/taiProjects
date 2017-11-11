@@ -10,4 +10,7 @@ public interface PaymentHistoryMapper {
     List<PaymentHistory> queryBillsWithoutInterest(@Param(value = "dwid") String dwid,
                                            @Param(value = "pre") String pre,
                                            @Param(value = "next") String next);
+
+   int queryCount(@Param(value = "dwid") String dwid);
+
 }
