@@ -20,7 +20,19 @@
 </head>
 <body>
 <%@include file="commonTop.jsp"%>
-<div class="container-fluid">
+<ul id="myTab" class="nav nav-tabs">
+    <li class="active">
+        <a href="#dwwork" data-toggle="tab">
+            单位业务
+        </a>
+    </li>
+    <li>
+        <a href="#grwork" data-toggle="tab">
+            个人业务
+        </a>
+    </li>
+</ul>
+<div class="container-fluid  tab-pane fade in active" id="dwwork">
     <div class="row">
         <div class="col-xs-3 col-md-4">
             <div class="input-group">
@@ -38,11 +50,15 @@
             <button class="btn btn-primary" data-toggle="button" id="query">查询</button>
         </div>
     </div>
-</div>
-<div class="container-fluid">
+    <div class="container-fluid">
 
-<a href="/department/querybydwid.action?dwid=111">修改单位信息(入参：dwid，这里先写死(111))</a>
-<a href="../department_bils.jsp?dwid=111">查询单据(入参：dwid，这里先写死(111))</a>
+        <a href="/department/querybydwid.action?dwid=100000000000001">修改单位信息(入参：dwid，这里先写死(111))</a>
+        <a href="../department_bils.jsp?dwid=100000000000001">查询单据(入参：dwid，这里先写死(111))</a>
+    </div>
+</div>
+
+<div class="grwork tab-pane fade" id="grwork">
+    这是个人业务
 </div>
 
 <script type="text/javascript">

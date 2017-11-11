@@ -12,8 +12,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>人员</title>
-    <link rel="stylesheet" href="../css/bootstrap.css">
-
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="bootstrap-table/bootstrap-table.css" type="text/css">
+    <script type="text/javascript" src="bootstrap/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="bootstrap-table/bootstrap-table.js"></script>
+    <script type="text/javascript" src="bootstrap-table/bootstrap-table-zh-CN.js"></script>
+    <script type="text/javascript" src="../js/dialog.js"></script>
 </head>
 <body>
 <div class="container-fluid">
@@ -34,6 +39,12 @@
             <button id="add_staff" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">添加人员</button>
         </div>
     </div>
+</div>
+
+<div>
+    <table id="per_table">
+
+    </table>
 </div>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
@@ -165,32 +176,30 @@
         </div>
     </div>
 </div>
-
-<script src="../js/jquery.js"></script>
-<script src="../js/bootstrap.js"></script>
-<script src="../js/dialog.js"></script>
 <script type="text/javascript">
-    var type = "";
+    var types = "";
     var dwid = <%=request.getParameter("dwid")%>;
     var page = 1;
     var count = 10;
+
     $("#officer").click(function () {
-        type = "AOA";
-        getStaff();
+        types = "A0A";
+        per_table();
     });
+
     $("#retiree").click(function () {
-        type = "AOC";
-        getStaff();
+        type = "A0C";
+        per_table();
     });
 
     $("#unemployed").click(function () {
 
-        type = "AOF";
-        getStaff();
+        type = "A0F";
+        per_table();
     });
 
 
-    function getStaff() {
+   /* function getStaff() {
         $.ajax({
             type: "POST",
             url: "staff/queryStaff.action",
@@ -204,7 +213,51 @@
                 console.log(err);
             }
         });
-    }
+    }*/
+
+   function per_table() {
+       $('#per_table').bootstrapTable({
+           url: '../staff/queryStaff.action',         //请求后台的URL（*）
+           method: 'get',                      //请求方式（*）
+           toolbar: '#toolbar',                //工具按钮用哪个容器
+           striped: true,                      //是否显示行间隔色
+           cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+           pagination: true,                   //是否显示分页（*）
+           sortable: false,                     //是否启用排序
+           sortOrder: "asc",                   //排序方式
+           queryParams : function (params) {
+               return {
+                   pageNumber: params.offset + 1,
+                   pageSize: params.limit,
+                   dwid: dwid,
+                   type: types
+               };
+           },
+           //传递参数（*）
+           sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+           pageNumber: 1,                       //初始化加载第一页，默认第一页
+           pageSize: 10,                       //每页的记录行数（*）
+           pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
+           clickToSelect:true,
+           showExport: true,                     //是否显示导出
+           exportDataType: "basic",              //basic', 'all', 'selected'.
+           columns: [{
+               checkbox: true
+           }, {
+               field: 'xm',
+               title: '姓名'
+           }, {
+               field: 'sfzhm',
+               title: '身份证号码'
+           }, {
+               field: 'csrq',
+               title: '出生日期'
+           }, {
+               field: 'cjgzsj',
+               title: '参加工作时间'
+           }, ]
+       });
+   }
 
     $("#clear").click(function () {
 
