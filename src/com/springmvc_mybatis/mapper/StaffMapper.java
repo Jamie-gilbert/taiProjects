@@ -11,6 +11,9 @@ public interface StaffMapper {
                            @Param(value = "pre") String pre,
                            @Param(value = "next") String next);
 
+    int queryCount(@Param(value = "dwid") String dwid,
+                   @Param(value = "cbrylb") String cbrylb);
+
     List<Staff> queryStaffInfo(@Param(value = "GRBH") String GRBH,
                                @Param(value = "SFZHM") String SFZHM,
                                @Param(value = "XM") String XM,

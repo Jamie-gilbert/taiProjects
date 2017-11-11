@@ -25,6 +25,12 @@
         <result column="JBR" property="JBR"/>
         <result column="JBSJ" property="JBSJ"/>
         <result column="LX" property="LX"/>
+
+        <association property="staff"
+                     column="RYID"
+                     select="selectStaffBystaffRYID">
+
+        </association>
     </resultMap>
 
     <select id="queryBillsWithoutInterest" resultMap="paymentHistoryResult">
@@ -35,5 +41,9 @@
 		WHERE  DWID =${dwid}) A
 		WHERE ROWNUM &lt;= ${next}
 		) WHERE RN >=${pre}
+    </select>
+
+    <select id="selectStaffBystaffRYID" parameterType="string" resultType="Staff">
+        SELECT * FROM si3.per_reg WHERE RYID=#{RYID}
     </select>
 </mapper>

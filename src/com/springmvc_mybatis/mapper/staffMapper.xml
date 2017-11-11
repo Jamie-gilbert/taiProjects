@@ -43,6 +43,12 @@ SELECT * FROM (
 		) WHERE RN >=#{pre}
 
 </select>
+    <select id="queryCount" resultType="int">
+        SELECT  count(*)
+        FROM 	si3.per_reg
+		where  cbrylb =#{cbrylb}
+		 AND  DWID =#{dwid}
+    </select>
     <insert id="saveStaff">
         INSERT INTO si3.per_reg(RYID,RYDJID,DWID,CZBM,YGRBH,GRBH,
         SFZHM,XM,CYM,XB,CSRQ,SFXZ,cbrylb,MZ,TBLB,TBLBMC,CJGZSJ,
@@ -76,5 +82,7 @@ SELECT * FROM (
 
 
     </select>
+
+
 </mapper>
         <!-- queryStaffInfo -->

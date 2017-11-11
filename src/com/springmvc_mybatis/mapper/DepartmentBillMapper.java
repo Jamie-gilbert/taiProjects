@@ -15,5 +15,9 @@ public interface DepartmentBillMapper {
                                     @Param(value = "pre") String pre,
                                     @Param(value = "next") String next);
 
+    int queryCount(@Param(value = "dwid") String dwid,
+                   @Param(value = "txsj") Date time,
+                   @Param(value = "djzt") String type);
+
 
 }

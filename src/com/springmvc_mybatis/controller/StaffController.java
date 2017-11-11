@@ -1,6 +1,7 @@
 package com.springmvc_mybatis.controller;
 
 import com.springmvc_mybatis.bean.Staff;
+import com.springmvc_mybatis.json.JSONArray;
 import com.springmvc_mybatis.json.JSONObject;
 import com.springmvc_mybatis.mapper.StaffMapper;
 import com.springmvc_mybatis.utils.PinYinUtil;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -36,12 +38,20 @@ public class StaffController {
         int pageNum = Integer.parseInt(page);
         String pre = String.valueOf(1 + (pageNum - 1) * countNum);
         String next = String.valueOf(pageNum * countNum);
-        List<Staff> staffList = staffMapper.queryStaff(dwid, type, pre, next);
+        int num = staffMapper.queryCount(dwid, type);
+        List<Staff> staffList = new ArrayList<>();
+        if (num > 0) {
+            staffList = staffMapper.queryStaff(dwid, type, pre, next);
+        }
 
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("errorCode", "0");
-        jsonObject.put("errorText", "");
-        jsonObject.put("data", staffList);
+        jsonObject.put("total", num);
+        JSONArray jsonArray = new JSONArray();
+        for (Staff staff : staffList) {
+            JSONObject object = new JSONObject(staff);
+            jsonArray.put(object);
+        }
+        jsonObject.put("rows", jsonArray);
         PrintWriter out = response.getWriter();
         out.write(jsonObject.toString());
         out.flush();

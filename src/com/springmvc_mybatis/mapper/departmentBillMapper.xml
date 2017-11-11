@@ -26,6 +26,12 @@ SELECT A.* ,ROWNUM RN FROM
 		WHERE ROWNUM &lt;= #{next}
 		) WHERE RN >=#{pre}
 	</select>
+    <select id="queryCount" resultType="int">
+        SELECT  count(*)  FROM si3.bill_genl
+         where dwid =#{dwid}
+		and txsj >=#{txsj}
+		AND  djzt =#{djzt}
+    </select>
     <select id="queryBillsWithoutInterest" resultMap="departmentBillResult">
 
     </select>

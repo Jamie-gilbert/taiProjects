@@ -5,6 +5,7 @@ import com.springmvc_mybatis.json.JSONObject;
 import com.springmvc_mybatis.mapper.PaymentHistoryMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,13 +20,8 @@ public class PaymentHistoryController {
     private PaymentHistoryMapper paymentHistoryMapper;
 
     @RequestMapping("/queryPaymentHistory")
-    public void queryBillsWithoutInterest(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public String queryBillsWithoutInterest(HttpServletRequest request, Model model) throws Exception {
 
-        //设置页面不缓存
-        response.setContentType("application/json");
-        response.setHeader("Pragma", "No-cache");
-        response.setHeader("Cache-Control", "no-cache");
-        response.setCharacterEncoding("UTF-8");
 
         String dwid = request.getParameter("dwid");
         String page = request.getParameter("page");
@@ -40,9 +36,8 @@ public class PaymentHistoryController {
         jsonObject.put("errorCode", "0");
         jsonObject.put("errorText", "");
         jsonObject.put("data", paymentHistories);
-        PrintWriter out = response.getWriter();
-        out.write(jsonObject.toString());
-        out.flush();
-        out.close();
+       model.addAttribute("data",paymentHistories);
+
+       return "dempartment_interest";
     }
 }
