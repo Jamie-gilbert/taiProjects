@@ -17,6 +17,8 @@
     <script type="text/javascript" src="bootstrap/js/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="bootstrap-table/bootstrap-table.js"></script>
+    <script type="text/javascript" src="bootstrap-table/tableExport.js"></script>
+    <script type="text/javascript" src="bootstrap-table/extensions/export/bootstrap-table-export.js"></script>
     <script type="text/javascript" src="bootstrap-table/bootstrap-table-zh-CN.js"></script>
     <script type="text/javascript" src="../js/dialog.js"></script>
 </head>
@@ -39,9 +41,13 @@
             <button id="add_staff" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">添加人员</button>
         </div>
     </div>
+
+
 </div>
 
 <div>
+    <div id="toolbar">
+    </div>
     <table id="per_table">
 
     </table>
@@ -240,24 +246,54 @@
            pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
            clickToSelect:true,
            showExport: true,                     //是否显示导出
-           exportDataType: "basic",              //basic', 'all', 'selected'.
+           exportDataType: "all",              //basic', 'all', 'selected'.
            columns: [{
                checkbox: true
            }, {
-               field: 'xm',
-               title: '姓名'
+               field: 'XM',
+               title: '姓名',
            }, {
-               field: 'sfzhm',
-               title: '身份证号码'
+               field: 'SFZHM',
+               title: '身份证号码',
            }, {
-               field: 'csrq',
-               title: '出生日期'
+               field:'GRBH',
+               title:'个人编号',
+               visible:true
+           },{
+               field: 'CSRQ',
+               title: '出生日期',
            }, {
-               field: 'cjgzsj',
+               field: 'CJGZSJ',
                title: '参加工作时间'
-           }, ]
+           },  {
+               field: 'TBLBMC',
+               title: '投保类别',
+               soetable:true
+           },{
+               field: 'personOpId',
+               title: '操作',
+               align: 'center',
+               width: 150,
+               formatter: operateFormatter,
+
+           }]
        });
    }
+
+    function operateFormatter(value,row,index)
+//row 获取这行的值 ，index 获取索引值
+    {
+        return [
+            "<a href='index.jsp' target='_blank'><button type='button' class='btn btn-small btn-info'" +
+            "style='margin-right:15px;' id='m-callback-this-start'" +
+            " onclick ='showGrbh()'>查看 </button></a>"
+        ].join('');
+
+    }
+
+    function showGrbh(){
+
+    }
 
     $("#clear").click(function () {
 

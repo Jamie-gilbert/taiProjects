@@ -5,7 +5,7 @@
 
 <configuration>
     <settings>
-        <setting name="logImpl" value="STDOUT_LOGGING" />
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
     </settings>
     <!-- 设置外部配置文件 -->
     <!-- 设置类别名 -->
@@ -13,6 +13,8 @@
         <typeAlias type="com.springmvc_mybatis.bean.User" alias="User"/>
         <typeAlias type="com.springmvc_mybatis.bean.Department" alias="Department"/>
         <typeAlias type="com.springmvc_mybatis.bean.Staff" alias="Staff"/>
+        <typeAlias type="com.springmvc_mybatis.bean.DepartmentBill" alias="DepartmentBill"/>
+        <typeAlias type="com.springmvc_mybatis.bean.PaymentHistory" alias="PaymentHistory"/>
     </typeAliases>
     <!-- 设置数据库连接环境 -->
     <!-- 映射文件 -->
@@ -20,6 +22,8 @@
         <mapper resource="com/springmvc_mybatis/mapper/userMapper.xml"/>
         <mapper resource="com/springmvc_mybatis/mapper/departmentMapper.xml"/>
         <mapper resource="com/springmvc_mybatis/mapper/staffMapper.xml"/>
+        <mapper resource="com/springmvc_mybatis/mapper/departmentBillMapper.xml"/>
+        <mapper resource="com/springmvc_mybatis/mapper/paymentHistoryMapper.xml"/>
     </mappers>
 
 </configuration>
