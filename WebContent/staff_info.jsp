@@ -37,7 +37,7 @@
             </div>
         </div>
         <div class="col-xs-3 col-md-3">
-            <button class="btn btn-primary" data-toggle="button" id="query">查询</button>
+            <button class="btn btn-primary" data-toggle="button" id="query_person">查询</button>
         </div>
     </div>
     <div class="row">
@@ -216,7 +216,7 @@
         $("#ygrbh").val(currentList[currentIndex].YGRBH);
         $("#jbjgid").val(currentList[currentIndex].JBJGID);
     };
-    $("#query").click(function () {
+    $("#query_person").click(function () {
         getStaff();
     });
 

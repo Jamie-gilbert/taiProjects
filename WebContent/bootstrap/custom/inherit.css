@@ -1,5 +1,5 @@
 .top_body .top_jsp{
-    height: 7%;
+    height: 45px;
     width:100% ;
     background:-moz-linear-gradient(bottom,#F7F7FF, #fff);
     border-bottom: 2px solid #9797FF;
@@ -15,7 +15,7 @@
     margin-top: 20px;
     margin-right: 20px;
     font-family: 楷体;
-    font-size: 15px;
+    font-size: 10px;
     color: black;
     font-weight: 900;
 }

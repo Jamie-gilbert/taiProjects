@@ -18,8 +18,9 @@
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../bootstrap/custom/department.css">
 </head>
-<body style="margin:0px;width: 100%">
-<div style="height: 300px;width: 100%;background-color: red">
+<body>
+<div>
+<div style="border-bottom:1px solid cornflowerblue;padding-bottom: 5px">
         <div class="row department">
             <div class="col-xs-3 col-md-4">
                 <div class="input-group">
@@ -35,12 +36,13 @@
             </div>
             <div class="col-xs-2 col-md-3">
                 <button class="btn btn-primary btn-sm" data-toggle="button" id="query">查询</button>
+                <button class="btn btn-primary btn-sm" id="resetBtn" type="reset">重置</button>
             </div>
         </div>
         <div class="container-fluid" id="unitButton">
             <a class="btn btn-primary btn-sm" href="/department/querybydwid.action?dwid=111">修改单位信息</a>
-            <a class="btn btn-primary btn-sm" href="department_bils.jsp?dwid=111">查询单据</a>
-            <a class="btn btn-primary btn-sm" href="dempartment_interest.jsp?dwid=111">单位计息</a>
+            <a class="btn btn-primary btn-sm" href="/department_bils.jsp?dwid=111">查询单据</a>
+            <a class="btn btn-primary btn-sm" href="/dempartment_interest.jsp?dwid=111">单位计息</a>
             <!--    <a class="btn btn-primary btn-sm" href="../staff_info.jsp?dwid=111">人员查询</a>-->
         </div>
 </div>
@@ -59,7 +61,10 @@
                 async: false,
                 dataType: "json",
                 success: function (data, status) {
-                    console.log(data)
+                    $('#dwbh').val(data.data[0].dwbh);
+                    $('#dwmc').val(data.data[0].dwmc);
+                    $('#dwbh').attr("readonly",true)
+                    $('#dwmc').attr("readonly",true)
                 },
                 error: function (err, status) {
                     console.log(err)
@@ -68,6 +73,14 @@
 
             });
         });
+    });
+
+    //重置按钮事件
+    $("#resetBtn").off().on("click",function(){
+        $("#dwmc").val("");
+        $("#dwbh").val("");
+        $('#dwbh').attr("readonly",false)
+        $('#dwmc').attr("readonly",false)
     });
 </script>
 </body>
