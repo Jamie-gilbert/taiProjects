@@ -19,8 +19,8 @@ SELECT A.* ,ROWNUM RN FROM
 		si3.orgn_reg
 		where
 		dwbh LIKE  concat(concat('%',#{dwbh}),'%')
-		and dwmc LIKE concat(concat('%',#{dwmc}),'%')
-		AND  dwmcpy LIKE concat(concat('%',#{dwmcpy}),'%')) A
+		and dwmc LIKE concat(concat('%',#{dwmc}),'%'))  A
+	<!--	AND  dwmcpy LIKE concat(concat('%',#{dwmcpy}),'%')) -->
 		WHERE ROWNUM &lt;= #{next}
 		) WHERE RN >=#{pre}
 
