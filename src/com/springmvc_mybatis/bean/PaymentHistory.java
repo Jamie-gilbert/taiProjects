@@ -32,6 +32,7 @@ public class PaymentHistory implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date JBSJ;
     private double LX;
+    private int XGBZ;
     private Staff staff;
 
     public String getJFLSID() {
@@ -218,11 +219,19 @@ public class PaymentHistory implements Serializable {
         this.LX = LX;
     }
 
-        public Staff getStaff() {
+    public Staff getStaff() {
         return staff;
     }
 
     public void setStaff(Staff staff) {
         this.staff = staff;
+    }
+
+    public int getXGBZ() {
+        return XGBZ;
+    }
+
+    public void setXGBZ(int XGBZ) {
+        this.XGBZ = XGBZ;
     }
 }

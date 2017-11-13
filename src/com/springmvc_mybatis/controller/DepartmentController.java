@@ -23,6 +23,12 @@ public class DepartmentController {
     @Autowired
     private DepartmentMapper departmentMapper;
 
+    /**
+     * 查询单位
+     * @param request
+     * @param response
+     * @throws Exception
+     */
     @RequestMapping("/querybykey")
     public void queryByKey(HttpServletRequest request, HttpServletResponse response) throws Exception {
 

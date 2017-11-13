@@ -23,7 +23,7 @@ SELECT A.* ,ROWNUM RN FROM
 		dwid =#{dwid}
 		and txsj >=#{txsj}
 		AND  djzt =#{djzt}) A
-		WHERE ROWNUM &lt;= #{next}
+		WHERE ROWNUM &lt; #{next}
 		) WHERE RN >=#{pre}
 	</select>
     <select id="queryCount" resultType="int">

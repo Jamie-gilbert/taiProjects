@@ -25,6 +25,7 @@
         <result column="JBR" property="JBR"/>
         <result column="JBSJ" property="JBSJ"/>
         <result column="LX" property="LX"/>
+        <result column="XGBZ" property="XGBZ"/>
 
         <association property="staff"
                      column="RYID"
@@ -39,7 +40,7 @@
 		(select DISTINCT RYID from
 		si3.aged_pay_his a
 		WHERE  a.DWID =${dwid} AND (a.LX=0 OR a.LX IS NULL )) A
-		WHERE ROWNUM &lt;= ${next}
+		WHERE ROWNUM &lt; ${next}
 		) WHERE RN >=${pre}
     </select>
     <select id="queryBillsWithInterest" resultMap="paymentHistoryResult">
@@ -48,13 +49,63 @@
         (select DISTINCT RYID from
         si3.aged_pay_his a
         WHERE  a.DWID =${dwid} AND (a.LX!=0 AND a.LX IS not NULL )) A
-        WHERE ROWNUM &lt;= ${next}
+        WHERE ROWNUM &lt; ${next}
         ) WHERE RN >=${pre}
     </select>
+
+    <select id="queryByRyid" resultMap="paymentHistoryResult">
+        SELECT * FROM (
+        SELECT A.*,ROWNUM RN FROM
+        (select * from
+        si3.aged_pay_his a
+        WHERE  a.RYID =${ryid}) A
+        WHERE ROWNUM &lt; ${next}
+        ) WHERE RN >=${pre}
+    </select>
+
+
+    <select id="queryCountByRyidWithDate" resultType="int">
+
+        select COUNT (*) from
+        si3.aged_pay_his a
+        WHERE  a.RYID =${ryid} AND a.QSNY>=${qsrq} AND a.QSNY&lt;=${zzrq}
+
+    </select>
+
+    <select id="queryByRyidWithDate" resultMap="paymentHistoryResult">
+        SELECT * FROM (
+        SELECT A.*,ROWNUM RN FROM
+        (select * from
+        si3.aged_pay_his a
+        WHERE  a.RYID =${ryid} and a.QSNY>= ${qsrq} AND a.QSNY&lt;=${zzrq}) A
+        WHERE ROWNUM &lt; ${next}
+        ) WHERE RN >=${pre}
+    </select>
+
+
     <select id="queryCountWithoutInterest" resultType="int">
     SELECT COUNT (DISTINCT RYID)
     FROM si3.aged_pay_his a
-		WHERE  a.DWID =${dwid} AND (a.LX=0 OR a.LX IS NULL ) AND a.JFLSID=(SELECT min(JFLSID) FROM si3.aged_pay_his WHERE RYID=a.RYID)
+		WHERE  a.DWID =${dwid} AND (a.LX=0 OR a.LX IS NULL )
+</select>
+
+
+    <select id="queryCountWithoutInterestByRyid" resultType="int">
+        SELECT COUNT (*)
+        FROM si3.aged_pay_his a
+            WHERE  a.RYID =${ryid} AND (a.LX=0 OR a.LX IS NULL )
+    </select>
+
+    <select id="queryCountWithInterestByRyid" resultType="int">
+        SELECT COUNT (*)
+        FROM si3.aged_pay_his a
+        WHERE  a.RYID =${ryid} AND (a.LX!=0 AND a.LX IS NOT NULL )
+    </select>
+
+    <select id="queryCountByRyid" resultType="int">
+ SELECT COUNT (*)
+    FROM si3.aged_pay_his a
+		WHERE  a.RYID =${ryid}
 </select>
 
     <select id="queryCountWithInterest" resultType="int">
@@ -65,10 +116,18 @@
     <select id="selectStaffBystaffRYID" parameterType="string" resultType="Staff">
         SELECT * FROM si3.per_reg WHERE RYID=#{RYID}
     </select>
-    <update id="modifyInterest">
-        UPDATE si3.aged_pay_his SET LX=${lx} WHERE  DWID=${dwid} AND
-        <foreach collection="ryids" index="index" item="ryid" open="(" separator="or" close=")">
-            RYID IN ${ryid}
+
+    <update id="modifyInterest" parameterType="java.util.List">
+        <foreach collection="list" open="begin" item="item" index="index" close=";end;" separator=";">
+            UPDATE si3.aged_pay_his SET LX=${item.LX} WHERE RYID=${item.RYID} AND QSNY=${item.QSNY } AND
+            DWID=${item.DWID}
+        </foreach>
+
+    </update>
+
+    <update id="modifyInterestByRyid" parameterType="java.util.List">
+        <foreach collection="list" open="begin" item="item" index="index" close=";end;" separator=";">
+            UPDATE si3.aged_pay_his SET LX=${item.LX} WHERE RYID=${item.RYID} AND QSNY=${item.QSNY }
         </foreach>
     </update>
 
@@ -78,4 +137,29 @@
             RYID IN ${ryid}
         </foreach>
     </update>
+
+    <update id="cancelInterestByRyid">
+        UPDATE si3.aged_pay_his SET LX=NULL WHERE RYID=${ryid}
+    </update>
+
+    <update id="modifyPaymentHistory" parameterType="java.util.List">
+        <foreach collection="list" open="begin" item="item" index="index" close=";end;" separator=";">
+            UPDATE si3.aged_pay_his SET QSNY=${item.QSNY}, ZZNY=${item.ZZNY}, DWJFJS=${item.DWJFJS}
+            , GRJFJS=${item.GRJFJS},DWJFE=${item.DWJFE},GRJFE=${item.GRJFE},DWJFZE=${item.DWJFZE}
+            ,GRJFZE=${item.GRJFZE},LX=${item.LX},XGBZ=${item.XGBZ}
+            WHERE RYID=${item.RYID} AND DWID=${item.DWID}
+            AND JFLSID=${item.JFLSID} AND ZDLSH=${item.ZDLSH}
+        </foreach>
+    </update>
+
+    <insert id="addPaymentHistory" parameterType="java.util.List">
+        <foreach collection="list" open="begin" item="item" index="index" close=";end;" separator=";">
+            INSERT INTO si3.aged_pay_his(JFLSID,RYID,RYDJID, DWID,XZBZ,FSRQ,JFRQ, QSNY, ZZNY,
+            DWJFJS, GRJFJS, DWJFBL, GRJFBL, DWJFE,GRJFE, DWJFZE, GRJFZE, ZDLSH,JBJGID,
+            BZ, JBR, JBSJ,LX, XGBZ )
+            VALUES (${JFLSID},${RYID},${RYDJID}, ${DWID},${XZBZ},${FSRQ},${JFRQ}, ${QSNY}, ${ZZNY},
+            ${DWJFJS}, ${GRJFJS}, ${DWJFBL}, ${GRJFBL}, ${DWJFE},${GRJFE}, ${DWJFZE}, ${GRJFZE}
+            , ${ZDLSH},${JBJGID},${BZ}, ${JBR}, ${JBSJ},${LX}, ${XGBZ})
+        </foreach>
+    </insert>
 </mapper>

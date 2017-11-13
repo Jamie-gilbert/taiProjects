@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springmvc_mybatis.mapper.InterestScaleMapper">
+    <resultMap type="InterestScale" id="interestScaleResult">
+        <result column="current_year" property="current_year"/>
+        <result column="interest_scale" property="interest_scale"/>
+    </resultMap>
+    <select id="queryInterestScale" resultType="float">
+		SELECT interest_scale FROM  be3.interest_scale_year WHERE current_year=${current_year}
+	</select>
+
+    <insert id="addInterestScale">
+        INSERT  INTO be3.interest_scale_year (current_year,interest_scale)
+         VALUES (${current_year},${interest_scale})
+    </insert>
+    <update id="modifyInterestScale">
+        UPDATE be3.interest_scale_year
+        SET interest_scale=${interest_scale}
+        WHERE current_year=${current_year}
+    </update>
+
+</mapper>
+        <!-- error ,,,,resultMap wrong to resultType... -->

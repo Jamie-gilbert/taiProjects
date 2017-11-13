@@ -39,7 +39,7 @@ SELECT * FROM (
 		si3.per_reg
 		where  cbrylb =#{cbrylb} AND  DWID =#{dwid}
 		) A
-		WHERE ROWNUM &lt;= #{next}
+		WHERE ROWNUM &lt; #{next}
 		) WHERE RN >=#{pre}
 
 </select>
@@ -77,10 +77,12 @@ SELECT * FROM (
         and XM LIKE concat(concat('%',#{XM}),'%')
         and SFZHM LIKE concat(concat('%',#{SFZHM}),'%')
         AND  XMPY LIKE concat(concat('%',#{XMPY}),'%')) A
-        WHERE ROWNUM &lt;= #{next}
+        WHERE ROWNUM &lt; #{next}
         ) WHERE RN >=#{pre}
+    </select>
 
-
+    <select id="queryStaffBySFZHM" resultType="java.lang.String" parameterType="java.lang.String">
+    SELECT RYID  FROM si3.per_reg WHERE SFZHM=#{sfzhm,jdbcType=VARCHAR}
     </select>
 
 

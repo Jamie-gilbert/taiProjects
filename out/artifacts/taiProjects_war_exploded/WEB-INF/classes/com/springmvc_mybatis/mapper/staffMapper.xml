@@ -31,7 +31,6 @@
         <result column="JBJGID" property="JBJGID"/>
         <result column="BZ" property="BZ"/>
         <result column="XMPY" property="XMPY"/>
-
     </resultMap>
     <select id="queryStaff" resultMap="staffResult">
 SELECT * FROM (
@@ -40,10 +39,16 @@ SELECT * FROM (
 		si3.per_reg
 		where  cbrylb =#{cbrylb} AND  DWID =#{dwid}
 		) A
-		WHERE ROWNUM &lt;= #{next}
+		WHERE ROWNUM &lt; #{next}
 		) WHERE RN >=#{pre}
 
 </select>
+    <select id="queryCount" resultType="int">
+        SELECT  count(*)
+        FROM 	si3.per_reg
+		where  cbrylb =#{cbrylb}
+		 AND  DWID =#{dwid}
+    </select>
     <insert id="saveStaff">
         INSERT INTO si3.per_reg(RYID,RYDJID,DWID,CZBM,YGRBH,GRBH,
         SFZHM,XM,CYM,XB,CSRQ,SFXZ,cbrylb,MZ,TBLB,TBLBMC,CJGZSJ,
@@ -53,5 +58,33 @@ SELECT * FROM (
         #{cjgzsj},#{jfly},#{hkxz},#{dz},#{dh},#{grsf},#{rwsj},#{drsj},
         #{zyyy},#{jyyy},#{jbjgid},#{bz},#{xmpy})
     </insert>
+
+    <update id="modifyStaff">
+        UPDATE si3.per_reg SET RYID=#{ryid},RYDJID=#{rydjid},CZBM=#{czbm},YGRBH=#{ygrbh},
+        SFZHM=#{sfzhm},XM=#{xm},CYM=#{cym},XB=#{xb},CSRQ=#{csrq},SFXZ=#{sfxz},cbrylb=#{cbrylb},
+        MZ=#{mz},TBLB=#{tblb},TBLBMC=#{tblbmc},CJGZSJ=#{cjgzsj},JFLY=#{jfly},
+        HKXZ=#{hkxz},DZ=#{dz},DH=#{dh},GRSF=#{grsf},RWSJ=#{rwsj},DRSJ=#{drsj},
+        ZYYY=#{zyyy},JYYY=#{jyyy},JBJGID=#{jbjgid},BZ=#{bz},XMPY=#{xmpy}  WHERE GRBH=#{grbh}
+
+    </update>
+
+    <select id="queryStaffInfo" resultMap="staffResult">
+        SELECT * FROM (
+        SELECT A.* ,ROWNUM RN FROM
+        (select * from
+        si3.per_reg
+        where GRBH LIKE  concat(concat('%',#{GRBH}),'%')
+        and XM LIKE concat(concat('%',#{XM}),'%')
+        and SFZHM LIKE concat(concat('%',#{SFZHM}),'%')
+        AND  XMPY LIKE concat(concat('%',#{XMPY}),'%')) A
+        WHERE ROWNUM &lt; #{next}
+        ) WHERE RN >=#{pre}
+    </select>
+
+    <select id="queryStaffBySFZHM" resultType="java.lang.String" parameterType="java.lang.String">
+    SELECT RYID  FROM si3.per_reg WHERE SFZHM=#{sfzhm,jdbcType=VARCHAR}
+    </select>
+
+
 </mapper>
-        <!-- error ,,,,resultMap wrong to resultType... -->
+        <!-- queryStaffInfo -->
