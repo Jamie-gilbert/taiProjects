@@ -32,18 +32,50 @@
 
         </association>
     </resultMap>
-
+    <!--select * from #T a where ID=(select min(ID) from #T where Name=a.Name)-->
     <select id="queryBillsWithoutInterest" resultMap="paymentHistoryResult">
        SELECT * FROM (
-        SELECT A.* ,ROWNUM RN FROM
-		(select * from
-		si3.aged_pay_his
-		WHERE  DWID =${dwid}) A
+        SELECT A.*,ROWNUM RN FROM
+		(select DISTINCT RYID from
+		si3.aged_pay_his a
+		WHERE  a.DWID =${dwid} AND (a.LX=0 OR a.LX IS NULL )) A
 		WHERE ROWNUM &lt;= ${next}
 		) WHERE RN >=${pre}
     </select>
+    <select id="queryBillsWithInterest" resultMap="paymentHistoryResult">
+        SELECT * FROM (
+        SELECT A.*,ROWNUM RN FROM
+        (select DISTINCT RYID from
+        si3.aged_pay_his a
+        WHERE  a.DWID =${dwid} AND (a.LX!=0 AND a.LX IS not NULL )) A
+        WHERE ROWNUM &lt;= ${next}
+        ) WHERE RN >=${pre}
+    </select>
+    <select id="queryCountWithoutInterest" resultType="int">
+    SELECT COUNT (DISTINCT RYID)
+    FROM si3.aged_pay_his a
+		WHERE  a.DWID =${dwid} AND (a.LX=0 OR a.LX IS NULL ) AND a.JFLSID=(SELECT min(JFLSID) FROM si3.aged_pay_his WHERE RYID=a.RYID)
+</select>
 
+    <select id="queryCountWithInterest" resultType="int">
+        SELECT COUNT (DISTINCT RYID)
+        FROM si3.aged_pay_his a
+        WHERE  a.DWID =${dwid} AND (a.LX!=0 AND a.LX IS not NULL )
+    </select>
     <select id="selectStaffBystaffRYID" parameterType="string" resultType="Staff">
         SELECT * FROM si3.per_reg WHERE RYID=#{RYID}
     </select>
+    <update id="modifyInterest">
+        UPDATE si3.aged_pay_his SET LX=${lx} WHERE  DWID=${dwid} AND
+        <foreach collection="ryids" index="index" item="ryid" open="(" separator="or" close=")">
+            RYID IN ${ryid}
+        </foreach>
+    </update>
+
+    <update id="clearInterest">
+        UPDATE si3.aged_pay_his SET LX=NULL WHERE DWID=${dwid} AND
+        <foreach collection="ryids" index="index" item="ryid" open="(" separator="or" close=")">
+            RYID IN ${ryid}
+        </foreach>
+    </update>
 </mapper>

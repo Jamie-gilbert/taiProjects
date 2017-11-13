@@ -31,9 +31,10 @@ public class StaffController {
         response.setCharacterEncoding("UTF-8");
 
         String dwid = request.getParameter("dwid");
+        String type = request.getParameter("type");
         String page = request.getParameter("pageNumber");
         String count = request.getParameter("pageSize");
-        String type = request.getParameter("type");
+
         int countNum = Integer.parseInt(count);
         int pageNum = Integer.parseInt(page);
 //        String pre = String.valueOf(1 + (pageNum - 1) * countNum);
@@ -57,6 +58,7 @@ public class StaffController {
         out.flush();
         out.close();
     }
+
 
     @RequestMapping("/saveStaff")
     public void saveStaff(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -181,8 +183,9 @@ public class StaffController {
         String grsfzhm = request.getParameter("grsfzhm");
         String grbh = request.getParameter("grbh");
         String grxm = request.getParameter("grxm");
-        String page = request.getParameter("page");
-        String count = request.getParameter("count");
+        String page = request.getParameter("pageNumber");
+        String count = request.getParameter("pageSize");
+
 
         String xmpy = "";
         if (grxm != null) {
@@ -201,10 +204,10 @@ public class StaffController {
         }
         int countNum = Integer.parseInt(count);
         int pageNum = Integer.parseInt(page);
-        String pre = String.valueOf(1 + (pageNum - 1) * countNum);
-        String next = String.valueOf(pageNum * countNum);
+//        String pre = String.valueOf(1 + (pageNum - 1) * countNum);
+//        String next = String.valueOf(pageNum * countNum);
         List<Staff> staffList = staffMapper
-                .queryStaffInfo(grbh, grsfzhm, grxm, xmpy, pre, next);
+                .queryStaffInfo(grbh, grsfzhm, grxm, xmpy,  page, String.valueOf(countNum+pageNum));
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("errorCode", "0");

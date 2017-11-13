@@ -45,13 +45,14 @@ public class DepartmentController {
         if (dwbh == null) {
             dwbh = "";
         }
-        String page = request.getParameter("page");
-        String count = request.getParameter("count");
-        int pageNum = Integer.parseInt(page);
+        String page = request.getParameter("pageNumber");
+        String count = request.getParameter("pageSize");
+
         int countNum = Integer.parseInt(count);
-        String pre = String.valueOf(1 + (pageNum - 1) * countNum);
-        String next = String.valueOf(pageNum * countNum);
-        List<Department> departments = departmentMapper.queryByKey(dwbh, dwmc, dwmcpy, pre, next);
+        int pageNum = Integer.parseInt(page);
+//        String pre = String.valueOf(1 + (pageNum - 1) * countNum);
+//        String next = String.valueOf(pageNum * countNum);
+        List<Department> departments = departmentMapper.queryByKey(dwbh, dwmc, dwmcpy, page, String.valueOf(countNum+pageNum));
 
         PrintWriter out = null;
         out = response.getWriter();
