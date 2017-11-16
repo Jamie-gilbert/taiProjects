@@ -46,13 +46,26 @@
     <link href="/webTree/assets/css/main-min.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
+<div class="container-fluid">
 
+    <a href="/department/querybydwid.action?dwid=111">修改单位信息(入参：dwid，这里先写死(111))</a>
+    <a href="../department_bils.jsp?dwid=111">查询单据(入参：dwid，这里先写死(111))</a>
+    <a href="../staff_reback_payment.jsp">人员退费</a>
+    <a href="../paymentHistory/interestPaymentHistory.action?dwid=100000000000175&pageNumber=1&pageSize=10">单位计息(入参：dwid，这里先写死(111))</a>
+
+
+    <a href="../paymentHistory/clearPaymentHistory.action?dwid=100000000000042&pageNumber=1&pageSize=10">撤销单位计息(入参：dwid，这里先写死(111))</a>
+
+    <a href="../staff_info.jsp?dwid=111">人员操作 查询人员信息</a>
+</div>
 <div class="header">
     <div class="dl-log"><span>当前系统时间:</span>
         <span id="clock"></span>
         欢迎您，<span class="dl-log-user">root</span><a href="/index.jsp" title="退出系统" class="dl-log-quit">[退出]</a>
     </div>
 </div>
+
+
 <div class="content">
     <div class="dl-main-nav">
         <div class="dl-inform"><div class="dl-inform-title"><s class="dl-inform-icon dl-up"></s></div></div>
@@ -68,18 +81,7 @@
 </div>
 
 
-<div class="container-fluid">
 
-    <a href="/department/querybydwid.action?dwid=111">修改单位信息(入参：dwid，这里先写死(111))</a>
-    <a href="../department_bils.jsp?dwid=111">查询单据(入参：dwid，这里先写死(111))</a>
-    <a href="../staff_reback_payment.jsp">人员退费</a>
-    <a href="../paymentHistory/interestPaymentHistory.action?dwid=100000000000042&pageNumber=1&pageSize=10">单位计息(入参：dwid，这里先写死(111))</a>
-
-
-    <a href="../paymentHistory/clearPaymentHistory.action?dwid=100000000000042&pageNumber=1&pageSize=10">撤销单位计息(入参：dwid，这里先写死(111))</a>
-
-    <a href="../staff_info.jsp?dwid=111">人员操作 查询人员信息</a>
-</div>
 
 <script type="text/javascript" src="/webTree/assets/js/jquery-1.8.1.min.js"></script>
 <script type="text/javascript" src="/webTree/assets/js/bui-min.js"></script>

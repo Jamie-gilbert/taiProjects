@@ -32,7 +32,11 @@ SELECT A.* ,ROWNUM RN FROM
 		and txsj >=#{txsj}
 		AND  djzt =#{djzt}
     </select>
-    <select id="queryBillsWithoutInterest" resultMap="departmentBillResult">
 
-    </select>
+    <insert id="addRebackBill">
+        insert into si3.bill_genl
+        (zdlsh,jbjgid,dwid,djzt,djlb,txr,txsj,qrr,qrsj,zje,ryid)
+        values(${zdlsh},${jbjgid},${dwid},0,'SI1002',${txr},
+       SYSDATE,${qrr},SYSDATE,${zje},${ryid})
+    </insert>
 </mapper>

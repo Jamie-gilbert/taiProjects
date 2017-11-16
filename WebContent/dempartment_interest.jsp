@@ -1,6 +1,6 @@
 <%--
   Created by IntelliJ IDEA.
-  User: Administrator
+  User: ggg
   Date: 2017/10/25
   Time: 21:57
   To change this template use File | Settings | File Templates.
@@ -13,8 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>单位计息</title>
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
-    <script src="../js/jquery.js"></script>
-    <script src="../js/bootstrap.js"></script>
+
 </head>
 <body>
 <div class="container-fluid">
@@ -23,26 +22,36 @@
         <div class="col-xs-8 col-md-8">
         </div>
         <div class="col-xs-4 col-md-4">
-            <button id="interest" class="btn btn-primary" data-toggle="button">计息</button>
+            <button id="interest" class="btn btn-primary" data-toggle="button" onclick="queryNeedInterest()">计息</button>
         </div>
+
     </div>
-
+    <div class="row">${requestScope.data}</div>
 </div>
-<script type="text/javascript">
-    var type = "";
 
-    function queryBils() {
-        var time = $("#time").val();
-        var page = 1;
-        var count = 10;
-        var dwid =<%=request.getParameter("dwid")%>;
+
+<script src="../js/jquery.js"></script>
+<script src="../js/bootstrap.js"></script>
+<script src="../js/dialog.js"></script>
+<script type="text/javascript">
+    var data = eval(${requestScope.data})
+    var all = data.total;
+
+    function interest() {
+        var dwid = "100000000000134";
+        var grjfe = "18.8";
+        var infos = [{"qsny": "201001", "payment": grjfe, "ryid": "11100000000000008807","flag":"isUpate"}
+            , {"qsny": "201002", "payment": grjfe, "ryid": "11100000000000008807","flag":"isUpate"}
+            , {"qsny": "201003", "payment": grjfe, "ryid": "11100000000000008807","flag":"isUpate"}
+            , {"qsny": "201004", "payment": grjfe, "ryid": "11100000000000008807","flag":"isUpate"}
+            , {"qsny": "201005", "payment": grjfe, "ryid": "11100000000000008807","flag":"isUpate"}];
+
         $.ajax({
             type: "POST",
-            url: "departmentBills/querydepartmentbils.action",
+            url: "../paymentHistory/interest.action",
             data: {
-                "time": time, "page": page,
-                "count": count, "type": type,
-                "dwid": dwid
+                "dwid": dwid,
+                "infos": JSON.stringify(infos)
             },
             dataType: "JSON",
             async: false,
@@ -55,25 +64,27 @@
         });
     }
 
-    $("#yqrdj").click(function () {
-        type = "1";
-        queryBils();
-    });
-    $("#wqrdj").click(function () {
-        type = "0";
-        queryBils();
-    });
-    $("#yzfdj").click(function () {
-        type = "2";
-        queryBils();
-    });
-    $("#ycxdj").click(function () {
-        type = "3";
-        queryBils();
-    });
-    $("#query").click(function () {
-        queryBils();
-    });
+    function queryNeedInterest() {
+        if (all > 0) {
+            Confirm({
+                msg: '你确定计息吗',
+                title: "提示",
+                onOk: function () {
+
+                    interest();
+                },
+                onCancel: function () {
+
+                }
+            })
+        } else {
+            Alert({
+                msg: '该单位已经计息',
+                title: "提示"
+            })
+        }
+    };
+
 
 </script>
 </body>
