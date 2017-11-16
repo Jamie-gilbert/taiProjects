@@ -96,6 +96,14 @@
             WHERE  a.RYID =${ryid} AND (a.LX=0 OR a.LX IS NULL )
     </select>
 
+    <select id="queryCountWithoutInterestByRyidWithDate" resultType="int">
+        SELECT COUNT (*)
+        FROM si3.aged_pay_his a
+        WHERE  a.RYID =${ryid} AND (a.LX=0 OR a.LX IS NULL )
+        AND a.QSNY>=${qsrq} AND a.QSNY&lt;=${zzrq}
+    </select>
+
+
     <select id="queryCountWithInterestByRyid" resultType="int">
         SELECT COUNT (*)
         FROM si3.aged_pay_his a
@@ -162,4 +170,16 @@
             , ${ZDLSH},${JBJGID},${BZ}, ${JBR}, ${JBSJ},${LX}, ${XGBZ})
         </foreach>
     </insert>
+    <update id="rebackPaymentByRyId">
+        UPDATE  si3.aged_pay_his
+        SET GRJFE=NULL ,LX=NULL ,XGBZ=2
+        WHERE RYID=${ryid} AND QSNY>=${qsrq} AND QSNY&lt;=${zzrq}
+    </update>
+    <select id="queryAmountByRyidWithDate" resultType="float">
+       select  CONCAT(sum(nvl(a.GRJFE, 0)),sum(nvl(a.LX, 0)))
+        from si3.aged_pay_his a
+        where a.RYID=${ryid}
+        and a.QSNY &lt;= ${zzrq}
+        and a.QSNY >= ${qsrq}
+    </select>
 </mapper>

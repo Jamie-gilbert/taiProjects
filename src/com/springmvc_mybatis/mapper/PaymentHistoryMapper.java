@@ -37,6 +37,7 @@ public interface PaymentHistoryMapper {
 
     int queryCountByRyid(@Param(value = "ryid") String ryid);
 
+
     void modifyInterest(@Param(value = "list") ArrayList<PaymentHistory> list);
 
     void modifyPaymentHistory(@Param(value = "list") ArrayList<PaymentHistory> list);
@@ -50,6 +51,20 @@ public interface PaymentHistoryMapper {
                        @Param(value = "ryids") List<String> ryids);
 
     int queryCountWithoutInterestByRyid(@Param(value = "ryid") String ryid);
+
+
+    int queryCountWithoutInterestByRyidWithDate(@Param(value = "ryid") String ryid,
+                                                @Param(value = "qsrq") String qsrq,
+                                                @Param(value = "zzrq") String zzrq);
+
+    int rebackPaymentByRyId(@Param(value = "ryid") String ryid,
+                            @Param(value = "qsrq") String qsrq,
+                            @Param(value = "zzrq") String zzrq);
+
+    float queryAmountByRyidWithDate(@Param(value = "ryid") String ryid,
+                                    @Param(value = "qsrq") String qsrq,
+                                    @Param(value = "zzrq") String zzrq);
+
 
     int queryCountWithInterestByRyid(@Param(value = "ryid") String ryid);
 

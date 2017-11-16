@@ -2,8 +2,10 @@ package com.springmvc_mybatis.controller;
 
 import com.springmvc_mybatis.bean.InterestScale;
 import com.springmvc_mybatis.bean.PaymentHistory;
+import com.springmvc_mybatis.bean.Staff;
 import com.springmvc_mybatis.json.JSONArray;
 import com.springmvc_mybatis.json.JSONObject;
+import com.springmvc_mybatis.mapper.DepartmentBillMapper;
 import com.springmvc_mybatis.mapper.InterestScaleMapper;
 import com.springmvc_mybatis.mapper.PaymentHistoryMapper;
 import com.springmvc_mybatis.mapper.StaffMapper;
@@ -33,6 +35,8 @@ public class PaymentHistoryController {
     private InterestScaleMapper interestScaleMapper;
     @Autowired
     private StaffMapper staffMapper;
+    @Autowired
+    private DepartmentBillMapper departmentBillMapper;
 
     /**
      * 根据单位id查询缴费历史
@@ -396,8 +400,8 @@ public class PaymentHistoryController {
         String sfzhm = request.getParameter("sfzhm");
         String qsrq = request.getParameter("qsrq");
         String zzrq = request.getParameter("zzrq");
-        qsrq=qsrq.replace("-","").trim();
-        zzrq=zzrq.replace("-","").trim();
+        qsrq = qsrq.replace("-", "").trim();
+        zzrq = zzrq.replace("-", "").trim();
         int countNum = Integer.parseInt(count);
         int pageNum = Integer.parseInt(page);
         String ryid = staffMapper.queryStaffBySFZHM(sfzhm);
@@ -420,6 +424,7 @@ public class PaymentHistoryController {
 
         }
         jsonObject.put("rows", jsonArray);
+        jsonObject.put("ryid", ryid);
         Writer writer = response.getWriter();
         writer.write(jsonObject.toString());
         writer.flush();
@@ -473,6 +478,77 @@ public class PaymentHistoryController {
             jsonObject.put("needInterest", false);
         }
 
+        Writer writer = response.getWriter();
+        writer.write(jsonObject.toString());
+        writer.flush();
+        writer.close();
+    }
+
+    /**
+     * 查询某个人员是否存在没有计息的缴费记录
+     *
+     * @param request
+     * @param response
+     * @throws IOException
+     */
+    @RequestMapping("/queryCountWithoutInterestByRyidWithDate")
+    public void queryCountWithoutInterestByRyidWithDate(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        //设置页面不缓存
+        response.setContentType("application/json");
+        response.setHeader("Pragma", "No-cache");
+        response.setHeader("Cache-Control", "no-cache");
+        response.setCharacterEncoding("UTF-8");
+        String ryid = request.getParameter("ryid");
+        String qsrq = request.getParameter("qsrq");
+        String zzrq = request.getParameter("zzrq");
+        qsrq = qsrq.replace("-", "").trim();
+        zzrq = zzrq.replace("-", "").trim();
+        int num = paymentHistoryMapper.queryCountWithoutInterestByRyidWithDate(ryid, qsrq, zzrq);
+        JSONObject jsonObject = new JSONObject();
+        if (num > 0) {
+            jsonObject.put("needInterest", true);
+        } else {
+            jsonObject.put("needInterest", false);
+        }
+
+        Writer writer = response.getWriter();
+        writer.write(jsonObject.toString());
+        writer.flush();
+        writer.close();
+    }
+
+    /**
+     * 根据人员id和缴费开始的时间段退费
+     *
+     * @param request
+     * @param response
+     * @throws IOException
+     */
+    @RequestMapping("/rebackPaymentByRyIdWithDate")
+    public void rebackPaymentByRyIdWithDate(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        //设置页面不缓存
+        response.setContentType("application/json");
+        response.setHeader("Pragma", "No-cache");
+        response.setHeader("Cache-Control", "no-cache");
+        response.setCharacterEncoding("UTF-8");
+        String ryid = request.getParameter("ryid");
+        String qsrq = request.getParameter("qsrq");
+        String zzrq = request.getParameter("zzrq");
+        qsrq = qsrq.replace("-", "").trim();
+        zzrq = zzrq.replace("-", "").trim();
+        Staff staff = staffMapper.queryStaffByRyid(ryid);
+        float amount = paymentHistoryMapper.queryAmountByRyidWithDate(ryid, qsrq, zzrq);
+        String txr = request.getParameter("txr");
+        Date date = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM");
+        String dateStr = simpleDateFormat.format(date);
+        String zdlsh="111111";
+        departmentBillMapper.addRebackBill(zdlsh,staff.getDWID()
+                , staff.getJBJGID(), txr, dateStr, txr, dateStr, amount, ryid);
+        paymentHistoryMapper.rebackPaymentByRyId(ryid, qsrq, zzrq);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("errorCode", 0);
+        jsonObject.put("errorText", "");
         Writer writer = response.getWriter();
         writer.write(jsonObject.toString());
         writer.flush();

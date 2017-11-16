@@ -85,6 +85,7 @@ SELECT * FROM (
     SELECT RYID  FROM si3.per_reg WHERE SFZHM=#{sfzhm,jdbcType=VARCHAR}
     </select>
 
-
+    <select id="queryStaffByRyid" resultMap="staffResult">
+        SELECT *  FROM si3.per_reg WHERE RYID=${ryid}
+    </select>
 </mapper>
-        <!-- queryStaffInfo -->

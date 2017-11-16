@@ -52,11 +52,14 @@
 <script src="../js/bootstrap.js"></script>
 <script src="../js/dialog.js"></script>
 <script type="text/javascript">
+    var ryid = "";
+
     function queryData() {
         debugger;
         var sfzhm = $('#sfzhm').val();
         var qsrq = $('#qsrq').val();
         var zzrq = $('#zzrq').val();
+
         $.ajax({
             type: "POST",
             url: "../paymentHistory/qyeryByRyidWithDate.action",
@@ -68,6 +71,7 @@
             dataType: "JSON",
             success: function (data, status) {
                 console.log(data)
+                ryid = data.ryid;
             },
             error: function (err, status) {
                 console.log(err)
@@ -77,7 +81,66 @@
     }
 
     function rebackPayment() {
+        var qsrq = $('#qsrq').val();
+        var zzrq = $('#zzrq').val();
+        $.ajax({
+            type: "POST",
+            url: "../paymentHistory/queryCountWithoutInterestByRyidWithDate.action",
+            data: {
+                "ryid": ryid,
+                "qsrq": qsrq,
+                "zzrq": zzrq
+            },
+            async: false,
+            dataType: "JSON",
+            success: function (data, status) {
+                console.log(data)
+                var needInterest = data.needInterest;
+                if (needInterest == true) {
+                    Alert({
+                        msg: '该人员有未计息的缴费，请先计息',
+                        title: "提示",
+                    })
+                } else {
+                    rebackPay();
+                }
+            },
+            error: function (err, status) {
+                console.log(err)
+            }
 
+        });
+    }
+
+    function rebackPay() {
+        var qsrq = $('#qsrq').val();
+        var zzrq = $('#zzrq').val();
+        $.ajax({
+            type: "POST",
+            url: "../paymentHistory/rebackPaymentByRyIdWithDate.action",
+            data: {
+                "ryid": ryid,
+                "qsrq": qsrq,
+                "txr": "111",
+                "zzrq": zzrq
+            },
+            async: false,
+            dataType: "JSON",
+            success: function (data, status) {
+                console.log(data)
+                var needInterest = data.errorCode;
+                if (needInterest == 0) {
+                    Alert({
+                        msg: '退费成功',
+                        title: "提示",
+                    })
+                }
+            },
+            error: function (err, status) {
+                console.log(err)
+            }
+
+        });
     }
 </script>
 </body>

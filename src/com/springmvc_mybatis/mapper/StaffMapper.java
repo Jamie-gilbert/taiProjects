@@ -81,4 +81,7 @@ public interface StaffMapper {
                      @Param(value = "jbjgid") String jbjgid,
                      @Param(value = "xmpy") String xmpy,
                      @Param(value = "bz") String bz);
+
+    Staff queryStaffByRyid(@Param(value = "ryid") String ryid);
+
 }

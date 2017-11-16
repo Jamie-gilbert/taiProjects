@@ -13,38 +13,36 @@
 
     </resultMap>
     <select id="queryByKey" resultMap="departmentResult">
-SELECT * FROM (
-SELECT A.* ,ROWNUM RN FROM
-		(select * from
-		si3.orgn_reg
-		where
-		dwbh LIKE  concat(concat('%',#{dwbh}),'%')
-		and dwmc LIKE concat(concat('%',#{dwmc}),'%'))  A
-	<!--	AND  dwmcpy LIKE concat(concat('%',#{dwmcpy}),'%')) -->
-		WHERE ROWNUM &lt; #{next}
-		) WHERE RN >=#{pre}
+        SELECT * FROM (
+        SELECT A.* ,ROWNUM RN FROM
+        (select * from
+        si3.orgn_reg
+        where
+        dwbh LIKE concat(concat('%',#{dwbh}),'%')
+        and dwmc LIKE concat(concat('%',#{dwmc}),'%')) A
 
+        WHERE ROWNUM &lt; #{next}
+        ) WHERE RN >=#{pre}
 
-	</select>
-
+    </select>
+    <select id="queryCountByKey" resultType="int">
+        select COUNT (*) from
+        si3.orgn_reg
+        where
+        dwbh LIKE concat(concat('%',#{dwbh}),'%')
+        and dwmc LIKE concat(concat('%',#{dwmc}),'%')
+    </select>
     <select id="queryByDWID" resultMap="departmentResult">
         select * from
         si3.orgn_reg
         where
         dwid =#{dwid}
     </select>
-
-    <select id="queryCountByKey" resultType="int">
-    select COUNT (*) from
-    si3.orgn_reg
-    where
-    dwbh LIKE concat(concat('%',#{dwbh}),'%')
-    and dwmc LIKE concat(concat('%',#{dwmc}),'%')
-    </select>
-
     <update id="modifyDepartment">
         UPDATE  si3.orgn_reg SET dwmc=#{dwmc},tblb=#{tblb},tblbmc=#{tblbmc}
         WHERE dwid=#{dwid}
     </update>
+
+
 </mapper>
         <!-- error ,,,,resultMap wrong to resultType... -->

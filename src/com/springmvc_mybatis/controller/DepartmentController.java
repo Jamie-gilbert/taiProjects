@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 
 @Controller
@@ -27,6 +27,7 @@ public class DepartmentController {
 
     /**
      * 查询单位
+     *
      * @param request
      * @param response
      * @throws Exception
@@ -55,11 +56,8 @@ public class DepartmentController {
         }
         String page = request.getParameter("pageNumber");
         String count = request.getParameter("pageSize");
-
-//        String pre = String.valueOf(1 + (pageNum - 1) * countNum);
-//        String next = String.valueOf(pageNum * countNum);
         List<Department> departments = new ArrayList<>();
-        int num = departmentMapper.queryCountByKey(dwbh,dwmc);
+        int num = departmentMapper.queryCountByKey(dwbh, dwmc, dwmcpy);
         if (num > 0) {
             int countNum = Integer.parseInt(count);
             int pageNum = Integer.parseInt(page);
@@ -79,7 +77,6 @@ public class DepartmentController {
         out.write(jsonObject.toString());
         out.flush();
         out.close();
-
     }
 
     @RequestMapping("/modifydepartment")
