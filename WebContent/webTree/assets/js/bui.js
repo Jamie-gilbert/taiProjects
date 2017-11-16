@@ -21019,7 +21019,7 @@ define('bui/form/remote',['bui/common'],function(require) {
      */
     loadingTpl : {
       view : true,
-      value : '<img src="http://img02.taobaocdn.com/tps/i2/T1NU8nXCVcXXaHNz_X-16-16.gif" alt="loading"/>'
+      value : '<img src="/webTree/Images/picture/T1NU8nXCVcXXaHNz_X-16-16.gif" alt="loading"/>'
     },
     /**
      * \u662f\u5426\u6b63\u5728\u7b49\u5f85\u5f02\u6b65\u8bf7\u6c42\u7ed3\u679c

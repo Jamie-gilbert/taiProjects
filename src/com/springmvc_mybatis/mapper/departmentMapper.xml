@@ -24,14 +24,9 @@
         WHERE ROWNUM &lt; #{next}
         ) WHERE RN >=#{pre}
 
-    </select>
-    <select id="queryCountByKey" resultType="int">
-        select COUNT (*) from
-        si3.orgn_reg
-        where
-        dwbh LIKE concat(concat('%',#{dwbh}),'%')
-        and dwmc LIKE concat(concat('%',#{dwmc}),'%')
-    </select>
+
+	</select>
+
     <select id="queryByDWID" resultMap="departmentResult">
         select * from
         si3.orgn_reg
