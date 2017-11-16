@@ -37,7 +37,7 @@
 
 </body>  -->
 <head>
-    <title>岱岳区养老管理系统</title>
+    <title>DEMO</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -50,7 +50,7 @@
 <div class="header">
     <div class="dl-log"><span>当前系统时间:</span>
         <span id="clock"></span>
-        欢迎您，<span class="dl-log-user">root</span><a href="/index.jsp" title="退出系统" class="dl-log-quit">[退出]</a>
+        欢迎您，<span class="dl-log-user">${user.yhxm}</span><a href="/index.jsp" title="退出系统" class="dl-log-quit">[退出]</a>
     </div>
 </div>
 <div class="content">
@@ -66,21 +66,6 @@
 
     </ul>
 </div>
-
-
-<div class="container-fluid">
-
-    <a href="/department/querybydwid.action?dwid=111">修改单位信息(入参：dwid，这里先写死(111))</a>
-    <a href="../department_bils.jsp?dwid=111">查询单据(入参：dwid，这里先写死(111))</a>
-    <a href="../staff_reback_payment.jsp">人员退费</a>
-    <a href="../paymentHistory/interestPaymentHistory.action?dwid=100000000000042&pageNumber=1&pageSize=10">单位计息(入参：dwid，这里先写死(111))</a>
-
-
-    <a href="../paymentHistory/clearPaymentHistory.action?dwid=100000000000042&pageNumber=1&pageSize=10">撤销单位计息(入参：dwid，这里先写死(111))</a>
-
-    <a href="../staff_info.jsp?dwid=111">人员操作 查询人员信息</a>
-</div>
-
 <script type="text/javascript" src="/webTree/assets/js/jquery-1.8.1.min.js"></script>
 <script type="text/javascript" src="/webTree/assets/js/bui-min.js"></script>
 <script type="text/javascript" src="/webTree/assets/js/common/main-min.js"></script>
@@ -88,14 +73,16 @@
 <script>
     BUI.use('common/main',function(){
         var config = [{
-            id:'1',
+            id:'unitWork',
+            collapsed:false, //默认左侧菜单收缩
+            homePage:'unitQuery', //默认打开的主页
             menu:[{
                 text:'单位业务',
                 items:[
-                    {id:'2',text:'单位查询',href:'/unit.jsp'},
-                    {id:'3',text:'单位人员',href:'/staff_info.jsp'},
-                    {id:'4',text:'单据管理',href:'/department_bils.jsp'},
-                    {id:'5',text:'单位计息',href:'/dempartment_interest.jsp'}
+                    {id:'unitQuery',text:'单位查询',href:'/unit.jsp'},
+                    {id:'unitPerson',text:'单位人员',href:'/department_staff.jsp'},
+                    {id:'unitBill',text:'单据管理',href:'/department_bils.jsp'},
+                    {id:'unitInter',text:'单位计息',href:'/dempartment_interest.jsp'}
                     ]
             },{
                 text:'单位业务',
@@ -113,11 +100,26 @@
                     {id:'4',text:'用户管理',href:'User/index.html'},
                     {id:'5',text:'菜单管理',href:'Menu/index.html'}
                 ]
-            }]},
-                    {id:'7',menu:[{text:'个人业务',
-            items:[{id:'9',text:'查询业务',href:'Node/index.html'}]}]},
-            {id:'10',menu:[{text:'系统管理',
-                items:[{id:'11',text:'参数设置',href:'Node/index.html'}]}]}];
+            }]
+        }, {
+                id:'personWork',
+                homePage:'personQuery',
+                menu:[{text:'个人业务',
+                items:[
+                {id:'personQuery',text:'查询业务',href:'/staff_info.jsp'}
+                ]
+            }]
+            }, {
+                id:'systemSet',
+                homePage:'parameter',
+                menu:[{text:'系统管理',
+                items:[
+                    {id:'parameter',text:'参数设置',href:'/index.jsp'},
+                    {id:'user',text:'添加用户',href:'/register.jsp'}
+                 ]
+             }]
+        }];
+
         new PageUtil.MainPage({
             modulesConfig : config
         });

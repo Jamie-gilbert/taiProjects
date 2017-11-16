@@ -1,6 +1,7 @@
 package com.springmvc_mybatis.controller;
 
 import com.springmvc_mybatis.bean.Department;
+import com.springmvc_mybatis.json.JSONArray;
 import com.springmvc_mybatis.json.JSONObject;
 import com.springmvc_mybatis.mapper.DepartmentMapper;
 import com.springmvc_mybatis.utils.PinYinUtil;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.ArrayList;
 
 
 @Controller
@@ -54,21 +56,30 @@ public class DepartmentController {
         String page = request.getParameter("pageNumber");
         String count = request.getParameter("pageSize");
 
-        int countNum = Integer.parseInt(count);
-        int pageNum = Integer.parseInt(page);
 //        String pre = String.valueOf(1 + (pageNum - 1) * countNum);
 //        String next = String.valueOf(pageNum * countNum);
-        List<Department> departments = departmentMapper.queryByKey(dwbh, dwmc, dwmcpy, page, String.valueOf(countNum+pageNum));
+        List<Department> departments = new ArrayList<>();
+        int num = departmentMapper.queryCountByKey(dwbh,dwmc);
+        if (num > 0) {
+            int countNum = Integer.parseInt(count);
+            int pageNum = Integer.parseInt(page);
+            departments = departmentMapper.queryByKey(dwbh, dwmc, dwmcpy, page, String.valueOf(countNum + pageNum));
+        }
 
-        PrintWriter out = null;
-        out = response.getWriter();
+        JSONArray jsonArray = new JSONArray();
+        for (Department department : departments) {
+            JSONObject object = new JSONObject(department);
+            jsonArray.put(object); }
+
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("errorCode", "0");
-        jsonObject.put("errorText", "");
-        jsonObject.put("data", departments);
+        jsonObject.put("total", num);
+        jsonObject.put("rows", jsonArray);
+        PrintWriter out = response.getWriter();
+
         out.write(jsonObject.toString());
         out.flush();
         out.close();
+
     }
 
     @RequestMapping("/modifydepartment")

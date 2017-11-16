@@ -194,13 +194,13 @@
     });
 
     $("#retiree").click(function () {
-        type = "A0C";
+        types = "A0C";
         per_table();
     });
 
     $("#unemployed").click(function () {
 
-        type = "A0F";
+        types = "A0F";
         per_table();
     });
 
@@ -222,6 +222,7 @@
     }*/
 
    function per_table() {
+       $('#per_table').bootstrapTable('destroy');
        $('#per_table').bootstrapTable({
            url: '../staff/queryStaff.action',         //请求后台的URL（*）
            method: 'get',                      //请求方式（*）
@@ -243,7 +244,7 @@
            sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
            pageNumber: 1,                       //初始化加载第一页，默认第一页
            pageSize: 10,                       //每页的记录行数（*）
-           pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
+           pageList: [10, 25, 50, 100,1000],        //可供选择的每页的行数（*）
            clickToSelect:true,
            showExport: true,                     //是否显示导出
            exportDataType: "all",              //basic', 'all', 'selected'.
@@ -274,7 +275,7 @@
                title: '操作',
                align: 'center',
                width: 150,
-               formatter: operateFormatter,
+               formatter: operateFormatter
 
            }]
        });

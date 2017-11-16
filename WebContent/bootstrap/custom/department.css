@@ -11,13 +11,6 @@ body #unitButton {
     margin-top: 13px;
 }
 
-.nav-header.collapsed > span.glyphicon-chevron-toggle:before {
-    content: "\e114";
-}
-.nav-header > span.glyphicon-chevron-toggle:before {
-    content: "\e113";
-}
-
 .secondmenu a {
     font-size: 12px;
     color: #4A515B;

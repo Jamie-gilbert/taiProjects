@@ -39,7 +39,7 @@
         <button class="btn btn-primary" data-toggle="button" id="modify">修 改</button>
     </div>
     <div class="row">
-        <a href="../department_staff.jsp?dwid=100000000000271">人员列表(单位id写死 333)</a>
+        <a href="../department_staff.jsp?dwid=100000000000148">人员列表(单位id写死 333)</a>
     </div>
 </div>
 <script src="../js/jquery.js"></script>

@@ -17,6 +17,10 @@ public interface DepartmentMapper {
                                 @Param(value = "pre") String pre,
                                 @Param(value = "next") String next);
 
+    int queryCountByKey(@Param(value = "dwbh") String dwbh,
+                        @Param(value = "dwmc") String dwmc);
+
+
     Department queryByDWID(@Param(value = "dwid") String dwid);
 
     String modifyDepartment(@Param(value = "dwid") String dwid,
