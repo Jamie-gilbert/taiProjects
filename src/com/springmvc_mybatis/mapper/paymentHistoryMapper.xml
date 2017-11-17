@@ -165,7 +165,7 @@
             INSERT INTO si3.aged_pay_his(JFLSID,RYID,RYDJID, DWID,XZBZ,FSRQ,JFRQ, QSNY, ZZNY,
             DWJFJS, GRJFJS, DWJFBL, GRJFBL, DWJFE,GRJFE, DWJFZE, GRJFZE, ZDLSH,JBJGID,
             BZ, JBR, JBSJ,LX, XGBZ )
-            VALUES (${JFLSID},${RYID},${RYDJID}, ${DWID},${XZBZ},${FSRQ},${JFRQ}, ${QSNY}, ${ZZNY},
+            VALUES (SI3.SQ_JFLSID.NEXTVAL,${RYID},${RYDJID}, ${DWID},${XZBZ},${FSRQ},${JFRQ}, ${QSNY}, ${ZZNY},
             ${DWJFJS}, ${GRJFJS}, ${DWJFBL}, ${GRJFBL}, ${DWJFE},${GRJFE}, ${DWJFZE}, ${GRJFZE}
             , ${ZDLSH},${JBJGID},${BZ}, ${JBR}, ${JBSJ},${LX}, ${XGBZ})
         </foreach>

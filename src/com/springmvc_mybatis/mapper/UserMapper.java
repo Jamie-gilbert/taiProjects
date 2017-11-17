@@ -14,17 +14,17 @@ public interface UserMapper {
     User login(@Param(value = "yhbh") String name,
                @Param(value = "kl") String password);
 
-    String register(@Param(value = "yhid") String yhid,
-                    @Param(value = "yhbh") String yhbh,
-                    @Param(value = "kl") String password,
-                    @Param(value = "yhxm") String yhxm,
-                    @Param(value = "sfzhm") String sfzhm,
-                    @Param(value = "xb") String xb,
-                    @Param(value = "lxdh") String lxdh,
-                    @Param(value = "jbjgid") String jbjgid,
-                    @Param(value = "jbr") String jbr,
-                    @Param(value = "jbsj") Date jbsj,
-                    @Param(value = "bz") String bz);
+    String register(
+            @Param(value = "yhbh") String yhbh,
+            @Param(value = "kl") String password,
+            @Param(value = "yhxm") String yhxm,
+            @Param(value = "sfzhm") String sfzhm,
+            @Param(value = "xb") String xb,
+            @Param(value = "lxdh") String lxdh,
+            @Param(value = "jbjgid") String jbjgid,
+            @Param(value = "jbr") String jbr,
+            @Param(value = "jbsj") Date jbsj,
+            @Param(value = "bz") String bz);
 
 
     List<User> getAllUsers();

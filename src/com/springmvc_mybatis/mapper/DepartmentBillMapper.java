@@ -20,7 +20,6 @@ public interface DepartmentBillMapper {
                    @Param(value = "djzt") String type);
 
     void addRebackBill(
-            @Param(value = "zdlsh") String zdlsh,
             @Param(value = "dwid") String dwid,
             @Param(value = "jbjgid") String jbjgid,
             @Param(value = "txr") String txr,

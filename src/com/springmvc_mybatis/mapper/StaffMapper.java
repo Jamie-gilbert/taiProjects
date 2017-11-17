@@ -44,11 +44,7 @@ public interface StaffMapper {
                    @Param(value = "drsj") String drsj,
                    @Param(value = "zyyy") String zyyy,
                    @Param(value = "jyyy") String jyyy,
-                   @Param(value = "ryid") String ryid,
-                   @Param(value = "rydjid") String rydjid,
                    @Param(value = "czbm") String czbm,
-                   @Param(value = "ygrbh") String ygrbh,
-                   @Param(value = "grbh") String grbh,
                    @Param(value = "jbjgid") String jbjgid,
                    @Param(value = "xmpy") String xmpy,
                    @Param(value = "bz") String bz);

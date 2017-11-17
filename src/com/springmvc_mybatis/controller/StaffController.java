@@ -42,7 +42,7 @@ public class StaffController {
         int num = staffMapper.queryCount(dwid, type);
         List<Staff> staffList = new ArrayList<>();
         if (num > 0) {
-            staffList = staffMapper.queryStaff(dwid, type, page, String.valueOf(countNum+pageNum));
+            staffList = staffMapper.queryStaff(dwid, type, page, String.valueOf(countNum + pageNum));
         }
 
         JSONObject jsonObject = new JSONObject();
@@ -91,18 +91,18 @@ public class StaffController {
         String zyyy = request.getParameter("zyyy");
         String jyyy = request.getParameter("jyyy");
         String bz = request.getParameter("bz");
-        String ryid = request.getParameter("ryid");
-        String rydjid = request.getParameter("rydjid");
+//        String ryid = request.getParameter("ryid");
+//        String rydjid = request.getParameter("rydjid");
         String czbm = request.getParameter("czbm");
-        String ygrbh = request.getParameter("ygrbh");
+//        String ygrbh = request.getParameter("ygrbh");
         String jbjgid = request.getParameter("jbjgid");
         String xmpy = PinYinUtil.cn2Spell(xm);
 
         staffMapper.saveStaff(xm, cym, dwid, cbrylb, xb
                 , sfzhm, csrq, sfxz, mz, tblb, tblbmc
                 , cjgzsj, jfly, hkxz, dz, dh, grsf, rwsj
-                , drsj, zyyy, jyyy, ryid, rydjid, czbm
-                , ygrbh, ygrbh, jbjgid, xmpy, bz);
+                , drsj, zyyy, jyyy, czbm
+                , jbjgid, xmpy, bz);
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("errorCode", "0");
@@ -207,7 +207,7 @@ public class StaffController {
 //        String pre = String.valueOf(1 + (pageNum - 1) * countNum);
 //        String next = String.valueOf(pageNum * countNum);
         List<Staff> staffList = staffMapper
-                .queryStaffInfo(grbh, grsfzhm, grxm, xmpy,  page, String.valueOf(countNum+pageNum));
+                .queryStaffInfo(grbh, grsfzhm, grxm, xmpy, page, String.valueOf(countNum + pageNum));
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("errorCode", "0");
