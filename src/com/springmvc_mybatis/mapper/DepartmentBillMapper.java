@@ -19,6 +19,10 @@ public interface DepartmentBillMapper {
                    @Param(value = "txsj") String time,
                    @Param(value = "djzt") String type);
 
+    void modifyStatusByDwid(@Param("zdlshs") List<DepartmentBill> zdlshs,
+                           @Param("dwid") String dwid,
+                           @Param("djzt") String djzt);
+
     void addRebackBill(@Param(value = "zdlsh") String zdlsh,
                        @Param(value = "dwid") String dwid,
                        @Param(value = "jbjgid") String jbjgid,

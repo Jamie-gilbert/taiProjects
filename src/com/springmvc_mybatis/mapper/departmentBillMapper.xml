@@ -48,4 +48,23 @@ SELECT A.* ,ROWNUM RN FROM
     <select id="queryZDLSH" useCache="false" flushCache="true" resultType="String">
  select si3.sq_zdlsh.nextval from dual
 </select>
+    <update id="modifyStatusByDwid" parameterType="java.util.List">
+        update si3.bill_genl set djzt=${djzt}
+        WHERE
+        dwid=${dwid} AND
+        <foreach collection="zdlshs" index="index" item="item" open="(" separator="or" close=")">
+            zdlsh=#{item.zdlsh,jdbcType=VARCHAR}
+        </foreach>
+    </update>
+
+    <insert id="addBillForWriteOff" parameterType="java.util.List">
+        <foreach collection="list" open="begin" item="item" index="index" close=";end;" separator=";">
+            INSERT INTO si3.bill_genl(zdlsh,dwid,RYDJID, DWID,XZBZ,FSRQ,JFRQ, QSNY, ZZNY,
+            DWJFJS, GRJFJS, DWJFBL, GRJFBL, DWJFE,GRJFE, DWJFZE, GRJFZE, ZDLSH,JBJGID,
+            BZ, JBR, JBSJ,LX, XGBZ )
+            VALUES (SI3.SQ_JFLSID.NEXTVAL,${RYID},${RYDJID}, ${DWID},${XZBZ},${FSRQ},${JFRQ}, ${QSNY}, ${ZZNY},
+            ${DWJFJS}, ${GRJFJS}, ${DWJFBL}, ${GRJFBL}, ${DWJFE},${GRJFE}, ${DWJFZE}, ${GRJFZE}
+            , ${ZDLSH},${JBJGID},${BZ}, ${JBR}, ${JBSJ},${LX}, ${XGBZ})
+        </foreach>
+    </insert>
 </mapper>

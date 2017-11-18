@@ -45,7 +45,9 @@
 <script src="../js/jquery.js"></script>
 <script src="../js/bootstrap.js"></script>
 <script src="../js/dialog.js"></script>
+
 <script type="text/javascript">
+
     $("#modify").click(function () {
         Confirm({
             msg: '你确定修改单位信息吗',

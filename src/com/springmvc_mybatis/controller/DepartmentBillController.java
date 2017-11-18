@@ -37,7 +37,8 @@ public class DepartmentBillController {
         response.setHeader("Cache-Control", "no-cache");
         response.setCharacterEncoding("UTF-8");
 
-        String dwid = request.getParameter("dwid");
+//        String dwid = request.getParameter("dwid");
+        String dwid = "100000000000012";
         String type = request.getParameter("type");
         String time = request.getParameter("time");
 
@@ -59,8 +60,8 @@ public class DepartmentBillController {
             e.printStackTrace();
         }
         List<DepartmentBill> departmentBills = new ArrayList<>();
-        SimpleDateFormat dateFormat=new SimpleDateFormat("yyyyMMdd");
-        String times=dateFormat.format(date);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+        String times = dateFormat.format(date);
         int counts = departmentBillMapper.queryCount(dwid, times, type);
         if (counts > 0) {
             departmentBills = departmentBillMapper.queryBills(dwid, times, type, page, String.valueOf(countNum + pageNum));
@@ -78,6 +79,46 @@ public class DepartmentBillController {
 //        jsonObject.put("errorCode", "0");
 //        jsonObject.put("errorText", "");
 //        jsonObject.put("data", departmentBills);
+        out.write(jsonObject.toString());
+        out.flush();
+        out.close();
+    }
+
+    /**
+     * 将选中的未确认单据改为已确认或者作废,将选中的已确认单据改为冲销
+     *
+     * @param request
+     * @param response
+     * @throws IOException
+     */
+    @RequestMapping("/modifyStatusByDwid")
+    public void modifyStatusByDwid(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        //设置页面不缓存
+        response.setContentType("application/json");
+        response.setHeader("Pragma", "No-cache");
+        response.setHeader("Cache-Control", "no-cache");
+        response.setCharacterEncoding("UTF-8");
+
+//        String dwid = request.getParameter("dwid");
+        String dwid = "100000000000012";
+        String zdlshs = request.getParameter("zdlshs");
+        String djzt = request.getParameter("djzt");
+
+        List<DepartmentBill> zdlshsList = new ArrayList<>();
+        JSONArray jsonArray = new JSONArray(zdlshs);
+        for (int i = 0; i < jsonArray.length(); i++) {
+            DepartmentBill bill = new DepartmentBill();
+            bill.setZdlsh(String.valueOf(jsonArray.getJSONObject(i).get("zdlsh")));
+            bill.setZje((0 - (jsonArray.getJSONObject(i).getDouble("zje"))));
+            zdlshsList.add(bill);
+        }
+        departmentBillMapper.modifyStatusByDwid(zdlshsList, dwid, djzt);
+        if (djzt.equals("3")) {
+
+        }
+        PrintWriter out = response.getWriter();
+        JSONObject jsonObject = new JSONObject();
+
         out.write(jsonObject.toString());
         out.flush();
         out.close();

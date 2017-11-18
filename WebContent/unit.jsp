@@ -16,7 +16,8 @@
     <script type="text/javascript"  src="/bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript"  src="/bootstrap-table/bootstrap-table.js"></script>
     <script type="text/javascript"  src="/bootstrap-table/bootstrap-table-zh-CN.js"></script>
-
+    <script type="text/javascript" src="../webTree/assets/js/bui-min.js"></script>
+    <script type="text/javascript" src="../webTree/assets/js/config-min.js"></script>
     <link rel="stylesheet" type="text/css" href="./css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="./bootstrap/custom/department.css">
 </head>
@@ -42,7 +43,8 @@
             </div>
         </div>
         <div class="container-fluid" id="unitButton">
-            <a class="btn btn-primary btn-sm" href="/department/querybydwid.action?dwid=111">修改单位信息</a>
+            <%--<a class="btn btn-primary btn-sm" href="/department/querybydwid.action?dwid=111">修改单位信息</a>--%>
+            <a class="page-action btn btn-primary btn-sm" href="#" data-href="../department/querybydwid.action?dwid=100000000000012" title="修改单位信息" data-id="modify_department">修改单位信息</a>
             <a class="btn btn-primary btn-sm" href="../paymentHistory/interestPaymentHistory.action?dwid=100000000000175&pageNumber=1&pageSize=10">查询单据</a>
             <a class="btn btn-primary btn-sm" href="../staff_reback_payment.jsp">人员退费</a>
             <a class="btn btn-primary btn-sm" href="/dempartment_interest.jsp?dwid=111">单位计息</a>
@@ -93,6 +95,7 @@
     var dwbhv = "";
     var dwmcv = "";
     var row  = "";
+    BUI.use('common/page');
 /*
     $(document).ready(function () {
         $("#query").click(function () {

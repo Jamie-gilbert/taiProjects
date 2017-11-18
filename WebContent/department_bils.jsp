@@ -33,14 +33,26 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-xs-6 col-md-6">
+        <div class="col-xs-3 col-md-3">
             <div class="input-group">
                 <span class="input-group-addon">填写时间:</span>
                 <input type="date" class="form-control" id="time"/>
             </div>
         </div>
-        <div class="col-xs-6 col-md-6">
+        <div class="col-xs-3 col-md-3">
             <button id="query" class="btn btn-primary" data-toggle="button">查询</button>
+        </div>
+        <div class="col-xs-3 col-md-3">
+            <button id="modify_status" onclick="modifyStatusByDwid()" class="btn btn-primary"
+                    data-toggle="button">
+                修改单据状态
+            </button>
+        </div>
+        <div class="col-xs-3 col-md-3">
+            <button id="modify_status2" onclick="toVoidByDwid()" class="btn btn-primary"
+                    data-toggle="button">
+                作废单据
+            </button>
         </div>
     </div>
 </div>
@@ -73,23 +85,105 @@
 
     $("#yqrdj").click(function () {
         type = "1";
+        $('#modify_status').val("冲销单据")
+        $('#modify_status').show();
+        $('#modify_status2').show();
         queryBils();
     });
     $("#wqrdj").click(function () {
         type = "0";
+        $('#modify_status').val("确认单据");
+        $('#modify_status').show();
+        $('#modify_status2').hide();
         queryBils();
     });
     $("#yzfdj").click(function () {
+        $('#modify_status').hide();
+        $('#modify_status2').hide();
         type = "2";
         queryBils();
     });
     $("#ycxdj").click(function () {
+        $('#modify_status').hide();
+        $('#modify_status2').hide();
+
         type = "3";
         queryBils();
     });
     $("#query").click(function () {
+
         queryBils();
     });
+
+    function modifyStatusByDwid() {
+        var djzt = '';
+        if (type == 0) {
+            djzt = 1;
+        } else if (type == 1) {
+            djzt = 3;
+        }
+        var zdlshs = [{"zdlsh": "200611210001"}
+            , {"zdlsh": "200611210001"}
+            , {"zdlsh": "200611210001"}
+            , {"zdlsh": "200611210001"}
+            , {"zdlsh": "200611210001"}];
+
+
+        var dwid =<%=request.getParameter("dwid")%>;
+        if (djzt != '') {
+            $.ajax({
+                type: "POST",
+                url: "../departmentBills/modifyStatusByDwid.action",
+                data: {
+                    "zdlshs": JSON.stringify(zdlshs),
+                    "dwid": dwid,
+                    "djzt": djzt
+                },
+                dataType: "JSON",
+                async: false,
+                success: function (data, status) {
+                    console.log(data)
+                },
+                error: function (err, status) {
+                    console.log(err)
+                }
+            });
+        }
+    }
+
+    function toVoidByDwid() {
+        var djzt = '';
+        if (type == 0) {
+            djzt = 2;
+        }
+        var zdlshs = [{"zdlsh": "200611210001"}
+            , {"zdlsh": "200611210001"}
+            , {"zdlsh": "200611210001"}
+            , {"zdlsh": "200611210001"}
+            , {"zdlsh": "200611210001"}];
+
+
+        var dwid =<%=request.getParameter("dwid")%>;
+        if (djzt != '') {
+            $.ajax({
+                type: "POST",
+                url: "../departmentBills/modifyStatusByDwid.action",
+                data: {
+                    "zdlshs": JSON.stringify(zdlshs),
+                    "dwid": dwid,
+                    "djzt": djzt
+                },
+                dataType: "JSON",
+                async: false,
+                success: function (data, status) {
+                    console.log(data)
+                },
+                error: function (err, status) {
+                    console.log(err)
+                }
+            });
+        }
+    }
 
 </script>
 </body>
