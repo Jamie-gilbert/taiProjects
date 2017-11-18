@@ -59,9 +59,11 @@ public class DepartmentBillController {
             e.printStackTrace();
         }
         List<DepartmentBill> departmentBills = new ArrayList<>();
-        int counts = departmentBillMapper.queryCount(dwid, date, type);
+        SimpleDateFormat dateFormat=new SimpleDateFormat("yyyyMMdd");
+        String times=dateFormat.format(date);
+        int counts = departmentBillMapper.queryCount(dwid, times, type);
         if (counts > 0) {
-            departmentBills = departmentBillMapper.queryBills(dwid, date, type, page, String.valueOf(countNum + pageNum));
+            departmentBills = departmentBillMapper.queryBills(dwid, times, type, page, String.valueOf(countNum + pageNum));
         }
 
         PrintWriter out = response.getWriter();

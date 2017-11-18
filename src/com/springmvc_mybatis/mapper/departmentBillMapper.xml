@@ -22,7 +22,7 @@ SELECT A.* ,ROWNUM RN FROM
 		si3.bill_genl
 		where
 		dwid =#{dwid}
-		and txsj >=#{txsj}
+		and to_char(txsj, 'yyyymmdd') >=#{txsj}
 		AND  djzt =#{djzt}) A
 		WHERE ROWNUM &lt; #{next}
 		) WHERE RN >=#{pre}
@@ -30,7 +30,7 @@ SELECT A.* ,ROWNUM RN FROM
     <select id="queryCount" resultType="int">
         SELECT  count(*)  FROM si3.bill_genl
          where dwid =#{dwid}
-		and txsj >=#{txsj}
+		and to_char(txsj, 'yyyymmdd') >=#{txsj}
 		AND  djzt =#{djzt}
     </select>
 
