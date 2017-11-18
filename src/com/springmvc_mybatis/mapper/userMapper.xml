@@ -24,7 +24,7 @@
     <insert id="register">
 
 	INSERT  INTO be3.sys_user(yhid,yhbh,kl,yhxm,sfzhm,xb,lxdh,jbjgid,jbr,jbsj,bz)
-	VALUES (SI3.SQ_YHID.NEXTVAL,#{yhbh},#{kl},#{yhxm},#{sfzhm},#{xb},#{lxdh},#{jbjgid},#{jbr},#{jbsj},#{bz})
+	VALUES (BE3.SQ_YHID.NEXTVAL,#{yhbh},#{kl},#{yhxm},#{sfzhm},#{xb},#{lxdh},#{jbjgid},#{jbr},#{jbsj},#{bz})
     </insert>
     <select id="getAllUsers" resultMap="userResult">
 		select *

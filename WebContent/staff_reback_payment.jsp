@@ -55,7 +55,6 @@
     var ryid = "";
 
     function queryData() {
-        debugger;
         var sfzhm = $('#sfzhm').val();
         var qsrq = $('#qsrq').val();
         var zzrq = $('#zzrq').val();

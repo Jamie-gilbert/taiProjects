@@ -63,6 +63,15 @@
         ) WHERE RN >=${pre}
     </select>
 
+    <select id="queryInterestByRyid" resultMap="paymentHistoryResult">
+        SELECT * FROM (
+        SELECT A.*,ROWNUM RN FROM
+        (select * from
+        si3.aged_pay_his a
+        WHERE  a.RYID =${ryid} AND (a.LX =0 OR a.LX IS  NULL )) A
+        WHERE ROWNUM &lt; ${next}
+        ) WHERE RN >=${pre}
+    </select>
 
     <select id="queryCountByRyidWithDate" resultType="int">
 

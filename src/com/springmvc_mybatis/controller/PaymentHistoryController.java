@@ -1,6 +1,5 @@
 package com.springmvc_mybatis.controller;
 
-import com.springmvc_mybatis.bean.InterestScale;
 import com.springmvc_mybatis.bean.PaymentHistory;
 import com.springmvc_mybatis.bean.Staff;
 import com.springmvc_mybatis.json.JSONArray;
@@ -17,9 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.Writer;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -381,6 +378,45 @@ public class PaymentHistoryController {
         writer.close();
     }
 
+
+    /**
+     * 查询某个人员的没有计息的历史记录
+     *
+     * @param request
+     * @param model
+     * @throws IOException
+     */
+    @RequestMapping("/qyeryInterestByRyid")
+    public String qyeryInterestByRyid(HttpServletRequest request, Model model) throws IOException {
+        //设置页面不缓存
+        String page = request.getParameter("pageNumber");
+        String count = request.getParameter("pageSize");
+        String ryid = request.getParameter("ryid");
+        int countNum = Integer.parseInt(count);
+        int pageNum = Integer.parseInt(page);
+        List<PaymentHistory> paymentHistories = new ArrayList<>();
+
+        int num = paymentHistoryMapper.queryCountWithoutInterestByRyid(ryid);
+        if (num > 0) {
+            paymentHistories = paymentHistoryMapper.queryInterestByRyid(ryid, page, String.valueOf(countNum + pageNum));
+        }
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("total", num);
+        JSONArray jsonArray = new JSONArray();
+        for (PaymentHistory paymentHistory : paymentHistories) {
+            paymentHistory.setStaff(null);
+            JSONObject object = new JSONObject(paymentHistory);
+            jsonArray.put(object);
+
+        }
+        jsonObject.put("rows", jsonArray);
+        model.addAttribute("data", jsonObject);
+
+        return "staff_interest";
+    }
+
+
     /**
      * 查询某个人员的指定时间段的缴费历史记录
      *
@@ -485,7 +521,7 @@ public class PaymentHistoryController {
     }
 
     /**
-     * 查询某个人员是否存在没有计息的缴费记录
+     * 查询某个人员在指定时间段中是否存在没有计息的缴费记录
      *
      * @param request
      * @param response

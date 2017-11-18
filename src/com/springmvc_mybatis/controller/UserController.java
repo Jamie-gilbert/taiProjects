@@ -1,10 +1,13 @@
 package com.springmvc_mybatis.controller;
 
+import java.io.Writer;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import com.springmvc_mybatis.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,7 +40,11 @@ public class UserController {
     }
 
     @RequestMapping("/register")
-    public String register(HttpServletRequest request, Model model) {
+    public void register(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        response.setContentType("application/json");
+        response.setHeader("Pragma", "No-cache");
+        response.setHeader("Cache-Control", "no-cache");
+        response.setCharacterEncoding("UTF-8");
         String yhxm = request.getParameter("yhxm");
         String kl = request.getParameter("kl");
         String sfzhm = request.getParameter("sfzhm");
@@ -51,8 +58,8 @@ public class UserController {
         String yhbh = yhxm;
         Date jbsj = new Date();
         try {
-            usermapper.register(yhid + ""
-                    , yhbh + ""
+            usermapper.register(
+                     yhbh + ""
                     , kl + ""
                     , yhxm + ""
                     , sfzhm + ""
@@ -62,6 +69,11 @@ public class UserController {
                     , jbr + ""
                     , jbsj
                     , bz + "");
+            JSONObject object = new JSONObject();
+            object.put("statusText", 0);
+            object.put("responseText", "");
+            Writer writer = response.getWriter();
+            writer.write(object.toString());
         } catch (Exception e) {
             if (e instanceof ClassCastException) {
 
@@ -70,7 +82,7 @@ public class UserController {
             }
         }
 
-        return "index";
+
 
     }
 

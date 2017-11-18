@@ -14,7 +14,7 @@ public interface UserMapper {
     User login(@Param(value = "yhbh") String name,
                @Param(value = "kl") String password);
 
-    String register(
+    void register(
             @Param(value = "yhbh") String yhbh,
             @Param(value = "kl") String password,
             @Param(value = "yhxm") String yhxm,

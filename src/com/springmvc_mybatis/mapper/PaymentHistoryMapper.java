@@ -21,6 +21,11 @@ public interface PaymentHistoryMapper {
                                      @Param(value = "pre") String pre,
                                      @Param(value = "next") String next);
 
+
+    List<PaymentHistory> queryInterestByRyid(@Param(value = "ryid") String dwid,
+                                             @Param(value = "pre") String pre,
+                                             @Param(value = "next") String next);
+
     List<PaymentHistory> queryByRyidWithDate(@Param(value = "ryid") String dwid,
                                              @Param(value = "qsrq") String qsrq,
                                              @Param(value = "zzrq") String zzrq,

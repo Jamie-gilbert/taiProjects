@@ -4,17 +4,17 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="bootstrap/custom/login.css" type="text/css">
-    <script type="text/javascript" src="bootstrap/js/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="../bootstrap/custom/login.css" type="text/css">
+    <script type="text/javascript" src="../bootstrap/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>
     <title>登录</title>
 </head>
 <body scroll="no">
 <div class="container">
     <div class="row">
         <div class="col-md-offset-3 col-md-6">
-            <form class="form-horizontal" action="user/login.action" method="post" onsubmit="return checkCh();">
+            <form class="form-horizontal" action="../user/login.action" method="post" onsubmit="return checkCh();">
                 <span class="heading">用户登录 </span>
                 <div class="form-group">
                     <input type="text" class="form-control userName" id="userName" name="username" placeholder="用户名">

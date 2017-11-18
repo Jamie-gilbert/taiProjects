@@ -63,26 +63,7 @@
             </div>
             <div class="modal-body">
                 <form>
-                    <div class="form-group">
-                        <label>人员ID</label>
-                        <input type="text" class="form-control" id="ryid" placeholder="人员ID">
-                    </div>
-                    <div class="form-group">
-                        <label>人员登记ID</label>
-                        <input type="text" class="form-control" id="rydjid" placeholder="人员登记ID">
-                    </div>
-                    <div class="form-group">
-                        <label>财政编号</label>
-                        <input type="text" class="form-control" id="czbm" placeholder="财政编号">
-                    </div>
-                    <div class="form-group">
-                        <label>原个人编号</label>
-                        <input type="text" class="form-control" id="ygrbh" placeholder="原个人编号">
-                    </div>
-                    <div class="form-group">
-                        <label>经办机构ID</label>
-                        <input type="text" class="form-control" id="jbjgid" placeholder="经办机构ID">
-                    </div>
+
                     <div class="form-group">
                         <label>姓名</label>
                         <input type="text" class="form-control" id="xm" placeholder="姓名">
@@ -92,11 +73,22 @@
                         <label>曾用名</label>
                         <input type="text" class="form-control" id="cym" placeholder="曾用名">
                     </div>
+                    <div class="form-group has-feedback">
+                        <label for="sexBoy">性别</label>
+                        <div class="input-group" id="sexLable">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input name="xb" id="sexBoy" name="optionsRadiosinline"  type="radio" value ="1" checked>男&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input name="xb" id="sexGirl" name="optionsRadiosinline"  type="radio" value ="2">女
+                        </div>
 
-                    <div class="form-group">
-                        <label>性别</label>
-                        <input type="text" class="form-control" id="xb" placeholder="性别">
+                        <span style="color:red;display: none;" class="tips"></span>
+                        <span style="display: none;" class=" glyphicon glyphicon-remove form-control-feedback"></span>
+                        <span style="display: none;" class="glyphicon glyphicon-ok form-control-feedback"></span>
                     </div>
+                    <%--<div class="form-group">--%>
+                        <%--<label>性别</label>--%>
+                        <%--<input type="text" class="form-control" id="xb" placeholder="性别">--%>
+                    <%--</div>--%>
                     <div class="form-group">
                         <label>身份证号码</label>
                         <input type="text" class="form-control" id="sfzhm" placeholder="身份证号码">
@@ -105,6 +97,17 @@
                     <div class="form-group">
                         <label>出生日期</label>
                         <input type="text" class="form-control" id="csrq" placeholder="出生日期">
+                    </div>
+
+
+                    <div class="form-group">
+                        <label>财政编号</label>
+                        <input type="text" class="form-control" id="czbm" placeholder="财政编号">
+                    </div>
+
+                    <div class="form-group">
+                        <label>经办机构ID</label>
+                        <input type="text" class="form-control" id="jbjgid" placeholder="经办机构ID">
                     </div>
 
                     <div class="form-group">

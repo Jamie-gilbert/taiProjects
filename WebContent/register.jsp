@@ -11,150 +11,159 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script type="text/javascript" src="bootstrap/js/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="./bootstrap/custom/register.css" type="text/css">
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="../bootstrap/custom/register.css" type="text/css">
+    <script src="../js/jquery.js"></script>
+    <script src="../js/bootstrap.js"></script>
+
+    <script src="../js/jquery.form.js"></script>
     <title>注册</title>
 </head>
 <body>
 <%--<div class="register">--%>
-    <%--<form action="/user/register.action" method="post" >--%>
-        <%--<table>--%>
-        <%--<tr>--%>
-            <%--<td>&nbsp;&nbsp;&nbsp;&nbsp;用户名:</td>--%>
-            <%--<td><input type="text" name="yhxm"></td>--%>
-        <%--</tr>--%>
-        <%--<tr>--%>
-            <%--<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;密码:</td>--%>
-            <%--<td><input type="password" name="kl"></td>--%>
-        <%--</tr>--%>
-        <%--<tr>--%>
-            <%--<td>确认密码:</td>--%>
-            <%--<td><input type="password" name="kl"></td>--%>
-        <%--</tr>--%>
-        <%--<tr>--%>
-            <%--<td>身份证号:</td>--%>
-            <%--<td><input type="text" name="sfzhm"></td>--%>
-        <%--</tr>--%>
-        <%--<tr>--%>
-            <%--<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;性别:</td>--%>
-            <%--<td>--%>
-                <%--<input type="radio" name="optionsRadiosinline" id="sexBoy" value="1" checked>男--%>
-                <%--<input type="radio" name="optionsRadiosinline" id="sexGirl" value="2" >女--%>
-            <%--</td>--%>
-        <%--</tr>--%>
-        <%--<tr>--%>
-            <%--<td>联系电话:</td>--%>
-            <%--<td><input type="text" name="lxdh"></td>--%>
-        <%--</tr>--%>
-    <%--</table>--%>
-        <%--<table>--%>
-        <%--<tr>--%>
-            <%--<td><button class="btn btn-primary btn-sm" type="submit" name="submit">确认</button></td>--%>
-            <%--<td><button class="btn btn-primary btn-sm" type="reset" name="cancle" id="cancle">重置</button></td>--%>
-        <%--</tr>--%>
-    <%--</table>--%>
-    <%--</form>--%>
+<%--<form action="/user/register.action" method="post" >--%>
+<%--<table>--%>
+<%--<tr>--%>
+<%--<td>&nbsp;&nbsp;&nbsp;&nbsp;用户名:</td>--%>
+<%--<td><input type="text" name="yhxm"></td>--%>
+<%--</tr>--%>
+<%--<tr>--%>
+<%--<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;密码:</td>--%>
+<%--<td><input type="password" name="kl"></td>--%>
+<%--</tr>--%>
+<%--<tr>--%>
+<%--<td>确认密码:</td>--%>
+<%--<td><input type="password" name="kl"></td>--%>
+<%--</tr>--%>
+<%--<tr>--%>
+<%--<td>身份证号:</td>--%>
+<%--<td><input type="text" name="sfzhm"></td>--%>
+<%--</tr>--%>
+<%--<tr>--%>
+<%--<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;性别:</td>--%>
+<%--<td>--%>
+<%--<input type="radio" name="optionsRadiosinline" id="sexBoy" value="1" checked>男--%>
+<%--<input type="radio" name="optionsRadiosinline" id="sexGirl" value="2" >女--%>
+<%--</td>--%>
+<%--</tr>--%>
+<%--<tr>--%>
+<%--<td>联系电话:</td>--%>
+<%--<td><input type="text" name="lxdh"></td>--%>
+<%--</tr>--%>
+<%--</table>--%>
+<%--<table>--%>
+<%--<tr>--%>
+<%--<td><button class="btn btn-primary btn-sm" type="submit" name="submit">确认</button></td>--%>
+<%--<td><button class="btn btn-primary btn-sm" type="reset" name="cancle" id="cancle">重置</button></td>--%>
+<%--</tr>--%>
+<%--</table>--%>
+<%--</form>--%>
 <%--</div>--%>
 <div class="container">
     <div class="col-md-6 col-md-offset-3">
-        <form class="form-horizontal" action="user/register.action" method="post" >
+        <form class="form-horizontal" id="registerForm" action="../user/register.action" method="post">
             <table>
-            <div class="form-group has-feedback">
-                <label for="username">用户名</label>
-                <div class="input-group">
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-                    <input name="yhxm" id="username" class="form-control" placeholder="请输入用户名" maxlength="10" type="text">
+                <div class="form-group has-feedback">
+                    <label for="username">用户名</label>
+                    <div class="input-group">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                        <input name="yhxm" id="username" class="form-control" placeholder="请输入用户名" maxlength="10"
+                               type="text">
+                    </div>
+
+                    <span style="color:red;display: none;" class="tips"></span>
+                    <span style="display: none;" class=" glyphicon glyphicon-remove form-control-feedback"></span>
+                    <span style="display: none;" class="glyphicon glyphicon-ok form-control-feedback"></span>
                 </div>
-
-                <span style="color:red;display: none;" class="tips"></span>
-                <span style="display: none;" class=" glyphicon glyphicon-remove form-control-feedback"></span>
-                <span style="display: none;" class="glyphicon glyphicon-ok form-control-feedback"></span>
-            </div>
-
-            <div class="form-group has-feedback">
-                <label for="password">密码</label>
-                <div class="input-group">
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
-                    <input name="kl" id="password" class="form-control" placeholder="请输入密码" maxlength="20" type="password">
-                </div>
-                <span style="color:red;display: none;" class="tips"></span>
-                <span style="display: none;" class="glyphicon glyphicon-remove form-control-feedback"></span>
-                <span style="display: none;" class="glyphicon glyphicon-ok form-control-feedback"></span>
-            </div>
-
-            <div class="form-group has-feedback">
-                <label for="passwordConfirm">确认密码</label>
-                <div class="input-group">
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
-                    <input id="passwordConfirm" class="form-control" placeholder="请再次输入密码" maxlength="20" type="password">
-                </div>
-                <span style="color:red;display: none;" class="tips"></span>
-                <span style="display: none;" class="glyphicon glyphicon-remove form-control-feedback"></span>
-                <span style="display: none;" class="glyphicon glyphicon-ok form-control-feedback"></span>
-            </div>
-
-            <div class="form-group has-feedback">
-                <label for="sexBoy">性别</label>
-                <div class="input-group" id="sexLable">
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <input name="xb" id="sexBoy" name="optionsRadiosinline"  type="radio" value ="1" checked>男&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <input name="xb" id="sexGirl" name="optionsRadiosinline"  type="radio" value ="2">女
-                </div>
-
-                <span style="color:red;display: none;" class="tips"></span>
-                <span style="display: none;" class=" glyphicon glyphicon-remove form-control-feedback"></span>
-                <span style="display: none;" class="glyphicon glyphicon-ok form-control-feedback"></span>
-            </div>
-
-            <div class="form-group has-feedback">
-                <label for="sfzhm">身份证</label>
-                <div class="input-group">
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-credit-card"></span></span>
-                    <input name="sfzhm" id="sfzhm" class="form-control" placeholder="请输入身份证号码" maxlength="18" type="text">
-                </div>
-                <span style="color:red;display: none;" class="tips"></span>
-                <span style="display: none;" class="glyphicon glyphicon-remove form-control-feedback"></span>
-                <span style="display: none;" class="glyphicon glyphicon-ok form-control-feedback"></span>
-            </div>
 
                 <div class="form-group has-feedback">
-                    <label for="phoneNum">手机号码</label>
+                    <label for="password">密码</label>
                     <div class="input-group">
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-phone"></span></span>
-                        <input name="lxdh" id="phoneNum" class="form-control" placeholder="请输入手机号码" maxlength="11" type="text">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+                        <input name="kl" id="password" class="form-control" placeholder="请输入密码" maxlength="20"
+                               type="password">
                     </div>
                     <span style="color:red;display: none;" class="tips"></span>
                     <span style="display: none;" class="glyphicon glyphicon-remove form-control-feedback"></span>
                     <span style="display: none;" class="glyphicon glyphicon-ok form-control-feedback"></span>
                 </div>
 
-            <div class="row">
-                <div class="col-xs-7">
-                    <div class="form-group has-feedback">
-                        <label for="idcode-btn">验证码</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><span class="glyphicon glyphicon-qrcode"></span></span>
-                            <input id="idcode-btn" class="form-control" placeholder="请输入验证码" maxlength="4" type="text">
+                <div class="form-group has-feedback">
+                    <label for="passwordConfirm">确认密码</label>
+                    <div class="input-group">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+                        <input id="passwordConfirm" class="form-control" placeholder="请再次输入密码" maxlength="20"
+                               type="password">
+                    </div>
+                    <span style="color:red;display: none;" class="tips"></span>
+                    <span style="display: none;" class="glyphicon glyphicon-remove form-control-feedback"></span>
+                    <span style="display: none;" class="glyphicon glyphicon-ok form-control-feedback"></span>
+                </div>
+
+                <div class="form-group has-feedback">
+                    <label for="sexBoy">性别</label>
+                    <div class="input-group" id="sexLable">
+                        <input name="xb" id="sexBoy" name="optionsRadiosinline" type="radio" value="1" checked>男&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input name="xb" id="sexGirl" name="optionsRadiosinline" type="radio" value="2">女
+                    </div>
+
+                    <span style="color:red;display: none;" class="tips"></span>
+                    <span style="display: none;" class=" glyphicon glyphicon-remove form-control-feedback"></span>
+                    <span style="display: none;" class="glyphicon glyphicon-ok form-control-feedback"></span>
+                </div>
+
+                <div class="form-group has-feedback">
+                    <label for="sfzhm">身份证</label>
+                    <div class="input-group">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-credit-card"></span></span>
+                        <input name="sfzhm" id="sfzhm" class="form-control" placeholder="请输入身份证号码" maxlength="18"
+                               type="text">
+                    </div>
+                    <span style="color:red;display: none;" class="tips"></span>
+                    <span style="display: none;" class="glyphicon glyphicon-remove form-control-feedback"></span>
+                    <span style="display: none;" class="glyphicon glyphicon-ok form-control-feedback"></span>
+                </div>
+
+                <div class="form-group has-feedback">
+                    <label for="phoneNum">手机号码</label>
+                    <div class="input-group">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-phone"></span></span>
+                        <input name="lxdh" id="phoneNum" class="form-control" placeholder="请输入手机号码" maxlength="11"
+                               type="text">
+                    </div>
+                    <span style="color:red;display: none;" class="tips"></span>
+                    <span style="display: none;" class="glyphicon glyphicon-remove form-control-feedback"></span>
+                    <span style="display: none;" class="glyphicon glyphicon-ok form-control-feedback"></span>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-7">
+                        <div class="form-group has-feedback">
+                            <label for="idcode-btn">验证码</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-qrcode"></span></span>
+                                <input id="idcode-btn" class="form-control" placeholder="请输入验证码" maxlength="4"
+                                       type="text">
+                            </div>
+                            <span style="color:red;display: none;" class="tips"></span>
+                            <span style="display: none;"
+                                  class="glyphicon glyphicon-remove form-control-feedback"></span>
+                            <span style="display: none;" class="glyphicon glyphicon-ok form-control-feedback"></span>
                         </div>
-                        <span style="color:red;display: none;" class="tips"></span>
-                        <span style="display: none;" class="glyphicon glyphicon-remove form-control-feedback"></span>
-                        <span style="display: none;" class="glyphicon glyphicon-ok form-control-feedback"></span>
+                    </div>
+                    <div class="col-xs-5" style="padding-top: 30px">
+                        <div id="idcode" style="background: transparent;"></div>
                     </div>
                 </div>
-                <div class="col-xs-5" style="padding-top: 30px">
-                    <div id="idcode" style="background: transparent;"></div>
+
+                <div class="form-group">
+                    <input class="form-control btn btn-primary" id="submit"
+                           value="立&nbsp;&nbsp;即&nbsp;&nbsp;添&nbsp;&nbsp;加" type="submit">
                 </div>
-            </div>
 
-            <div class="form-group">
-                <input class="form-control btn btn-primary" id="submit" value="立&nbsp;&nbsp;即&nbsp;&nbsp;添&nbsp;&nbsp;加" type="submit">
-            </div>
-
-            <div class="form-group">
-                <input value="重置" id="reset" class="form-control btn btn-primary" type="reset">
-            </div>
+                <div class="form-group">
+                    <input value="重置" id="reset" class="form-control btn btn-primary" type="reset">
+                </div>
             </table>
         </form>
     </div>
@@ -177,16 +186,16 @@
         codeval: '#ehong-code'
     }
     $.idcode = {
-        getCode: function(option) {
+        getCode: function (option) {
             _commSetting(option);
             return _storeData(_set.storeLable, null);
         },
-        setCode: function(option) {
+        setCode: function (option) {
             _commSetting(option);
             _setCodeStyle("#" + settings.e, settings.codeType.name, settings.codeType.len);
 
         },
-        validateCode: function(option) {
+        validateCode: function (option) {
             _commSetting(option);
             var inputV;
             if (settings.inputID) {
@@ -282,6 +291,7 @@
         }
         return code;
     }
+
     var regUsername = /^[a-zA-Z_][a-zA-Z0-9_]{4,19}$/;
     var regPasswordSpecial = /[~!@#%&=;':",./<>_\}\]\-\$\(\)\*\+\.\[\?\\\^\{\|]/;
     var regPasswordAlpha = /[a-zA-Z]/;
@@ -309,7 +319,7 @@
     }
 
     // 用户名匹配
-    $('.container').find('input').eq(0).change(function() {
+    $('.container').find('input').eq(0).change(function () {
 
 
         if (regUsername.test($(this).val())) {
@@ -323,7 +333,6 @@
     });
 
 
-
     // 密码匹配
 
     // 匹配字母、数字、特殊字符至少两种的函数
@@ -335,7 +344,7 @@
 
     }
 
-    $('.container').find('input').eq(1).change(function() {
+    $('.container').find('input').eq(1).change(function () {
 
         password = $(this).val();
 
@@ -354,7 +363,7 @@
 
 
     // 再次输入密码校验
-    $('.container').find('input').eq(2).change(function() {
+    $('.container').find('input').eq(2).change(function () {
 
         if ($(this).val() == password) {
             success($(this), 2);
@@ -366,17 +375,17 @@
     });
     //身份证号码
     $('.container').find('input').eq(5).change(function () {
-        if($(this).val().length<18 || isNaN($(this).val()) == true) {
+        if ($(this).val().length < 18 || isNaN($(this).val()) == true) {
             fail($(this), 4, '请输入18位数字身份证号码');
         } else {
-            success($(this),5);
+            success($(this), 5);
         }
     });
 
     // 验证码
     $.idcode.setCode();
 
-    $('.container').find('input').eq(7).change(function() {
+    $('.container').find('input').eq(7).change(function () {
         var IsBy = $.idcode.validateCode();
         if (IsBy) {
             success($(this), 7);
@@ -386,16 +395,25 @@
     });
 
 
-
-
-    $('#reset').click(function() {
+    $('#reset').click(function () {
         $('input').slice(0, 6).parent().parent().removeClass('has-error has-success');
         $('.tips').hide();
         $('.glyphicon-ok').hide();
         $('.glyphicon-remove').hide();
-        check = [false, false, false, false, false, false, ];
+        check = [false, false, false, false, false, false,];
     });
+    $(document).ready(function () {
 
+        $('#registerForm').ajaxForm(function (responseText, statusText) {
+            if (statusText == 'success') {
+              console.log(statusText)
+                alert("注册成功")
+            } else {
+                console.log(statusText)
+                alert("注册失败")
+            }
+        });
+    });
 
 </script>
 </body>
