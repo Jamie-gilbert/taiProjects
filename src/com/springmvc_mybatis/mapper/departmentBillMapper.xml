@@ -38,7 +38,14 @@ SELECT A.* ,ROWNUM RN FROM
 
         insert into si3.bill_genl
         (zdlsh,jbjgid,dwid,djzt,djlb,txr,txsj,qrr,qrsj,zje,ryid)
-        values(SI3.SQ_ZDLSH.NEXTVAL,${jbjgid},${dwid},0,'SI1002',${txr},
+        values(${zdlsh},${jbjgid},${dwid},0,'SI1002',${txr},
        SYSDATE,${qrr},SYSDATE,${zje},${ryid})
     </insert>
+    <insert id="addBillDel">
+        insert into si3.bill_detl
+        (zdlsh,xzbz,jfxmbh,qsny,zzny,jfje) VALUES (${zdlsh},${xzbz},${jfxmbh},${qsny},${zzny},${jfje})
+    </insert>
+    <select id="queryZDLSH" useCache="false" flushCache="true" resultType="String">
+ select si3.sq_zdlsh.nextval from dual
+</select>
 </mapper>

@@ -56,8 +56,8 @@
             type: "POST",
             url: "departmentBills/querydepartmentbils.action",
             data: {
-                "time": time, "page": page,
-                "count": count, "type": type,
+                "time": time, "pageNumber": page,
+                "pageSize": count, "type": type,
                 "dwid": dwid
             },
             dataType: "JSON",

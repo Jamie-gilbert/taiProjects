@@ -46,10 +46,8 @@ public class DepartmentBillController {
 
         int countNum = Integer.parseInt(count);
         int pageNum = Integer.parseInt(page);
-//        String pre = String.valueOf(1 + (pageNum - 1) * countNum);
-//        String next = String.valueOf(pageNum * countNum);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = null;
+        Date date = new Date();
         try {
             if (time != null && !"".equals(time)) {
                 date = simpleDateFormat.parse(time);
@@ -63,7 +61,7 @@ public class DepartmentBillController {
         List<DepartmentBill> departmentBills = new ArrayList<>();
         int counts = departmentBillMapper.queryCount(dwid, date, type);
         if (counts > 0) {
-            departmentBills = departmentBillMapper.queryBills(dwid, date, type, page, String.valueOf(countNum+pageNum));
+            departmentBills = departmentBillMapper.queryBills(dwid, date, type, page, String.valueOf(countNum + pageNum));
         }
 
         PrintWriter out = response.getWriter();
@@ -82,7 +80,6 @@ public class DepartmentBillController {
         out.flush();
         out.close();
     }
-
 
 
 }

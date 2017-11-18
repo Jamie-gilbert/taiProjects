@@ -18,21 +18,13 @@
         (select * from
         si3.orgn_reg
         where
-        1=1
-        <if test="dwbh != null and dwbh != ''">
-        AND    dwbh LIKE concat(concat('%',#{dwbh}),'%')
-        </if>
-
-        <if test="dwmc != null and dwmc != ''">
-            and dwmc LIKE concat(concat('%',#{dwmc}),'%')
-        </if>
-       ) A
-
+        dwbh LIKE concat(concat('%',#{dwbh}),'%')
+        and dwmc LIKE concat(concat('%',#{dwmc}),'%')) A
         WHERE ROWNUM &lt; #{next}
         ) WHERE RN >=#{pre}
 
 
-	</select>
+    </select>
 
     <select id="queryByDWID" resultMap="departmentResult">
         select * from
@@ -45,13 +37,9 @@
     select COUNT (*) from
     si3.orgn_reg
     where
-    1=1
-        <if test="dwbh != null and dwbh != ''">
-            and dwbh LIKE concat(concat('%',#{dwbh}),'%')
-        </if>
-        <if test="dwbh != null and dwbh != ''">
-            and dwmc LIKE concat(concat('%',#{dwmc}),'%')
-        </if>
+    dwbh LIKE concat(concat('%',#{dwbh}),'%')
+  and dwmc LIKE concat(concat('%',#{dwmc}),'%')
+
 
     </select>
 

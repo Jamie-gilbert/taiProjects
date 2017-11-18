@@ -43,7 +43,7 @@
         </div>
         <div class="container-fluid" id="unitButton">
             <a class="btn btn-primary btn-sm" href="/department/querybydwid.action?dwid=111">修改单位信息</a>
-            <a class="btn btn-primary btn-sm" href="/department_bils.jsp?dwid=111">查询单据</a>
+            <a class="btn btn-primary btn-sm" href="../paymentHistory/interestPaymentHistory.action?dwid=100000000000175&pageNumber=1&pageSize=10">查询单据</a>
             <a class="btn btn-primary btn-sm" href="../staff_reback_payment.jsp">人员退费</a>
             <a class="btn btn-primary btn-sm" href="/dempartment_interest.jsp?dwid=111">单位计息</a>
             <!--    <a class="btn btn-primary btn-sm" href="../staff_info.jsp?dwid=111">人员查询</a>-->

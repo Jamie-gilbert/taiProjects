@@ -19,15 +19,25 @@ public interface DepartmentBillMapper {
                    @Param(value = "txsj") Date time,
                    @Param(value = "djzt") String type);
 
-    void addRebackBill(
-            @Param(value = "dwid") String dwid,
-            @Param(value = "jbjgid") String jbjgid,
-            @Param(value = "txr") String txr,
-            @Param(value = "txsj") String txsj,
-            @Param(value = "qrr") String qrr,
-            @Param(value = "qrsj") String qrsj,
-            @Param(value = "zje") float zje,
-            @Param(value = "ryid") String ryid
+    void addRebackBill(@Param(value = "zdlsh") String zdlsh,
+                       @Param(value = "dwid") String dwid,
+                       @Param(value = "jbjgid") String jbjgid,
+                       @Param(value = "txr") String txr,
+                       @Param(value = "txsj") String txsj,
+                       @Param(value = "qrr") String qrr,
+                       @Param(value = "qrsj") String qrsj,
+                       @Param(value = "zje") float zje,
+                       @Param(value = "ryid") String ryid
     );
+
+    void addBillDel(@Param(value = "zdlsh") String zdlsh,
+                    @Param(value = "xzbz") String xzbz,
+                    @Param(value = "jfxmbh") String jfxmbh,
+                    @Param(value = "qsny") String qsny,
+                    @Param(value = "zzny") String zzny,
+                    @Param(value = "jfje") float jfje
+    );
+
+    String queryZDLSH();
 
 }

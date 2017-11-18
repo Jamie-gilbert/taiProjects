@@ -89,19 +89,14 @@ SELECT * FROM (
         (select * from
         si3.per_reg
         where
-        1=1
-        <if test="GRBH !=NULL AND GRBH !=''">
-            AND GRBH LIKE  concat(concat('%',#{GRBH}),'%')
-        </if>
-        <if test="XM !=NULL AND XM !=''">
+      GRBH LIKE  concat(concat('%',#{GRBH}),'%')
+
             and XM LIKE concat(concat('%',#{XM}),'%')
-        </if>
-        <if test="SFZHM !=NULL AND SFZHM !=''">
+
             and SFZHM LIKE concat(concat('%',#{SFZHM}),'%')
-        </if>
-        <if test="XMPY !=NULL AND XMPY !=''">
+
             AND  XMPY LIKE concat(concat('%',#{XMPY}),'%')
-        </if>
+
        ) A
         WHERE ROWNUM &lt; #{next}
         ) WHERE RN >=#{pre}

@@ -578,9 +578,12 @@ public class PaymentHistoryController {
         Date date = new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM");
         String dateStr = simpleDateFormat.format(date);
-        departmentBillMapper.addRebackBill(staff.getDWID()
+        String zdlsh = departmentBillMapper.queryZDLSH();
+        departmentBillMapper.addRebackBill(zdlsh, staff.getDWID()
                 , staff.getJBJGID(), txr, dateStr, txr, dateStr, amount, ryid);
+        departmentBillMapper.addBillDel(zdlsh,"102","AL1",qsrq,zzrq,amount);
         paymentHistoryMapper.rebackPaymentByRyId(ryid, qsrq, zzrq);
+
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("errorCode", 0);
         jsonObject.put("errorText", "");
