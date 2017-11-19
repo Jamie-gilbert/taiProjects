@@ -25,6 +25,7 @@ public class PaymentHistory implements Serializable {
     private double GRJFE;
     private double DWJFZE;
     private double GRJFZE;
+    private double ZJE;
     private String ZDLSH;
     private String JBJGID;
     private String BZ;
@@ -233,5 +234,13 @@ public class PaymentHistory implements Serializable {
 
     public void setXGBZ(int XGBZ) {
         this.XGBZ = XGBZ;
+    }
+
+    public double getZJE() {
+        return ZJE;
+    }
+
+    public void setZJE(double ZJE) {
+        this.ZJE = ZJE;
     }
 }

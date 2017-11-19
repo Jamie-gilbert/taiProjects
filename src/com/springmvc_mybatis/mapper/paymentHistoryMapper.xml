@@ -26,6 +26,7 @@
         <result column="JBSJ" property="JBSJ"/>
         <result column="LX" property="LX"/>
         <result column="XGBZ" property="XGBZ"/>
+        <result column="ZJE" property="ZJE"/>
 
         <association property="staff"
                      column="RYID"
@@ -37,9 +38,9 @@
     <select id="queryBillsWithoutInterest" resultMap="paymentHistoryResult">
        SELECT * FROM (
         SELECT A.*,ROWNUM RN FROM
-		(select DISTINCT RYID from
+		(select  a.RYID ,sum(a.grjfze) as ZJE from
 		si3.aged_pay_his a
-		WHERE  a.DWID =${dwid} AND (a.LX=0 OR a.LX IS NULL )) A
+		WHERE  a.DWID =${dwid} AND (a.LX=0 OR a.LX IS NULL ) group by ryid) A
 		WHERE ROWNUM &lt; ${next}
 		) WHERE RN >=${pre}
     </select>
@@ -48,7 +49,7 @@
         SELECT A.*,ROWNUM RN FROM
         (select DISTINCT RYID from
         si3.aged_pay_his a
-        WHERE  a.DWID =${dwid} AND (a.LX!=0 AND a.LX IS not NULL )) A
+        WHERE  a.DWID =${dwid} AND (a.LX!=0 AND a.LX IS not NULL )group by ryid) A
         WHERE ROWNUM &lt; ${next}
         ) WHERE RN >=${pre}
     </select>

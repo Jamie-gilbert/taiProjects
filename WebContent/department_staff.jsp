@@ -77,8 +77,8 @@
                         <label for="sexBoy">性别</label>
                         <div class="input-group" id="sexLable">
                             <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <input name="xb" id="sexBoy" name="optionsRadiosinline"  type="radio" value ="1" checked>男&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <input name="xb" id="sexGirl" name="optionsRadiosinline"  type="radio" value ="2">女
+                            <input name="xb" id="sexBoy" name="optionsRadiosinline" type="radio" value="1" checked>男&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input name="xb" id="sexGirl" name="optionsRadiosinline" type="radio" value="2">女
                         </div>
 
                         <span style="color:red;display: none;" class="tips"></span>
@@ -86,8 +86,8 @@
                         <span style="display: none;" class="glyphicon glyphicon-ok form-control-feedback"></span>
                     </div>
                     <%--<div class="form-group">--%>
-                        <%--<label>性别</label>--%>
-                        <%--<input type="text" class="form-control" id="xb" placeholder="性别">--%>
+                    <%--<label>性别</label>--%>
+                    <%--<input type="text" class="form-control" id="xb" placeholder="性别">--%>
                     <%--</div>--%>
                     <div class="form-group">
                         <label>身份证号码</label>
@@ -208,83 +208,83 @@
     });
 
 
-   /* function getStaff() {
-        $.ajax({
-            type: "POST",
-            url: "staff/queryStaff.action",
-            data: {"dwid": dwid, "page": page, "count": count, "type": type},
-            async: false,
-            dataType: "JSON",
-            success: function (data, status) {
-                console.log(data);
+    /* function getStaff() {
+         $.ajax({
+             type: "POST",
+             url: "staff/queryStaff.action",
+             data: {"dwid": dwid, "page": page, "count": count, "type": type},
+             async: false,
+             dataType: "JSON",
+             success: function (data, status) {
+                 console.log(data);
+             },
+             error: function (err, status) {
+                 console.log(err);
+             }
+         });
+     }*/
+
+    function per_table() {
+        $('#per_table').bootstrapTable('destroy');
+        $('#per_table').bootstrapTable({
+            url: '../staff/queryStaff.action',         //请求后台的URL（*）
+            method: 'get',                      //请求方式（*）
+            toolbar: '#toolbar',                //工具按钮用哪个容器
+            striped: true,                      //是否显示行间隔色
+            cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+            pagination: true,                   //是否显示分页（*）
+            sortable: false,                     //是否启用排序
+            sortOrder: "asc",                   //排序方式
+            queryParams: function (params) {
+                return {
+                    pageNumber: params.offset + 1,
+                    pageSize: params.limit,
+                    dwid: dwid,
+                    type: types
+                };
             },
-            error: function (err, status) {
-                console.log(err);
-            }
+            //传递参数（*）
+            sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+            pageNumber: 1,                       //初始化加载第一页，默认第一页
+            pageSize: 10,                       //每页的记录行数（*）
+            pageList: [10, 25, 50, 100, 1000],        //可供选择的每页的行数（*）
+            clickToSelect: true,
+            showExport: true,                     //是否显示导出
+            exportDataType: "all",              //basic', 'all', 'selected'.
+            columns: [{
+                checkbox: true
+            }, {
+                field: 'XM',
+                title: '姓名',
+            }, {
+                field: 'SFZHM',
+                title: '身份证号码',
+            }, {
+                field: 'GRBH',
+                title: '个人编号',
+                visible: true
+            }, {
+                field: 'CSRQ',
+                title: '出生日期',
+            }, {
+                field: 'CJGZSJ',
+                title: '参加工作时间'
+            }, {
+                field: 'TBLBMC',
+                title: '投保类别',
+                soetable: true
+            }, {
+                field: 'personOpId',
+                title: '操作',
+                align: 'center',
+                width: 150,
+                formatter: operateFormatter
+
+            }]
         });
-    }*/
+    }
 
-   function per_table() {
-       $('#per_table').bootstrapTable('destroy');
-       $('#per_table').bootstrapTable({
-           url: '../staff/queryStaff.action',         //请求后台的URL（*）
-           method: 'get',                      //请求方式（*）
-           toolbar: '#toolbar',                //工具按钮用哪个容器
-           striped: true,                      //是否显示行间隔色
-           cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
-           pagination: true,                   //是否显示分页（*）
-           sortable: false,                     //是否启用排序
-           sortOrder: "asc",                   //排序方式
-           queryParams : function (params) {
-               return {
-                   pageNumber: params.offset + 1,
-                   pageSize: params.limit,
-                   dwid: dwid,
-                   type: types
-               };
-           },
-           //传递参数（*）
-           sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
-           pageNumber: 1,                       //初始化加载第一页，默认第一页
-           pageSize: 10,                       //每页的记录行数（*）
-           pageList: [10, 25, 50, 100,1000],        //可供选择的每页的行数（*）
-           clickToSelect:true,
-           showExport: true,                     //是否显示导出
-           exportDataType: "all",              //basic', 'all', 'selected'.
-           columns: [{
-               checkbox: true
-           }, {
-               field: 'XM',
-               title: '姓名',
-           }, {
-               field: 'SFZHM',
-               title: '身份证号码',
-           }, {
-               field:'GRBH',
-               title:'个人编号',
-               visible:true
-           },{
-               field: 'CSRQ',
-               title: '出生日期',
-           }, {
-               field: 'CJGZSJ',
-               title: '参加工作时间'
-           },  {
-               field: 'TBLBMC',
-               title: '投保类别',
-               soetable:true
-           },{
-               field: 'personOpId',
-               title: '操作',
-               align: 'center',
-               width: 150,
-               formatter: operateFormatter
-
-           }]
-       });
-   }
-
-    function operateFormatter(value,row,index)
+    function operateFormatter(value, row, index)
 //row 获取这行的值 ，index 获取索引值
     {
         return [
@@ -295,7 +295,7 @@
 
     }
 
-    function showGrbh(){
+    function showGrbh() {
 
     }
 

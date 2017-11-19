@@ -18,6 +18,8 @@
         SET interest_scale=${interest_scale}
         WHERE current_year=${current_year}
     </update>
-
+    <select id="queryAllInterestScales" resultMap="interestScaleResult">
+        SELECT  * FROM  be3.interest_scale_year
+    </select>
 </mapper>
         <!-- error ,,,,resultMap wrong to resultType... -->
