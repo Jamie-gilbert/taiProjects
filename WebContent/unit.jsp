@@ -47,7 +47,7 @@
             <a class="page-action btn btn-primary btn-sm" href="#" data-href="../department/querybydwid.action?dwid=100000000000012" title="修改单位信息" data-id="modify_department">修改单位信息</a>
             <a class="btn btn-primary btn-sm" href="../department_bils.jsp?dwid=100000000000175">查询单据</a>
             <a class="btn btn-primary btn-sm" href="../staff_reback_payment.jsp">人员退费</a>
-            <a class="btn btn-primary btn-sm" href="/dempartment_interest.jsp?dwid=111">单位计息</a>
+            <a class="btn btn-primary btn-sm" href="../paymentHistory/interestPaymentHistory.action?dwid=100000000000175&pageNumber=1&pageSize=10">单位计息</a>
             <!--    <a class="btn btn-primary btn-sm" href="../staff_info.jsp?dwid=111">人员查询</a>-->
             <a class="btn btn-primary btn-sm" href="../paymentHistory/clearPaymentHistory.action?dwid=100000000000042&pageNumber=1&pageSize=10">
                 撤销单位计息
