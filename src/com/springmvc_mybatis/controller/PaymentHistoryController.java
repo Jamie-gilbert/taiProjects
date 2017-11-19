@@ -39,12 +39,11 @@ public class PaymentHistoryController {
      * 根据单位id查询缴费历史
      *
      * @param request
-     *
      * @return
      * @throws Exception
      */
     @RequestMapping("/interestPaymentHistory")
-    public String interestPaymentHistory(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public void interestPaymentHistory(HttpServletRequest request, HttpServletResponse response) throws Exception {
         response.setContentType("application/json");
         response.setHeader("Pragma", "No-cache");
         response.setHeader("Cache-Control", "no-cache");
@@ -70,7 +69,7 @@ public class PaymentHistoryController {
 
         for (PaymentHistory paymentHistory : paymentHistories) {
             JSONObject object = new JSONObject(paymentHistory.getStaff());
-            object.put("zje",paymentHistory.getZJE());
+            object.put("zje", paymentHistory.getZJE());
             jsonArray.put(object);
         }
         jsonObject.put("rows", jsonArray);
@@ -79,20 +78,25 @@ public class PaymentHistoryController {
         writer.flush();
         writer.close();
 
-        return "dempartment_interest";
+//        model.addAttribute("data", jsonObject);
+//
+//        return "dempartment_interest";
+
     }
 
     /**
      * 根据dwid 查询需要已经计息的人员
      *
      * @param request
-     * @param model
-     * @return
+     * @param response
      * @throws Exception
      */
     @RequestMapping("/clearPaymentHistory")
-    public String clearPaymentHistory(HttpServletRequest request, Model model) throws Exception {
-
+    public void clearPaymentHistory(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        response.setContentType("application/json");
+        response.setHeader("Pragma", "No-cache");
+        response.setHeader("Cache-Control", "no-cache");
+        response.setCharacterEncoding("UTF-8");
         String dwid = request.getParameter("dwid");
         String page = request.getParameter("pageNumber");
         String count = request.getParameter("pageSize");
@@ -111,12 +115,15 @@ public class PaymentHistoryController {
 
         for (PaymentHistory paymentHistory : paymentHistories) {
             JSONObject object = new JSONObject(paymentHistory.getStaff());
+            object.put("zje", paymentHistory.getZJE());
             jsonArray.put(object);
         }
         jsonObject.put("rows", jsonArray);
-        model.addAttribute("data", jsonObject);
+        Writer writer = response.getWriter();
+        writer.write(jsonObject.toString());
+        writer.flush();
+        writer.close();
 
-        return "dempartment_clear_interest";
     }
 
     /**
@@ -136,31 +143,39 @@ public class PaymentHistoryController {
         String dwid = request.getParameter("dwid");
         String infos = request.getParameter("infos");
         JSONArray jsonArray = new JSONArray(infos);
-        ArrayList<PaymentHistory> params = new ArrayList();
+        List<PaymentHistory> params = new ArrayList();
         Calendar calendar = Calendar.getInstance();
         int currentYear = calendar.get(Calendar.YEAR);
         float scale = interestScaleMapper.queryInterestScale((String.valueOf(currentYear)).trim());
-
+        List<String> ryids = new ArrayList<>();
+        JSONObject object = new JSONObject();
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject jsonObject = jsonArray.getJSONObject(i);
-            String qsny = jsonObject.getString("qsny");
             String ryid = jsonObject.getString("ryid");
-            float payment = jsonObject.getFloat("payment");
-            int qsnyNum = Integer.parseInt(qsny.substring(0, 4));
-            float lx = calInterest(qsnyNum, currentYear, scale, payment);
-            PaymentHistory paymentHistory = new PaymentHistory();
-            paymentHistory.setQSNY(qsny);
-            paymentHistory.setRYID(ryid);
-            paymentHistory.setDWID(dwid);
-            paymentHistory.setLX(lx);
-            params.add(paymentHistory);
+            ryids.add(ryid);
         }
-        paymentHistoryMapper.modifyInterest(params);
-        JSONObject object = new JSONObject();
-        object.put("errorCode", 0);
-        object.put("errorText", "");
+        params = paymentHistoryMapper.queryPaymentHisByRyids(dwid,ryids);
+        if (params != null) {
+            for (PaymentHistory paymentHistory : params) {
+                String qsny = paymentHistory.getQSNY();
+                int qsnyNum = Integer.parseInt(qsny.substring(0, 4));
+                float lx = calInterest(qsnyNum, currentYear, scale, paymentHistory.getGRJFE());
+                paymentHistory.setLX(lx);
+
+            }
+            paymentHistoryMapper.modifyInterest(params);
+            object.put("errorCode", 0);
+            object.put("errorText", "");
+        } else {
+            object.put("errorCode", 1);
+            object.put("errorText", "计息失败");
+        }
+
+
         Writer writer = response.getWriter();
         writer.write(object.toString());
+        writer.flush();
+        writer.close();
     }
 
     /**
@@ -257,6 +272,8 @@ public class PaymentHistoryController {
         object.put("errorText", "");
         Writer writer = response.getWriter();
         writer.write(object.toString());
+        writer.flush();
+        writer.close();
 
     }
 
@@ -289,6 +306,8 @@ public class PaymentHistoryController {
             object.put("errorText", "");
             Writer writer = response.getWriter();
             writer.write(object.toString());
+            writer.flush();
+            writer.close();
         } catch (Exception e) {
             throw e;
         }
@@ -338,6 +357,8 @@ public class PaymentHistoryController {
             object.put("errorText", "");
             Writer writer = response.getWriter();
             writer.write(object.toString());
+            writer.flush();
+            writer.close();
         } catch (Exception e) {
             throw e;
         }
@@ -640,10 +661,10 @@ public class PaymentHistoryController {
      * @param payment
      * @return
      */
-    private float calInterest(int year, int currentYear, float scale, float payment) {
+    private float calInterest(int year, int currentYear, float scale, double payment) {
         float finalInterest = 0f;
 
-        finalInterest = payment * scale * (currentYear - year);
+        finalInterest = (float) (payment * scale * (currentYear - year));
         return finalInterest;
     }
 }

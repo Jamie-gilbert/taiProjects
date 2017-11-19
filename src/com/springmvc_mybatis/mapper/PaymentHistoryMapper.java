@@ -4,7 +4,6 @@ import com.springmvc_mybatis.bean.PaymentHistory;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public interface PaymentHistoryMapper {
@@ -43,7 +42,11 @@ public interface PaymentHistoryMapper {
     int queryCountByRyid(@Param(value = "ryid") String ryid);
 
 
-    void modifyInterest(@Param(value = "list") ArrayList<PaymentHistory> list);
+    void modifyInterest(@Param(value = "list") List<PaymentHistory> list);
+
+    List<PaymentHistory> queryPaymentHisByRyids(
+            @Param(value = "dwid") String dwid,
+            @Param(value = "ryids") List<String> ryids);
 
     void modifyPaymentHistory(@Param(value = "list") ArrayList<PaymentHistory> list);
 

@@ -74,6 +74,8 @@ public class UserController {
             object.put("responseText", "");
             Writer writer = response.getWriter();
             writer.write(object.toString());
+            writer.flush();
+            writer.close();
         } catch (Exception e) {
             if (e instanceof ClassCastException) {
 
