@@ -13,10 +13,11 @@
         INSERT  INTO be3.interest_scale_year (current_year,interest_scale)
          VALUES (${current_year},${interest_scale})
     </insert>
-    <update id="modifyInterestScale">
-        UPDATE be3.interest_scale_year
-        SET interest_scale=${interest_scale}
-        WHERE current_year=${current_year}
+    <update id="modifyInterestScale" parameterType="java.util.List">
+        <foreach collection="list" open="begin" item="item" index="index" close=";end;" separator=";">
+            UPDATE be3.interest_scale_year SET  interest_scale=${item.interest_scale} WHERE current_year=${item.current_year}
+        </foreach>
+
     </update>
     <select id="queryAllInterestScales" resultMap="interestScaleResult">
         SELECT  * FROM  be3.interest_scale_year

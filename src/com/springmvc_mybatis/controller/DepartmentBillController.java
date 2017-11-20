@@ -37,8 +37,8 @@ public class DepartmentBillController {
         response.setHeader("Cache-Control", "no-cache");
         response.setCharacterEncoding("UTF-8");
 
-//        String dwid = request.getParameter("dwid");
-        String dwid = "100000000000012";
+        String dwid = request.getParameter("dwid");
+
         String type = request.getParameter("type");
         String time = request.getParameter("time");
 
