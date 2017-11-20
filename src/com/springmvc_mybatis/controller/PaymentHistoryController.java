@@ -462,14 +462,14 @@ public class PaymentHistoryController {
         response.setCharacterEncoding("UTF-8");
         String page = request.getParameter("pageNumber");
         String count = request.getParameter("pageSize");
-        String sfzhm = request.getParameter("sfzhm");
+        String grbh = request.getParameter("grbh");
         String qsrq = request.getParameter("qsrq");
         String zzrq = request.getParameter("zzrq");
         qsrq = qsrq.replace("-", "").trim();
         zzrq = zzrq.replace("-", "").trim();
         int countNum = Integer.parseInt(count);
         int pageNum = Integer.parseInt(page);
-        String ryid = staffMapper.queryStaffBySFZHM(sfzhm);
+        String ryid = staffMapper.queryStaffByGRBH(grbh);
         List<PaymentHistory> paymentHistories = new ArrayList<>();
         int num = paymentHistoryMapper.queryCountByRyidWithDate(ryid
                 , qsrq, zzrq);

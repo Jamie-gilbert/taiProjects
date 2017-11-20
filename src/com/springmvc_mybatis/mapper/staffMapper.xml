@@ -112,8 +112,8 @@ SELECT * FROM (
     </select>
 
 
-    <select id="queryStaffBySFZHM" resultType="java.lang.String" parameterType="java.lang.String">
-    SELECT RYID  FROM si3.per_reg WHERE SFZHM=#{sfzhm,jdbcType=VARCHAR}
+    <select id="queryStaffByGRBH" resultType="java.lang.String" parameterType="java.lang.String">
+    SELECT RYID  FROM si3.per_reg WHERE GRBH=#{grbh,jdbcType=VARCHAR}
     </select>
 
     <select id="queryStaffByRyid" resultMap="staffResult">

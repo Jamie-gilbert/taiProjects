@@ -28,7 +28,7 @@ public interface StaffMapper {
                                @Param(value = "XM") String XM,
                                @Param(value = "XMPY") String XMPY);
 
-    String queryStaffBySFZHM(@Param(value = "sfzhm") String sfzhm);
+    String queryStaffByGRBH(@Param(value = "grbh") String grbh);
 
     void saveStaff(@Param(value = "xm") String xm,
                    @Param(value = "cym") String cym,
