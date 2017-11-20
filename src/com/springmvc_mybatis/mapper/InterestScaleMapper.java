@@ -15,8 +15,7 @@ public interface InterestScaleMapper {
     void addInterestScale(@Param(value = "current_year") String currentYear,
                           @Param(value = "interest_scale") float interest_scale);
 
-    void modifyInterestScale(@Param(value = "current_year") String currentYear,
-                             @Param(value = "interest_scale") float interest_scale);
+    void modifyInterestScale(@Param(value = "list") List<InterestScale> list);
 
 
 }
