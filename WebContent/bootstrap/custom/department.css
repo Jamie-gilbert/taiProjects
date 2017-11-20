@@ -5,6 +5,7 @@ body {
 
 body .department {
     margin-top: 1%;
+    margin-left:1%;
 }
 
 body #unitButton {
@@ -19,4 +20,24 @@ body #unitButton {
 .secondmenu li.active {
     background-color: #eee;
     border-color: #428bca;
+}
+
+.depart_show {
+    width:60%;
+    margin-top:3%;
+}
+
+.depart_show .input-group {
+    margin-top: 6%;
+}
+
+.person_show {
+    width:90%;
+    margin-top:1%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.person_show .input-group {
+    margin-top: 6%;
 }

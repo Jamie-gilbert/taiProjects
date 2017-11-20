@@ -23,26 +23,17 @@
     <script type="text/javascript" src="../js/dialog.js"></script>
 </head>
 <body>
-<div class="container-fluid">
+<%@include file="commonTop.jsp"%>
+<div class="" style="margin-top: 1%;margin-left: 0px">
+
     <div class="row">
         <div class="col-xs-4 col-md-4">
             <button id="officer" class="btn btn-primary" data-toggle="button">在职人员</button>
-        </div>
-        <div class="col-xs-4 col-md-4">
             <button id="retiree" class="btn btn-primary" data-toggle="button">退休人员</button>
-        </div>
-        <div class="col-xs-4 col-md-4">
             <button id="unemployed" class="btn btn-primary" data-toggle="button">离职人员</button>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-xs-4 col-md-4">
             <button id="add_staff" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">添加人员</button>
         </div>
     </div>
-
-
 </div>
 
 <div>
@@ -56,11 +47,6 @@
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" id="btnClose" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">×</span></button>
-                <h4 class="modal-title" id="exampleModalLabel">添加人员</h4>
-            </div>
             <div class="modal-body">
                 <form>
 
@@ -187,9 +173,12 @@
 </div>
 <script type="text/javascript">
     var types = "";
-    var dwid = <%=request.getParameter("dwid")%>;
-    var page = 1;
-    var count = 10;
+    $(document).ready(function() {
+        $("#dwid").val(dwid);
+        $("#dwmc").val(dwmc);
+        $("#dwbh").val(dwbh);
+    });
+
 
     $("#officer").click(function () {
         types = "A0A";
@@ -206,23 +195,6 @@
         types = "A0F";
         per_table();
     });
-
-
-    /* function getStaff() {
-         $.ajax({
-             type: "POST",
-             url: "staff/queryStaff.action",
-             data: {"dwid": dwid, "page": page, "count": count, "type": type},
-             async: false,
-             dataType: "JSON",
-             success: function (data, status) {
-                 console.log(data);
-             },
-             error: function (err, status) {
-                 console.log(err);
-             }
-         });
-     }*/
 
     function per_table() {
         $('#per_table').bootstrapTable('destroy');

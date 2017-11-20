@@ -106,10 +106,6 @@
                         <input name="xb" id="sexBoy" name="optionsRadiosinline" type="radio" value="1" checked>男&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <input name="xb" id="sexGirl" name="optionsRadiosinline" type="radio" value="2">女
                     </div>
-
-                    <span style="color:red;display: none;" class="tips"></span>
-                    <span style="display: none;" class=" glyphicon glyphicon-remove form-control-feedback"></span>
-                    <span style="display: none;" class="glyphicon glyphicon-ok form-control-feedback"></span>
                 </div>
 
                 <div class="form-group has-feedback">
@@ -375,10 +371,14 @@
     });
     //身份证号码
     $('.container').find('input').eq(5).change(function () {
-        if ($(this).val().length < 18 || isNaN($(this).val()) == true) {
-            fail($(this), 4, '请输入18位数字身份证号码');
+        if ($(this).val().length < 18) {
+            fail($(this), 3, '请输入18位身份证!');
         } else {
-            success($(this), 5);
+            if (isNaN($(this).val()) == true) {
+                fail($(this), 3, '请输入数字!');
+            } else {
+                success($(this), 3);
+            }
         }
     });
 
@@ -406,7 +406,7 @@
 
         $('#registerForm').ajaxForm(function (responseText, statusText) {
             if (statusText == 'success') {
-              console.log(statusText)
+                console.log(statusText)
                 alert("注册成功")
             } else {
                 console.log(statusText)

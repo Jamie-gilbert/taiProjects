@@ -18,6 +18,7 @@
     <script type="text/javascript" src="/bootstrap-table/bootstrap-table-zh-CN.js"></script>
     <script type="text/javascript" src="../webTree/assets/js/bui-min.js"></script>
     <script type="text/javascript" src="../webTree/assets/js/config-min.js"></script>
+    <script type="text/javascript" src="../js/dialog.js"></script>
     <link rel="stylesheet" type="text/css" href="./css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="./bootstrap/custom/department.css">
 </head>
@@ -38,29 +39,26 @@
                 </div>
             </div>
             <div class="col-xs-2 col-md-3">
-                <button class="btn btn-primary btn-sm" data-toggle="modal" id="query" data-target="#unitModal">查询
-                </button>
+                <button class="btn btn-primary btn-sm" data-toggle="modal" id="query"  data-target="#unitModal">查询</button>
                 <button class="btn btn-primary btn-sm" id="resetBtn" type="reset">重置</button>
             </div>
         </div>
         <div class="container-fluid" id="unitButton">
-            <%--<a class="btn btn-primary btn-sm" href="/department/querybydwid.action?dwid=111">修改单位信息</a>--%>
-            <a id="xgdwxx" class="page-action btn btn-primary btn-sm" href="#"
-               data-href="../department/querybydwid.action?dwid=100000000000012" title="修改单位信息"
-               data-id="modify_department">修改单位信息</a>
-            <a class="btn btn-primary btn-sm" href="../department_bils.jsp?dwid=100000000000175">查询单据</a>
-            <a class="btn btn-primary btn-sm" href="../staff_reback_payment.jsp">人员退费</a>
-            <a class="btn btn-primary btn-sm"
-               href="../paymentHistory/interestPaymentHistory.action?dwid=100000000000175&pageNumber=1&pageSize=10">单位计息</a>
-            <!--    <a class="btn btn-primary btn-sm" href="../staff_info.jsp?dwid=111">人员查询</a>-->
-            <a class="btn btn-primary btn-sm"
-               href="../paymentHistory/clearPaymentHistory.action?dwid=100000000000042&pageNumber=1&pageSize=10">
+            <a id='rylb' class="page-action btn btn-primary btn-sm" href="#" title="人员列表">人员列表
+            </a>
+            <a id="xgdwxx" class="btn btn-primary btn-sm" href="#unitChangeModal" data-toggle="modal" title="修改单位信息">
+                修改单位信息</a>
+            <a id='cxdj' class="page-action btn btn-primary btn-sm" href="#"  title="查询单据">
+                查询单据</a>
+            <a id='dwjx' class="page-action btn btn-primary btn-sm" href="#"  title="单位计息">
+                单位计息
+            </a>
+            <a id='cxdwjx' class="page-action btn btn-primary btn-sm" href="#" title="撤销单位计息">
                 撤销单位计息
             </a>
         </div>
     </div>
-    <div class="modal fade" id="unitModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
-         data-backdrop="static" data-keyboard="false">
+    <div class="modal fade" id="unitModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -77,65 +75,84 @@
             </div>
         </div>
     </div>
-    <div>
-        <div>
-            <label for="dwbh">单位编号</label>
-            <input name="dwbh" type="text" readonly>
+    <div class="modal fade" id="unitChangeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="unitInfo">单位信息</h4>
+                </div>
+                <div class="modal-body input-group">
+                    <span class="input-group-addon">单位名称:</span>
+                    <input name="dwmc" type="text" id="xgDwmc" class="form-control">
+                </div>
+                <input  type="hidden" id="xgDwid" class="form-control">
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="changeUnit">确定</button>
+                </div>
+            </div>
         </div>
-        <div>
-            <label for="dwmc">单位名称</label>
-            <input name="dwmc" type="text" readonly>
+    </div>
+    <div class="depart_show">
+        <input name="dwbh" type="text" id="dwid" hidden="hidden" readonly>
+        <div class="input-group">
+            <span class="input-group-addon">单位编号:</span>
+            <input name="dwbh" type="text" id="tcDwbh" class="form-control" readonly>
         </div>
-        <div>
-            <label for="jbjgid">经办机构</label>
-            <input name="jbjgid" type="text" readonly>
+        <div class="input-group">
+            <span class="input-group-addon">单位名称:</span>
+            <input name="dwmc" type="text" id="tcDwmc" class="form-control" readonly>
         </div>
-        <div>
-            <label for="tblbmc">投保类别</label>
-            <input name="tblbmc" type="text" readonly>
+        <div class="input-group">
+            <span class="input-group-addon">经办机构:</span>
+            <input name="jbjgid" type="text" id="jbjgid" class="form-control" readonly>
+        </div>
+        <div class="input-group">
+            <span class="input-group-addon">投保类别:</span>
+            <input name="tblbmc" type="text" id="tblbmc" class="form-control" readonly>
         </div>
     </div>
 </div>
+
 
 <script type="text/javascript">
     var dwbhv = "";
     var dwmcv = "";
     var row = "";
+    var dwid ="";
+    var dwbh ="";
+    var dwmc ="";
     BUI.use('common/page');
-    /*
-        $(document).ready(function () {
-            $("#query").click(function () {
-                var dwmc = $("#dwmc").val();
-                var dwbh = $("#dwbh").val();
-                var page = 1;
-                var count = 10;
-                $.ajax({
-                    type: "POST",
-                    url: "../department/querybykey.action",
-                    data: {"dwbh": dwbh, "dwmc": dwmc, "page": page, "count": count},
-                    async: false,
-                    dataType: "json",
-                    success: function (data, status) {
-                        $('#dwbh').val(data.data[0].dwbh);
-                        $('#dwmc').val(data.data[0].dwmc);
-                        $('#dwbh').attr("readonly",true)
-                        $('#dwmc').attr("readonly",true)
-                    },
-                    error: function (err, status) {
-                        console.log(err)
-                    }
 
 
-                });
+    $("#changeUnit").click(function () {
+
+        dwmc = $("#xgDwmc").val();
+        dwid = $("#xgDwid").val();
+        if (dwmc == null){
+            alert("请输入要修改的信息");
+        }else {
+            $.ajax({
+                type: "POST",
+                url: "../department/modifydepartment.action",
+                data: {"dwmc": dwmc,"dwid":dwid},
+                async: false,
+                dataType: "JSON",
+                success: function (data, status) {
+                    alert("修改成功!");
+                    $('#changeUnit').modal('hide');
+                },
+                error: function (err, status) {
+                    alert("修改异常!");
+                    $('#changeUnit').modal('hide');
+                }
             });
-        });
-    */
-
+        }
+    });
 
     $(document).ready(function () {
         $('#query').click(function () {
-            var dwid="1111";
-            $('#xgdwxx').attr('data-href',dwid);
             dwbhv = $('#dwbh').val();
             dwmcv = $('#dwmc').val();
             unit();
@@ -167,7 +184,7 @@
             sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
             pageNumber: 1,                       //初始化加载第一页，默认第一页
             pageSize: 10,                       //每页的记录行数（*）
-            pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
+            pageList: [10, 25, 50],        //可供选择的每页的行数（*）
             clickToSelect: true,
             columns: [{
                 checkbox: true
@@ -196,7 +213,22 @@
             $('#dwbh').val(row[0]["dwbh"]);
             $('#dwbh').attr("readonly", true);
             $('#dwmc').attr("readonly", true);
+            $('#tcDwmc').val(row[0]["dwmc"]);
+            $('#xgDwmc').val(row[0]["dwmc"]);
+            $('#tcDwbh').val(row[0]["dwbh"]);
+            $('#jbjgid').val("岱岳区");
+            $('#tblbmc').val(row[0]["tblbmc"]);
+            $('#dwid').val(row[0]["dwid"]);
+            $('#xgDwid').val(row[0]["dwid"]);
         }
+        var dwid=$('#dwid').val();
+        var dwmc=$('#dwmc').val();
+        var dwbh=$('#dwbh').val();
+
+        $('#rylb').attr('data-href',"../department_staff.jsp?dwid="+dwid+"&dwbh="+dwbh+"&dwmc="+dwmc);
+        $('#cxdj').attr('data-href',"../department_bils.jsp?dwid="+dwid+"&dwbh="+dwbh+"&dwmc="+dwmc);
+        $('#dwjx').attr('data-href',"../dempartment_interest.jsp?dwid="+dwid+"&dwbh="+dwbh+"&dwmc="+dwmc);
+        $('#cxdwjx').attr('data-href',"../dempartment_clear_interest.jsp?dwid="+dwid+"&dwbh="+dwbh+"&dwmc="+dwmc);
     }
 
 
@@ -208,5 +240,6 @@
         $('#dwmc').attr("readonly", false)
     });
 </script>
+
 </body>
 </html>
