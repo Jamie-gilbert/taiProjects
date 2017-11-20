@@ -206,13 +206,20 @@ public class StaffController {
         int pageNum = Integer.parseInt(page);
 //        String pre = String.valueOf(1 + (pageNum - 1) * countNum);
 //        String next = String.valueOf(pageNum * countNum);
-        List<Staff> staffList = staffMapper
-                .queryStaffInfo(grbh, grsfzhm, grxm, xmpy, page, String.valueOf(countNum + pageNum));
+        int num = staffMapper.queryStaffCount(grbh, grsfzhm, grxm, xmpy);
+        JSONArray array = new JSONArray();
+        if (num > 0) {
+            List<Staff> staffList = staffMapper
+                    .queryStaffInfo(grbh, grsfzhm, grxm, xmpy, page, String.valueOf(countNum + pageNum));
+            for (Staff staff : staffList) {
+                JSONObject object = new JSONObject(staff);
+                array.put(object);
+            }
+        }
 
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("errorCode", "0");
-        jsonObject.put("errorText", "");
-        jsonObject.put("data", staffList);
+        jsonObject.put("total", num);
+        jsonObject.put("rows", array);
         PrintWriter out = response.getWriter();
         out.write(jsonObject.toString());
         out.flush();

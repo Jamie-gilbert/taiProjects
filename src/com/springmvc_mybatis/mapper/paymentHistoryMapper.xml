@@ -40,7 +40,7 @@
         SELECT A.*,ROWNUM RN FROM
 		(select  a.RYID ,sum(a.grjfze) as ZJE from
 		si3.aged_pay_his a
-		WHERE  a.DWID =${dwid} AND (a.LX=0 OR a.LX IS NULL ) group by ryid) A
+		WHERE  a.DWID =${dwid} AND  a.LX IS NULL  group by ryid) A
 		WHERE ROWNUM &lt; ${next}
 		) WHERE RN >=${pre}
     </select>
@@ -49,7 +49,7 @@
         SELECT A.*,ROWNUM RN FROM
         (select  a.RYID ,sum(a.grjfze) as ZJE from
         si3.aged_pay_his a
-        WHERE  a.DWID =${dwid} AND (a.LX!=0 AND a.LX IS not NULL )group by ryid) A
+        WHERE  a.DWID =${dwid} AND a.LX IS not NULL group by ryid) A
         WHERE ROWNUM &lt; ${next}
         ) WHERE RN >=${pre}
     </select>
@@ -69,7 +69,7 @@
         SELECT A.*,ROWNUM RN FROM
         (select * from
         si3.aged_pay_his a
-        WHERE  a.RYID =${ryid} AND (a.LX =0 OR a.LX IS  NULL )) A
+        WHERE  a.RYID =${ryid} AND  a.LX IS  NULL ) A
         WHERE ROWNUM &lt; ${next}
         ) WHERE RN >=${pre}
     </select>
@@ -96,20 +96,20 @@
     <select id="queryCountWithoutInterest" resultType="int">
     SELECT COUNT (DISTINCT RYID)
     FROM si3.aged_pay_his a
-		WHERE  a.DWID =${dwid} AND (a.LX=0 OR a.LX IS NULL )
+		WHERE  a.DWID =${dwid} AND  a.LX IS NULL
 </select>
 
 
     <select id="queryCountWithoutInterestByRyid" resultType="int">
         SELECT COUNT (*)
         FROM si3.aged_pay_his a
-            WHERE  a.RYID =${ryid} AND (a.LX=0 OR a.LX IS NULL )
+            WHERE  a.RYID =${ryid} AND a.LX IS NULL
     </select>
 
     <select id="queryCountWithoutInterestByRyidWithDate" resultType="int">
         SELECT COUNT (*)
         FROM si3.aged_pay_his a
-        WHERE  a.RYID =${ryid} AND (a.LX=0 OR a.LX IS NULL )
+        WHERE  a.RYID =${ryid} AND a.LX IS NULL
         AND a.QSNY>=${qsrq} AND a.QSNY&lt;=${zzrq}
     </select>
 
@@ -117,7 +117,7 @@
     <select id="queryCountWithInterestByRyid" resultType="int">
         SELECT COUNT (*)
         FROM si3.aged_pay_his a
-        WHERE  a.RYID =${ryid} AND (a.LX!=0 AND a.LX IS NOT NULL )
+        WHERE  a.RYID =${ryid} AND  a.LX IS NOT NULL
     </select>
 
     <select id="queryCountByRyid" resultType="int">
@@ -129,7 +129,7 @@
     <select id="queryCountWithInterest" resultType="int">
         SELECT COUNT (DISTINCT RYID)
         FROM si3.aged_pay_his a
-        WHERE  a.DWID =${dwid} AND (a.LX!=0 AND a.LX IS not NULL )
+        WHERE  a.DWID =${dwid} AND  a.LX IS not NULL
     </select>
     <select id="selectStaffBystaffRYID" parameterType="string" resultType="Staff">
         SELECT * FROM si3.per_reg WHERE RYID=#{RYID}
@@ -137,7 +137,8 @@
 
     <update id="modifyInterest" parameterType="java.util.List">
         <foreach collection="list" open="begin" item="item" index="index" close=";end;" separator=";">
-            UPDATE si3.aged_pay_his SET LX=${item.LX} WHERE JFLSID=${item.JFLSID}
+            UPDATE si3.aged_pay_his SET LX=${item.LX} WHERE DWID=${item.DWID}
+            AND RYID=${item.RYID} AND QSNY=${item.QSNY} and ZZNY=${item.ZZNY}
         </foreach>
 
     </update>

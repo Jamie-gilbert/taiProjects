@@ -14,12 +14,19 @@ public interface StaffMapper {
     int queryCount(@Param(value = "dwid") String dwid,
                    @Param(value = "cbrylb") String cbrylb);
 
+
+    //  AND  XMPY LIKE concat(concat('%',#{XMPY}),'%')
     List<Staff> queryStaffInfo(@Param(value = "GRBH") String GRBH,
                                @Param(value = "SFZHM") String SFZHM,
                                @Param(value = "XM") String XM,
                                @Param(value = "XMPY") String XMPY,
                                @Param(value = "pre") String pre,
                                @Param(value = "next") String next);
+
+    int queryStaffCount(@Param(value = "GRBH") String GRBH,
+                               @Param(value = "SFZHM") String SFZHM,
+                               @Param(value = "XM") String XM,
+                               @Param(value = "XMPY") String XMPY);
 
     String queryStaffBySFZHM(@Param(value = "sfzhm") String sfzhm);
 
