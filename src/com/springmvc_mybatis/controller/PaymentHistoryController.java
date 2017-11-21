@@ -18,10 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.Writer;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping("/paymentHistory")
@@ -145,7 +142,8 @@ public class PaymentHistoryController {
         JSONArray jsonArray = new JSONArray(infos);
         List<PaymentHistory> params = new ArrayList();
         Calendar calendar = Calendar.getInstance();
-        int currentYear = calendar.get(Calendar.YEAR);
+//        int currentYear = calendar.get(Calendar.YEAR);
+        int currentYear = 2016;
         float scale = interestScaleMapper.queryInterestScale((String.valueOf(currentYear)).trim());
         List<String> ryids = new ArrayList<>();
         JSONObject object = new JSONObject();
@@ -157,9 +155,9 @@ public class PaymentHistoryController {
         params = paymentHistoryMapper.queryPaymentHisByRyids(dwid, ryids);
         if (params != null) {
             for (PaymentHistory paymentHistory : params) {
-                String qsny = paymentHistory.getQSNY();
-                int qsnyNum = Integer.parseInt(qsny.substring(0, 4));
-                float lx = calInterest(qsnyNum, currentYear, scale, paymentHistory.getGRJFE());
+                String zzny = paymentHistory.getZZNY();
+                int zznyNum = Integer.parseInt(zzny.substring(0, 4));
+                float lx = calInterest(zznyNum, currentYear, scale, paymentHistory.getGRJFE());
                 paymentHistory.setLX(lx);
 
             }
@@ -334,11 +332,12 @@ public class PaymentHistoryController {
             JSONArray jsonArray = new JSONArray(infos);
             ArrayList<PaymentHistory> params = new ArrayList();
             Calendar calendar = Calendar.getInstance();
-            int currentYear = calendar.get(Calendar.YEAR);
+//            int currentYear = calendar.get(Calendar.YEAR);
+            int currentYear = 2016;
             float scale = interestScaleMapper.queryInterestScale((String.valueOf(currentYear)).trim());
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                String qsny = jsonObject.getString("qsny");
+                String qsny = jsonObject.getString("zzny");
                 float payment = jsonObject.getFloat("payment");
                 int qsnyNum = Integer.parseInt(qsny.substring(0, 4));
 
@@ -597,12 +596,17 @@ public class PaymentHistoryController {
         response.setHeader("Cache-Control", "no-cache");
         response.setCharacterEncoding("UTF-8");
         String ryid = request.getParameter("ryid");
-        String qsrq = request.getParameter("qsrq");
-        String zzrq = request.getParameter("zzrq");
-        qsrq = qsrq.replace("-", "").trim();
-        zzrq = zzrq.replace("-", "").trim();
+        String qsrqs = request.getParameter("qsrqs");
+        JSONArray array = new JSONArray(qsrqs);
+        List<String> qsrqList = new ArrayList<>();
+        for (int i = 0; i < array.length(); i++) {
+            JSONObject object = array.getJSONObject(i);
+            qsrqList.add(String.valueOf(object.get("qsrq")));
+        }
+        String zzny = Collections.max(qsrqList);
+        String qsny = Collections.min(qsrqList);
         Staff staff = staffMapper.queryStaffByRyid(ryid);
-        float amount = paymentHistoryMapper.queryAmountByRyidWithDate(ryid, qsrq, zzrq);
+        float amount = paymentHistoryMapper.queryAmountByRyidWithDate(ryid, qsrqList);
         String txr = request.getParameter("txr");
         Date date = new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM");
@@ -610,8 +614,8 @@ public class PaymentHistoryController {
         String zdlsh = departmentBillMapper.queryZDLSH();
         departmentBillMapper.addRebackBill(zdlsh, staff.getDWID()
                 , staff.getJBJGID(), txr, dateStr, txr, dateStr, amount, ryid);
-        departmentBillMapper.addBillDel(zdlsh, "102", "AL1", qsrq, zzrq, amount);
-        paymentHistoryMapper.rebackPaymentByRyId(ryid, qsrq, zzrq);
+        departmentBillMapper.addBillDel(zdlsh, "102", "AL1", qsny, zzny, amount);
+        paymentHistoryMapper.rebackPaymentByRyId(ryid, qsrqList);
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("errorCode", 0);
