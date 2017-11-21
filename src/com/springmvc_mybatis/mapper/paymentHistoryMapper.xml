@@ -196,7 +196,7 @@
 
         <foreach collection="list" open="begin" item="item" index="index" close=";end;" separator=";">
             UPDATE  si3.aged_pay_his
-            SET GRJFE=${item.GRJFE} ,LX=${item.LX}
+            SET GRJFE=${item.GRJFE} ,LX=${item.LX},GRJFZE=${item.GRJFZE}
             WHERE RYID=#{ryid,jdbcType=VARCHAR}  AND  QSNY  = #{item.QSNY,jdbcType=VARCHAR}
         </foreach>
     </update>

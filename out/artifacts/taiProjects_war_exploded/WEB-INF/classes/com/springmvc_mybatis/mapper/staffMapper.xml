@@ -37,7 +37,7 @@ SELECT * FROM (
   SELECT A.* ,ROWNUM RN FROM
 		(select * from
 		si3.per_reg
-		where  cbrylb =#{cbrylb} AND  DWID =#{dwid}
+		where  cbrylb =#{cbrylb,jdbcType=VARCHAR} AND  DWID =#{dwid,jdbcType=VARCHAR}
 		) A
 		WHERE ROWNUM &lt; #{next}
 		) WHERE RN >=#{pre}
@@ -46,25 +46,37 @@ SELECT * FROM (
     <select id="queryCount" resultType="int">
         SELECT  count(*)
         FROM 	si3.per_reg
-		where  cbrylb =#{cbrylb}
-		 AND  DWID =#{dwid}
+		where  cbrylb =#{cbrylb,jdbcType=VARCHAR}
+		 AND  DWID =#{dwid,jdbcType=VARCHAR}
     </select>
     <insert id="saveStaff">
-        INSERT INTO si3.per_reg(RYID,RYDJID,DWID,CZBM,YGRBH,GRBH,
-        SFZHM,XM,CYM,XB,CSRQ,SFXZ,cbrylb,MZ,TBLB,TBLBMC,CJGZSJ,
-        JFLY,HKXZ,DZ,DH,GRSF,RWSJ,DRSJ,ZYYY,JYYY,JBJGID,BZ,XMPY)
-        VALUES (#{ryid},#{rydjid},#{dwid},#{czbm},#{ygrbh},#{grbh},#{sfzhm},
-        #{xm},#{cym},#{xb},#{csrq},#{sfxz},#{cbrylb},#{mz},#{tblb},#{tblbmc},
-        #{cjgzsj},#{jfly},#{hkxz},#{dz},#{dh},#{grsf},#{rwsj},#{drsj},
-        #{zyyy},#{jyyy},#{jbjgid},#{bz},#{xmpy})
+        <choose>
+            <when test="sfzhm!=null">
+                INSERT INTO si3.per_reg(RYID,RYDJID,DWID,CZBM,YGRBH,GRBH,
+                SFZHM,XM,CYM,XB,CSRQ,SFXZ,cbrylb,MZ,TBLB,TBLBMC,CJGZSJ,
+                JFLY,HKXZ,DZ,DH,GRSF,RWSJ,DRSJ,ZYYY,JYYY,JBJGID,BZ,XMPY)
+                VALUES (SI3.SQ_RYID.NEXTVAL,SI3.SQ_RYDJID.NEXTVAL,#{dwid},#{czbm},#{sfzhm},#{sfzhm},#{sfzhm},
+                #{xm},#{cym},#{xb},#{csrq},#{sfxz},#{cbrylb},#{mz},#{tblb},#{tblbmc},
+                #{cjgzsj},#{jfly},#{hkxz},#{dz},#{dh},#{grsf},#{rwsj},#{drsj},
+                #{zyyy},#{jyyy},#{jbjgid},#{bz},#{xmpy})
+            </when>
+            <otherwise>
+                INSERT INTO si3.per_reg(RYID,RYDJID,DWID,CZBM,YGRBH,GRBH,
+                SFZHM,XM,CYM,XB,CSRQ,SFXZ,cbrylb,MZ,TBLB,TBLBMC,CJGZSJ,
+                JFLY,HKXZ,DZ,DH,GRSF,RWSJ,DRSJ,ZYYY,JYYY,JBJGID,BZ,XMPY)
+                VALUES (SI3.SQ_RYID.NEXTVAL,SI3.SQ_RYDJID.NEXTVAL,#{dwid},#{czbm}
+                ,SI3.SQ_GRBH.NEXTVAL,SI3.SQ_GRBH.NEXTVAL,#{sfzhm},
+                #{xm},#{cym},#{xb},#{csrq},#{sfxz},#{cbrylb},#{mz},#{tblb},#{tblbmc},
+                #{cjgzsj},#{jfly},#{hkxz},#{dz},#{dh},#{grsf},#{rwsj},#{drsj},
+                #{zyyy},#{jyyy},#{jbjgid},#{bz},#{xmpy})
+            </otherwise>
+        </choose>
+
     </insert>
 
     <update id="modifyStaff">
-        UPDATE si3.per_reg SET RYID=#{ryid},RYDJID=#{rydjid},CZBM=#{czbm},YGRBH=#{ygrbh},
-        SFZHM=#{sfzhm},XM=#{xm},CYM=#{cym},XB=#{xb},CSRQ=#{csrq},SFXZ=#{sfxz},cbrylb=#{cbrylb},
-        MZ=#{mz},TBLB=#{tblb},TBLBMC=#{tblbmc},CJGZSJ=#{cjgzsj},JFLY=#{jfly},
-        HKXZ=#{hkxz},DZ=#{dz},DH=#{dh},GRSF=#{grsf},RWSJ=#{rwsj},DRSJ=#{drsj},
-        ZYYY=#{zyyy},JYYY=#{jyyy},JBJGID=#{jbjgid},BZ=#{bz},XMPY=#{xmpy}  WHERE GRBH=#{grbh}
+        UPDATE si3.per_reg SET
+        SFZHM=#{sfzhm},XM=#{xm},CYM=#{cym},CSRQ=#{csrq}  WHERE GRBH=#{grbh,jdbcType=VARCHAR}
 
     </update>
 
@@ -73,19 +85,33 @@ SELECT * FROM (
         SELECT A.* ,ROWNUM RN FROM
         (select * from
         si3.per_reg
-        where GRBH LIKE  concat(concat('%',#{GRBH}),'%')
-        and XM LIKE concat(concat('%',#{XM}),'%')
-        and SFZHM LIKE concat(concat('%',#{SFZHM}),'%')
-        AND  XMPY LIKE concat(concat('%',#{XMPY}),'%')) A
+        where
+      GRBH LIKE  concat(concat('%',#{GRBH}),'%')
+
+            and XM LIKE concat(concat('%',#{XM}),'%')
+
+            and SFZHM LIKE concat(concat('%',#{SFZHM}),'%')
+
+       ) A
         WHERE ROWNUM &lt; #{next}
         ) WHERE RN >=#{pre}
     </select>
 
-    <select id="queryStaffBySFZHM" resultType="java.lang.String" parameterType="java.lang.String">
-    SELECT RYID  FROM si3.per_reg WHERE SFZHM=#{sfzhm,jdbcType=VARCHAR}
+    <select id="queryStaffCount" resultType="int">
+        select COUNT (*) from
+        si3.per_reg
+        where
+        GRBH LIKE  concat(concat('%',#{GRBH}),'%')
+        and XM LIKE concat(concat('%',#{XM}),'%')
+        and SFZHM LIKE concat(concat('%',#{SFZHM}),'%')
+    </select>
+
+
+    <select id="queryStaffByGRBH" resultType="java.lang.String" parameterType="java.lang.String">
+    SELECT RYID  FROM si3.per_reg WHERE GRBH=#{grbh,jdbcType=VARCHAR}
     </select>
 
     <select id="queryStaffByRyid" resultMap="staffResult">
-        SELECT *  FROM si3.per_reg WHERE RYID=${ryid}
+        SELECT *  FROM si3.per_reg WHERE RYID=#{ryid,jdbcType=VARCHAR}
     </select>
 </mapper>

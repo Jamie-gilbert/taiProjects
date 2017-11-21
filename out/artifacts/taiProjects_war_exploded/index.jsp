@@ -14,7 +14,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-offset-3 col-md-6">
-            <form class="form-horizontal" action="user/login.action" method="post" onsubmit="return checkCh();">
+            <form class="form-horizontal" action="../user/login.action" method="post" onsubmit="return checkCh();">
                 <span class="heading">用户登录 </span>
                 <div class="form-group">
                     <input type="text" class="form-control userName" id="userName" name="username" placeholder="用户名">
@@ -33,9 +33,9 @@
                     <span class="text">记住账号</span>
                     <button type="submit" class="btn btn-default">登录</button>
                 </div>
-                <div>
-                    <a href="register.jsp">立即注册</a>
-                </div>
+                <%--<div>--%>
+                    <%--<a href="register.jsp">立即注册</a>--%>
+                <%--</div>--%>
             </form>
         </div>
     </div>

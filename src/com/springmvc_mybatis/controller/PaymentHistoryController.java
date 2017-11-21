@@ -686,6 +686,7 @@ public class PaymentHistoryController {
             PaymentHistory paymentHistory = new PaymentHistory();
             paymentHistory.setQSNY(String.valueOf(object.get("qsrq")));
             paymentHistory.setGRJFE(0 - object.getFloat("grjfe"));
+            paymentHistory.setGRJFZE(0 - object.getFloat("grjfze"));
             paymentHistory.setLX(0 - object.getFloat("lx"));
             list.add(paymentHistory);
         }

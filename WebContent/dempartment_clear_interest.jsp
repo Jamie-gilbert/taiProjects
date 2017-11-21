@@ -32,9 +32,9 @@
 </div>
 
 
-<script src="../js/jquery.js"></script>
-<script src="../js/bootstrap.js"></script>
-<script src="../js/dialog.js"></script>
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/dialog.js"></script>
 <script type="text/javascript" src="bootstrap-table/bootstrap-table.js"></script>
 <script type="text/javascript" src="bootstrap-table/tableExport.js"></script>
 <script type="text/javascript" src="bootstrap-table/extensions/export/bootstrap-table-export.js"></script>

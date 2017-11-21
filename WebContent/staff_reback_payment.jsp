@@ -19,7 +19,7 @@
 
 </head>
 <body>
-
+<%@include file="pcommonTop.jsp"%>
 <div class="container-fluid">
     <div class="row">
         <div class="col-xs-3 col-md-3">
@@ -77,7 +77,7 @@
 
      $("#grbh").val(grbh1.toString() + grbh2);
 
-
+     $('#xm').val(xm);
         queryData();
     });
 
@@ -208,6 +208,7 @@
             var qsrq = {};
             qsrq.qsrq = datas[i].QSNY;
             qsrq.grjfe=datas[i].GRJFZE;
+            qsrq.grjfze = datas[i].GRJFZE;
             qsrq.lx=datas[i].LX;
             qsrqs.push(qsrq);
         }

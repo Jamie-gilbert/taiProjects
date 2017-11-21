@@ -101,10 +101,13 @@
             }, {
                 field: 'GRJFZE',
                 title: '个人缴费总额',
+            },  {
+                field: 'LX',
+                title: '利息',
             }, {
                 field: 'RYID',
                 title: 'ryid',
-                visible: true
+                visible: false
             }]
         });
     }
@@ -138,7 +141,9 @@
                     title: "提示",
 
                 });
-
+                $("#grbh").val(grbh1.toString() + grbh2);
+                $("#xm").val(xm);
+                queryData();
 
             },
             error: function (err, status) {

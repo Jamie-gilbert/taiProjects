@@ -11,7 +11,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>单据管理</title>
+    <title>退费单据</title>
     <link rel="stylesheet" href="css/bootstrap.css" type="text/css">
     <link rel="stylesheet" href="bootstrap/custom/department.css" type="text/css">
     <link rel="stylesheet" type="text/css" href="./bootstrap/custom/department.css">
@@ -25,64 +25,19 @@
 </head>
 <body>
 
-<button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#billModal" id="query_person">查询
-</button>
 <table id="person_jfls"></table>
 
-<div class="modal fade" id="billModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title" id="myModalLabel">单据信息</h4>
-            </div>
-            <div class="modal-body">
-                <table id="person_modal" style="border:solid 1px">
-                    <tr>
-                        <td>单位编号:</td>
-                        <td>12345678</td>
-                        <td>单位名称:</td>
-                        <td>测试单位</td>
-                    </tr>
-                    <tr>
-                        <td>个人编号:</td>
-                        <td>1234567</td>
-                        <td>姓名:</td>
-                        <td>测试</td>
-                    </tr>
-                    <tr>
-                        <td>单位缴纳:</td>
-                        <td>1234567</td>
-                        <td>个人缴纳:</td>
-                        <td>122222</td>
-                    </tr>
-                    <tr>
-                        <td>利息:</td>
-                        <td>1234567</td>
-                        <td>合计:</td>
-                        <td>122222</td>
-                    </tr>
-                    <tr>
-                        <td>填写时间:</td>
-                        <td>1234567</td>
-                        <td>填写人:</td>
-                        <td>122222</td>
-                    </tr>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button type="button" class="btn btn-primary" onclick="javascript:window.print();">打印</button>
-            </div>
-        </div>
-    </div>
-</div>
+
+<button type="button" class="btn btn-primary" id="print" onclick="printPage()">打印</button>
+
 <script type="text/javascript">
+    var xm = <%=request.getParameter("xm")%>
     var grbh1 =<%=request.getParameter("grbh1")%>;
     var grbh2 =<%=request.getParameter("grbh2")%>;
     var grbh=grbh1.toString() + grbh2;
     $(document).ready(function () {
-
+        $('#grbh').val(grbh);
+        $('#xm').val(xm);
         queryData();
     });
     function queryData() {
@@ -123,6 +78,19 @@
             pageList: [1000],        //可供选择的每页的行数（*）
             clickToSelect: true,
             columns: [{
+                field: 'grbh',
+                title: '个人编号',
+                formatter : function (value, row, index) {
+                    return grbh;
+                }
+            },{
+                field: 'xm',
+                title: '姓名',
+                formatter : function (value, row, index) {
+                    return xm;
+                }
+            },
+                {
                 field: 'dwjfes',
                 title: '单位缴费额',
             }, {
@@ -137,11 +105,20 @@
             }, {
                 field: 'JBR',
                 title: '填写人',
+                formatter : function (value, row, index) {
+                    return 'admin';
+                }
             }, {
                 field: 'JBSJ',
                 title: '填写时间',
             }]
         });
+    }
+
+    function printPage()
+    {
+        $("#print").css("display","none");
+        window.print();
     }
 </script>
 </body>

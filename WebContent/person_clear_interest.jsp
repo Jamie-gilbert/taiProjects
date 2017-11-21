@@ -30,9 +30,9 @@
 </div>
 
 
-<script src="../js/jquery.js"></script>
-<script src="../js/bootstrap.js"></script>
-<script src="../js/dialog.js"></script>
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/dialog.js"></script>
 <script type="text/javascript" src="bootstrap-table/bootstrap-table.js"></script>
 <script type="text/javascript" src="bootstrap-table/tableExport.js"></script>
 <script type="text/javascript" src="bootstrap-table/extensions/export/bootstrap-table-export.js"></script>
@@ -101,6 +101,10 @@
                 field: 'GRJFZE',
                 title: '个人缴费总额',
             }, {
+                field: 'LX',
+                title: '利息',
+            },
+                {
                 field: 'RYID',
                 title: 'ryid',
                 visible: false
@@ -119,7 +123,6 @@
                 msg: '你确定撤销计息吗',
                 title: "提示",
                 onOk: function () {
-
                     clearInterest(currentData);
                 },
                 onCancel: function () {

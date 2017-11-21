@@ -19,7 +19,7 @@
 
 </head>
 <body>
-
+<%@include file="pcommonTop.jsp"%>
 <div class="container-fluid">
     <div class="row">
         <div class="col-xs-3 col-md-3">
@@ -146,6 +146,7 @@
 <script type="text/javascript" src="bootstrap/editable/bootstrap-table-editable.js"></script>
 <script src="../x-editable/dist/bootstrap3-editable/js/bootstrap-editable.js"></script>
 <script type="text/javascript">
+    var xm = <%=request.getParameter("xm")%>
     var ryid1 =<%=request.getParameter("ryid1")%>;
     var ryid2 =<%=request.getParameter("ryid2")%>;
     var ryid =  ryid1.toString() + ryid2.toString();
@@ -240,7 +241,8 @@
         $("#dtp_input3").val("");
     });
     $(document).ready(function () {
-        $("#grbh").val(grbh1.toString() + grbh2.toString())
+        $("#grbh").val(grbh1.toString() + grbh2.toString());
+        $('#xm').val(xm);
         queryData();
     });
 
@@ -265,7 +267,6 @@
                         title: "提示",
                         onOk: function () {
                             $('#exampleModal').modal('hide');
-
                         }
 
                     });
