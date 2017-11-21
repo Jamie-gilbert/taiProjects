@@ -301,7 +301,7 @@ public class PaymentHistoryController {
         double GRJFE = jsonObject.getDouble("GRJFE");
 
         PaymentHistory paymentHistory = new PaymentHistory();
-        ArrayList<PaymentHistory> paymentHistories=new ArrayList<>();
+        ArrayList<PaymentHistory> paymentHistories = new ArrayList<>();
         String jbr = jsonObject.getString("jbr");
         Date jbsj = new Date();
         String jfrq = jsonObject.getString("jfrq");
@@ -392,7 +392,7 @@ public class PaymentHistoryController {
         response.setHeader("Cache-Control", "no-cache");
         response.setCharacterEncoding("UTF-8");
         try {
-            String ryid = request.getParameter("ryid");
+
             String infos = request.getParameter("infos");
             JSONArray jsonArray = new JSONArray(infos);
             ArrayList<PaymentHistory> params = new ArrayList();
@@ -402,11 +402,13 @@ public class PaymentHistoryController {
             float scale = interestScaleMapper.queryInterestScale((String.valueOf(currentYear)).trim());
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                String qsny = jsonObject.getString("zzny");
+                String qsny = jsonObject.getString("qsny");
+                String zzny = jsonObject.getString("zzny");
+                String ryid = jsonObject.getString("ryid");
                 float payment = jsonObject.getFloat("payment");
-                int qsnyNum = Integer.parseInt(qsny.substring(0, 4));
+                int zznyNum = Integer.parseInt(zzny.substring(0, 4));
 
-                float lx = calInterest(qsnyNum, currentYear, scale, payment);
+                float lx = calInterest(zznyNum, currentYear, scale, payment);
                 PaymentHistory paymentHistory = new PaymentHistory();
                 paymentHistory.setQSNY(qsny);
                 paymentHistory.setRYID(ryid);
@@ -683,6 +685,7 @@ public class PaymentHistoryController {
             PaymentHistory paymentHistory = new PaymentHistory();
             paymentHistory.setQSNY(String.valueOf(object.get("qsrq")));
             paymentHistory.setGRJFE(0 - object.getFloat("grjfe"));
+            paymentHistory.setLX(0 - object.getFloat("lx"));
             list.add(paymentHistory);
         }
         String zzny = Collections.max(qsrqList);

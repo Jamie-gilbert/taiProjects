@@ -17,7 +17,7 @@
 
 </head>
 <body>
-<%@include file="pcommonTop.jsp"%>
+<%@include file="pcommonTop.jsp" %>
 <div class="container-fluid">
 
 
@@ -45,12 +45,12 @@
     var grbh2 =<%=request.getParameter("grbh2")%>;
     var xm = <%=request.getParameter("xm")%>
 
-    $(document).ready(function () {
+        $(document).ready(function () {
 
-        $("#grbh").val(grbh1.toString() + grbh2);
-        $("#xm").val(xm);
-        queryData();
-    });
+            $("#grbh").val(grbh1.toString() + grbh2);
+            $("#xm").val(xm);
+            queryData();
+        });
 
     function queryData() {
         var grbh = $('#grbh').val();
@@ -102,86 +102,81 @@
                 field: 'GRJFZE',
                 title: '个人缴费总额',
             }, {
-                    field: 'RYID',
-                    title: 'ryid',
-                    visible: false
-                }]
+                field: 'RYID',
+                title: 'ryid',
+                visible: true
+            }]
         });
     }
 
-    <%--function interest(selectData) {--%>
+    function interest(selectData) {
 
-        <%--var dwid =<%=request.getParameter("dwid")%>;--%>
-        <%--var infos = [];--%>
+        var dwid =<%=request.getParameter("dwid")%>;
+        var infos = [];
 
-        <%--for (var i = 0; i < selectData.length; i++) {--%>
-            <%--var ryidObj = {};--%>
-            <%--ryidObj.ryid = selectData[i].RYID;--%>
-            <%--infos.push(ryidObj);--%>
-        <%--}--%>
-        <%--$.ajax({--%>
-            <%--type: "POST",--%>
-            <%--url: "../paymentHistory/interest.action",--%>
-            <%--data: {--%>
-                <%--"dwid": dwid,--%>
-                <%--"infos": JSON.stringify(infos)--%>
-            <%--},--%>
-            <%--dataType: "JSON",--%>
-            <%--async: true,--%>
-            <%--success: function (data, status) {--%>
-                <%--console.log(data)--%>
-                <%--Alert({--%>
-                    <%--msg: '计息成功',--%>
-                    <%--title: "提示",--%>
+        for (var i = 0; i < selectData.length; i++) {
+            var ryidObj = {};
+            ryidObj.ryid = selectData[i].RYID;
+            ryidObj.qsny = selectData[i].QSNY;
+            ryidObj.zzny = selectData[i].ZZNY;
+            ryidObj.payment = selectData[i].GRJFE;
+            infos.push(ryidObj);
+        }
+        $.ajax({
+            type: "POST",
+            url: "../paymentHistory/modifyInterestByRyid.action",
+            data: {
+                "dwid": dwid,
+                "infos": JSON.stringify(infos)
+            },
+            dataType: "JSON",
+            async: true,
+            success: function (data, status) {
+                console.log(data)
+                Alert({
+                    msg: '计息成功',
+                    title: "提示",
 
-                <%--});--%>
-                <%--paymentHis_table();--%>
-            <%--},--%>
-            <%--error: function (err, status) {--%>
-                <%--console.log(err)--%>
-                <%--Alert({--%>
-                    <%--msg: '计息失败',--%>
-                    <%--title: "提示",--%>
+                });
+                paymentHis_table();
+            },
+            error: function (err, status) {
+                console.log(err)
+                Alert({
+                    msg: '计息失败',
+                    title: "提示",
 
-                <%--})--%>
-            <%--}--%>
-        <%--});--%>
+                })
+            }
+        });
 
 
-    <%--}--%>
+    }
 
-    <%--function queryNeedInterest() {--%>
-        <%--var currentData = $('#paymentHis').bootstrapTable('getData');--%>
-        <%--var all = currentData.length;--%>
-        <%--var selectData = $('#paymentHis').bootstrapTable('getSelections');--%>
+    function queryNeedInterest() {
+        var selectData = $('#person_jfls').bootstrapTable('getData', false);
+        var all = selectData.length;
+        if (all > 0) {
 
-        <%--if (all > 0) {--%>
-            <%--if (selectData != null && selectData.length > 0) {--%>
-                <%--Confirm({--%>
-                    <%--msg: '你确定计息吗',--%>
-                    <%--title: "提示",--%>
-                    <%--onOk: function () {--%>
+            Confirm({
+                msg: '你确定计息吗',
+                title: "提示",
+                onOk: function () {
 
-                        <%--interest(selectData);--%>
-                    <%--},--%>
-                    <%--onCancel: function () {--%>
+                    interest(selectData);
+                },
+                onCancel: function () {
 
-                    <%--}--%>
-                <%--})--%>
-            <%--} else {--%>
-                <%--Alert({--%>
-                    <%--msg: '请先选择需要计息的人员',--%>
-                    <%--title: "提示",--%>
+                }
+            })
 
-                <%--})--%>
-            <%--}--%>
-        <%--} else {--%>
-            <%--Alert({--%>
-                <%--msg: '该单位已经计息',--%>
-                <%--title: "提示"--%>
-            <%--})--%>
-        <%--}--%>
-    <%--};--%>
+        } else {
+            Alert({
+                msg: '该人员没有缴费记录',
+                title: "提示"
+            })
+        }
+    };
 
 
 </script>

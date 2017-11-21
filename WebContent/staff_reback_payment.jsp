@@ -208,6 +208,7 @@
             var qsrq = {};
             qsrq.qsrq = datas[i].QSNY;
             qsrq.grjfe=datas[i].GRJFZE;
+            qsrq.lx=datas[i].LX;
             qsrqs.push(qsrq);
         }
         $.ajax({

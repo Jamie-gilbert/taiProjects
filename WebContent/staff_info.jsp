@@ -553,7 +553,9 @@
         var ryid1 =ryid.substr(0,5);
         var ryid2 = ryid.substr(5,ryid.length);
         $('#rytf').attr('data-href',"../staff_reback_payment.jsp?grbh1="+grbh1+"&xm="+"'"+xm+"'"+"&grbh2="+"'"+grbh2+"'");
-        $('#grjx').attr('data-href',"../person_interest.jsp?grbh1="+grbh1+"&xm="+"'"+xm+"'"+"&grbh2="+"'"+grbh2+"'");
+        $('#grjx').attr('data-href',"../person_interest.jsp?grbh1="+grbh1+"&xm="+"'"+xm+"'"+"&grbh2="+"'"+grbh2+"'"+"&dwid="+dwid
+            +"&ryid1="+ryid1+"&ryid2="+ryid2);
+
         $('#cxgrjx').attr('data-href',"../person_clear_interest.jsp?grbh1="+grbh1+"&xm="+xm+"&grbh2="+"'"+grbh2+"'");
         var grbh = $('#grbh').val();
         var xm = $('#grxm').val();
