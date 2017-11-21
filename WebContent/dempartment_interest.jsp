@@ -19,14 +19,16 @@
 <body>
 <%@include file="commonTop.jsp"%>
 <div class="container-fluid">
+
+
     <div id="toolbar" class="btn-group" onclick="queryNeedInterest()">
         <button data-toggle="button" type="button" class="btn btn-default">
-            <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>计息
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>计息
         </button>
+
     </div>
-    <div>
-        <table id="paymentHis"></table>
-    </div>
+    <table id="paymentHis"></table>
+
 </div>
 
 
@@ -39,15 +41,12 @@
 <script type="text/javascript" src="bootstrap-table/bootstrap-table-zh-CN.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#dwid").val(dwid);
-        $("#dwmc").val(dwmc);
-        $("#dwbh").val(dwbh);
         paymentHis_table();
     })
 
     function paymentHis_table() {
         var dwid =<%=request.getParameter("dwid")%>;
-//        $('#paymentHis').bootstrapTable('destroy');
+        $('#paymentHis').bootstrapTable('destroy');
         $('#paymentHis').bootstrapTable({
             url: '../paymentHistory/interestPaymentHistory.action',         //请求后台的URL（*）
             method: 'get',                      //请求方式（*）
@@ -127,7 +126,8 @@
                     msg: '计息成功',
                     title: "提示",
 
-                })
+                });
+                paymentHis_table();
             },
             error: function (err, status) {
                 console.log(err)

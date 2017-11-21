@@ -154,7 +154,7 @@ public class PaymentHistoryController {
             String ryid = jsonObject.getString("ryid");
             ryids.add(ryid);
         }
-        params = paymentHistoryMapper.queryPaymentHisByRyids(dwid,ryids);
+        params = paymentHistoryMapper.queryPaymentHisByRyids(dwid, ryids);
         if (params != null) {
             for (PaymentHistory paymentHistory : params) {
                 String qsny = paymentHistory.getQSNY();
@@ -651,6 +651,54 @@ public class PaymentHistoryController {
         writer.flush();
         writer.close();
     }
+
+
+    /**
+     * 根据zdlsh查询缴费记录
+     *
+     * @param request
+     * @param response
+     * @throws IOException
+     */
+    @RequestMapping("/queryByZDLSH")
+    public void queryByZDLSH(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        //设置页面不缓存
+        response.setContentType("application/json");
+        response.setHeader("Pragma", "No-cache");
+        response.setHeader("Cache-Control", "no-cache");
+        response.setCharacterEncoding("UTF-8");
+        String zdlsh = request.getParameter("zdlsh");
+        String page = request.getParameter("pageNumber");
+        String count = request.getParameter("pageSize");
+        int countNum = Integer.parseInt(count);
+        int pageNum = Integer.parseInt(page);
+        JSONObject jsonObject = new JSONObject();
+        int num = paymentHistoryMapper.queryCountByZDLSH(zdlsh);
+        JSONArray jsonArray = new JSONArray();
+        if (num > 0) {
+            List<PaymentHistory> paymentHistories = paymentHistoryMapper.queryPaymentHisByZDLSH(zdlsh
+                    , page, String.valueOf(countNum + pageNum));
+
+            for (PaymentHistory paymentHistory : paymentHistories) {
+                JSONObject object = new JSONObject(paymentHistory.getStaff());
+                object.put("zje", paymentHistory.getGRJFE());
+                object.put("qsny", paymentHistory.getQSNY());
+                object.put("zzny", paymentHistory.getZZNY());
+                object.put("xzbz", paymentHistory.getXZBZ());
+                object.put("lx", paymentHistory.getLX());
+                jsonArray.put(object);
+            }
+        }
+        jsonObject.put("total", num);
+
+        jsonObject.put("rows", jsonArray);
+
+        Writer writer = response.getWriter();
+        writer.write(jsonObject.toString());
+        writer.flush();
+        writer.close();
+    }
+
 
     /**
      * 计息算法

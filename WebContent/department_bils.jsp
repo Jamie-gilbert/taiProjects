@@ -22,12 +22,12 @@
     <script type="text/javascript" src="bootstrap-table/bootstrap-table-zh-CN.js"></script>
 </head>
 <body>
-<%@include file="commonTop.jsp"%>
+<%@include file="commonTop.jsp" %>
 <div class="" style="margin-top: 1%;margin-left: 0px">
     <div class="col-xs-3 col-md-4">
         <div class="input-group">
             <span class="input-group-addon">单据类型:</span>
-            <select  id="djlb" name="djlb"  class="form-control">
+            <select id="djlb" name="djlb" class="form-control">
                 <option value="1">已确认单据</option>
                 <option value="0">未确认单据</option>
                 <option value="3">已冲销单据</option>
@@ -58,12 +58,32 @@
 
     </table>
 </div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" id="btnClose" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">缴费历史</h4>
+            </div>
+            <div class="modal-body">
+                <table id="bil_history">
+
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
 </div>
 <script type="text/javascript">
     var type = "";
-    var time ="";
+    var time = "";
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         $("#dwid").val(dwid);
         $("#dwmc").val(dwmc);
         $("#dwbh").val(dwbh);
@@ -87,11 +107,11 @@
             pagination: true,                   //是否显示分页（*）
             sortable: false,                     //是否启用排序
             sortOrder: "asc",                   //排序方式
-            queryParams : function (params) {
+            queryParams: function (params) {
                 return {
                     pageNumber: params.offset + 1,
                     pageSize: params.limit,
-                    time:time,
+                    time: time,
                     dwid: dwid,
                     type: type
                 };
@@ -100,35 +120,35 @@
             sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
             pageNumber: 1,                       //初始化加载第一页，默认第一页
             pageSize: 10,                       //每页的记录行数（*）
-            pageList: [10, 25, 50, 100,1000],        //可供选择的每页的行数（*）
-            clickToSelect:true,
+            pageList: [10, 25, 50, 100, 1000],        //可供选择的每页的行数（*）
+            clickToSelect: true,
             showExport: true,                     //是否显示导出
             exportDataType: "all",              //basic', 'all', 'selected'.
-            columns: [ {
+            columns: [{
                 field: 'zdlsh',
                 title: '自动流水号',
             }, {
                 field: 'dwid',
                 title: '单位名称',
             }, {
-                field:'djlb',
-                title:'单据类别',
-            },{
+                field: 'djlb',
+                title: '单据类别',
+            }, {
                 field: 'djzt',
                 title: '单据状态',
             }, {
                 field: 'txr',
                 title: '填写人'
-            },  {
+            }, {
                 field: 'txsj',
                 title: '填写时间',
                 formatter: function (value, row, index) {
                     return Todate(value)
                 }
-            },  {
+            }, {
                 field: 'qrr',
                 title: '确认人',
-            },  {
+            }, {
                 field: 'qrsj',
                 title: '确认时间',
                 formatter: function (value, row, index) {
@@ -149,25 +169,119 @@
         });
     }
 
-    function operateFormatter(value,row,index)
+    function operateFormatter(value, row, index)
 //row 获取这行的值 ，index 获取索引值
     {
         return [
-            "<a href='index.jsp' target='_blank'><button type='button' class='btn btn-small btn-info'" +
-            "style='margin-right:15px;' id='m-callback-this-start'" +
-            " onclick ='showGrbh()'>查看 </button></a>"
+            "<button type='button' " +
+            "  class='btn btn-small btn-info' " +
+            "style='margin-right:15px;' id='m-callback-this-start' " +
+            "data-toggle='modal' id='query'  data-target='#exampleModal'" +
+            " onclick ='showData(" + JSON.stringify(row) + ")'>查看 </button>"
         ].join('');
 
+    }
+
+    function showData(row) {
+//        console.log("aaa"+row);
+////        $('#exampleModal').modal('show');
+//        var data = JSON.parse(row);
+
+
+        showHistory(row.zdlsh)
+    }
+
+    function showHistory(zdlsh) {
+        $('#bil_history').bootstrapTable('destroy');
+        $('#bil_history').bootstrapTable({
+            url: '../paymentHistory/queryByZDLSH.action',         //请求后台的URL（*）
+            method: 'get',                      //请求方式（*）
+//            toolbar: '#toolbar',                //工具按钮用哪个容器
+            striped: true,                      //是否显示行间隔色
+            cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+            pagination: true,                   //是否显示分页（*）
+            sortable: false,                     //是否启用排序
+            sortOrder: "asc",                   //排序方式
+            queryParams: function (params) {
+                return {
+                    pageNumber: params.offset + 1,
+                    pageSize: params.limit,
+                    zdlsh: zdlsh
+                };
+            },
+            //传递参数（*）
+            sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+            pageNumber: 1,                       //初始化加载第一页，默认第一页
+            pageSize: 10,                       //每页的记录行数（*）
+            pageList: [10, 25, 50, 100, 1000],        //可供选择的每页的行数（*）
+            clickToSelect: true,
+            showExport: true,                     //是否显示导出
+            exportDataType: "all",              //basic', 'all', 'selected'.
+            columns: [
+                {
+                    field: 'SFZHM',
+                    title: '身份证号码',
+                    align: 'center',
+
+                }, {
+                    field: 'XM',
+                    title: '姓名',
+                    align: 'center',
+
+                },
+                {
+                    field: 'qsny',
+                    title: '起始年月',
+                    align: 'center',
+
+                }, {
+                    field: 'zzny',
+                    title: '终止年月',
+                    align: 'center',
+
+                }, {
+                    field: 'xzbz',
+                    title: '险种标志',
+                    align: 'center',
+
+                }, {
+                    field: 'zje',
+                    title: '个人缴费额',
+                    align: 'center',
+
+                }, {
+                    field: 'lx',
+                    title: '利息',
+                    align: 'center',
+
+                }]
+        });
     }
 
     function Todate(num) { //Fri Oct 31 18:00:00 UTC+0800 2008
         num = num + "";
         var date = "";
         var month = new Array();
-        month["Jan"] = 1; month["Feb"] = 2; month["Mar"] = 3; month["Apr"] = 4; month["May"] = 5; month["Jun"] = 6;
-        month["Jul"] = 7; month["Aug"] = 8; month["Sep"] = 9; month["Oct"] = 10; month["Nov"] = 11; month["Dec"] = 12;
+        month["Jan"] = 1;
+        month["Feb"] = 2;
+        month["Mar"] = 3;
+        month["Apr"] = 4;
+        month["May"] = 5;
+        month["Jun"] = 6;
+        month["Jul"] = 7;
+        month["Aug"] = 8;
+        month["Sep"] = 9;
+        month["Oct"] = 10;
+        month["Nov"] = 11;
+        month["Dec"] = 12;
         var week = new Array();
-        week["Mon"] = "一"; week["Tue"] = "二"; week["Wed"] = "三"; week["Thu"] = "四"; week["Fri"] = "五"; week["Sat"] = "六"; week["Sun"] = "日";
+        week["Mon"] = "一";
+        week["Tue"] = "二";
+        week["Wed"] = "三";
+        week["Thu"] = "四";
+        week["Fri"] = "五";
+        week["Sat"] = "六";
+        week["Sun"] = "日";
         str = num.split(" ");
         date = str[5] + "-";
         date = date + month[str[1]] + "-" + str[2];

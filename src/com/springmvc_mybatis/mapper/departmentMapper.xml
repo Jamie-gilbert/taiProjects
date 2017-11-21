@@ -30,7 +30,7 @@
         select * from
         si3.orgn_reg
         where
-        dwid =#{dwid}
+        dwid =#{dwid,jdbcType=VARCHAR}
     </select>
 
     <select id="queryCountByKey" resultType="int">
@@ -45,7 +45,7 @@
 
     <update id="modifyDepartment">
         UPDATE  si3.orgn_reg SET dwmc=#{dwmc},tblb=#{tblb},tblbmc=#{tblbmc}
-        WHERE dwid=#{dwid}
+        WHERE dwid=#{dwid,jdbcType=VARCHAR}
     </update>
 
 

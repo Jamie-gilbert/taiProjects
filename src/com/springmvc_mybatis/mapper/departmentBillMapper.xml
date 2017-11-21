@@ -18,18 +18,18 @@
     <select id="queryBills" resultMap="departmentBillResult">
 SELECT * FROM (
 SELECT A.* ,ROWNUM RN FROM
-		(select * from
+		(select zdlsh,dwid,sum(zje) as zje,txr,txsj,qrr,qrsj ,djlb,djzt from
 		si3.bill_genl
 		where
-		dwid =#{dwid}
+		dwid =#{dwid,jdbcType=VARCHAR}
 		and to_char(txsj, 'yyyymmdd') >=#{txsj}
-		AND  djzt =#{djzt}) A
+		AND  djzt =#{djzt} group by zdlsh,dwid,txr,txsj,qrr,qrsj ,djlb,djzt ) A
 		WHERE ROWNUM &lt; #{next}
 		) WHERE RN >=#{pre}
 	</select>
     <select id="queryCount" resultType="int">
         SELECT  count(*)  FROM si3.bill_genl
-         where dwid =#{dwid}
+         where dwid =#{dwid,jdbcType=VARCHAR}
 		and to_char(txsj, 'yyyymmdd') >=#{txsj}
 		AND  djzt =#{djzt}
     </select>
@@ -51,7 +51,7 @@ SELECT A.* ,ROWNUM RN FROM
     <update id="modifyStatusByDwid" parameterType="java.util.List">
         update si3.bill_genl set djzt=${djzt}
         WHERE
-        dwid=${dwid} AND
+        dwid=${dwid,jdbcType=VARCHAR} AND
         <foreach collection="zdlshs" index="index" item="item" open="(" separator="or" close=")">
             zdlsh=#{item.zdlsh,jdbcType=VARCHAR}
         </foreach>

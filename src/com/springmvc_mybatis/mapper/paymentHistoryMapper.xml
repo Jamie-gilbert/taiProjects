@@ -40,7 +40,7 @@
         SELECT A.*,ROWNUM RN FROM
 		(select  a.RYID ,sum(a.grjfze) as ZJE from
 		si3.aged_pay_his a
-		WHERE  a.DWID =${dwid} AND  a.LX IS NULL  group by ryid) A
+		WHERE  a.DWID =#{dwid,jdbcType=VARCHAR} AND  a.LX IS NULL  group by ryid) A
 		WHERE ROWNUM &lt; ${next}
 		) WHERE RN >=${pre}
     </select>
@@ -49,7 +49,7 @@
         SELECT A.*,ROWNUM RN FROM
         (select  a.RYID ,sum(a.grjfze) as ZJE from
         si3.aged_pay_his a
-        WHERE  a.DWID =${dwid} AND a.LX IS not NULL group by ryid) A
+        WHERE  a.DWID =#{dwid,jdbcType=VARCHAR} AND a.LX IS not NULL group by ryid) A
         WHERE ROWNUM &lt; ${next}
         ) WHERE RN >=${pre}
     </select>
@@ -59,7 +59,7 @@
         SELECT A.*,ROWNUM RN FROM
         (select * from
         si3.aged_pay_his a
-        WHERE  a.RYID =${ryid}) A
+        WHERE  a.RYID =#{ryid,jdbcType=VARCHAR}) A
         WHERE ROWNUM &lt; ${next}
         ) WHERE RN >=${pre}
     </select>
@@ -69,7 +69,7 @@
         SELECT A.*,ROWNUM RN FROM
         (select * from
         si3.aged_pay_his a
-        WHERE  a.RYID =${ryid} AND  a.LX IS  NULL ) A
+        WHERE  a.RYID =#{ryid,jdbcType=VARCHAR} AND  a.LX IS  NULL ) A
         WHERE ROWNUM &lt; ${next}
         ) WHERE RN >=${pre}
     </select>
@@ -78,7 +78,7 @@
 
         select COUNT (*) from
         si3.aged_pay_his a
-        WHERE  a.RYID =${ryid} AND a.QSNY>=${qsrq} AND a.QSNY&lt;=${zzrq}
+        WHERE  a.RYID =#{ryid,jdbcType=VARCHAR} AND a.QSNY>=${qsrq} AND a.QSNY&lt;=${zzrq}
 
     </select>
 
@@ -87,7 +87,7 @@
         SELECT A.*,ROWNUM RN FROM
         (select * from
         si3.aged_pay_his a
-        WHERE  a.RYID =${ryid} and a.QSNY>= ${qsrq} AND a.QSNY&lt;=${zzrq}) A
+        WHERE  a.RYID =#{ryid,jdbcType=VARCHAR} and a.QSNY>= ${qsrq} AND a.QSNY&lt;=${zzrq}) A
         WHERE ROWNUM &lt; ${next}
         ) WHERE RN >=${pre}
     </select>
@@ -96,20 +96,20 @@
     <select id="queryCountWithoutInterest" resultType="int">
     SELECT COUNT (DISTINCT RYID)
     FROM si3.aged_pay_his a
-		WHERE  a.DWID =${dwid} AND  a.LX IS NULL
+		WHERE  a.DWID =#{dwid,jdbcType=VARCHAR} AND  a.LX IS NULL
 </select>
 
 
     <select id="queryCountWithoutInterestByRyid" resultType="int">
         SELECT COUNT (*)
         FROM si3.aged_pay_his a
-            WHERE  a.RYID =${ryid} AND a.LX IS NULL
+            WHERE  a.RYID =#{ryid,jdbcType=VARCHAR} AND a.LX IS NULL
     </select>
 
     <select id="queryCountWithoutInterestByRyidWithDate" resultType="int">
         SELECT COUNT (*)
         FROM si3.aged_pay_his a
-        WHERE  a.RYID =${ryid} AND a.LX IS NULL
+        WHERE  a.RYID =#{ryid,jdbcType=VARCHAR} AND a.LX IS NULL
         AND a.QSNY>=${qsrq} AND a.QSNY&lt;=${zzrq}
     </select>
 
@@ -117,47 +117,48 @@
     <select id="queryCountWithInterestByRyid" resultType="int">
         SELECT COUNT (*)
         FROM si3.aged_pay_his a
-        WHERE  a.RYID =${ryid} AND  a.LX IS NOT NULL
+        WHERE  a.RYID =#{ryid,jdbcType=VARCHAR} AND  a.LX IS NOT NULL
     </select>
 
     <select id="queryCountByRyid" resultType="int">
  SELECT COUNT (*)
     FROM si3.aged_pay_his a
-		WHERE  a.RYID =${ryid}
+		WHERE  a.RYID =#{ryid,jdbcType=VARCHAR}
 </select>
 
     <select id="queryCountWithInterest" resultType="int">
         SELECT COUNT (DISTINCT RYID)
         FROM si3.aged_pay_his a
-        WHERE  a.DWID =${dwid} AND  a.LX IS not NULL
+        WHERE  a.DWID =#{dwid,jdbcType=VARCHAR} AND  a.LX IS not NULL
     </select>
     <select id="selectStaffBystaffRYID" parameterType="string" resultType="Staff">
-        SELECT * FROM si3.per_reg WHERE RYID=#{RYID}
+        SELECT * FROM si3.per_reg WHERE RYID=#{RYID,jdbcType=VARCHAR}
     </select>
 
     <update id="modifyInterest" parameterType="java.util.List">
         <foreach collection="list" open="begin" item="item" index="index" close=";end;" separator=";">
-            UPDATE si3.aged_pay_his SET LX=${item.LX} WHERE DWID=${item.DWID}
-            AND RYID=${item.RYID}   AND ${item.QSNY } BETWEEN QSNY AND ZZNY
+            UPDATE si3.aged_pay_his SET LX=${item.LX} WHERE DWID=#{item.DWID,jdbcType=VARCHAR}
+            AND RYID=#{item.RYID,jdbcType=VARCHAR} AND ${item.QSNY } BETWEEN QSNY AND ZZNY
         </foreach>
 
     </update>
 
     <update id="modifyInterestByRyid" parameterType="java.util.List">
         <foreach collection="list" open="begin" item="item" index="index" close=";end;" separator=";">
-            UPDATE si3.aged_pay_his SET LX=${item.LX} WHERE RYID=${item.RYID} AND QSNY=${item.QSNY }
+            UPDATE si3.aged_pay_his SET LX=${item.LX} WHERE RYID=#{item.RYID,jdbcType=VARCHAR}
+             AND QSNY=${item.QSNY }
         </foreach>
     </update>
 
     <update id="clearInterest">
         UPDATE si3.aged_pay_his SET LX=NULL WHERE DWID=${dwid} AND
         <foreach collection="ryids" index="index" item="ryid" open="(" separator="or" close=")">
-            RYID IN ${ryid}
+            RYID IN #{ryid,jdbcType=VARCHAR}
         </foreach>
     </update>
 
     <update id="cancelInterestByRyid">
-        UPDATE si3.aged_pay_his SET LX=NULL WHERE RYID=${ryid}
+        UPDATE si3.aged_pay_his SET LX=NULL WHERE RYID=#{ryid,jdbcType=VARCHAR}
     </update>
 
     <update id="modifyPaymentHistory" parameterType="java.util.List">
@@ -165,8 +166,8 @@
             UPDATE si3.aged_pay_his SET QSNY=${item.QSNY}, ZZNY=${item.ZZNY}, DWJFJS=${item.DWJFJS}
             , GRJFJS=${item.GRJFJS},DWJFE=${item.DWJFE},GRJFE=${item.GRJFE},DWJFZE=${item.DWJFZE}
             ,GRJFZE=${item.GRJFZE},LX=${item.LX},XGBZ=${item.XGBZ}
-            WHERE RYID=${item.RYID} AND DWID=${item.DWID}
-            AND JFLSID=${item.JFLSID} AND ZDLSH=${item.ZDLSH}
+            WHERE RYID=#{item.RYID,jdbcType=VARCHAR} AND DWID=#{item.DWID,jdbcType=VARCHAR}
+            AND JFLSID=#{item.JFLSID,jdbcType=VARCHAR} AND ZDLSH=#{item.ZDLSH,jdbcType=VARCHAR}
         </foreach>
     </update>
 
@@ -183,12 +184,12 @@
     <update id="rebackPaymentByRyId">
         UPDATE  si3.aged_pay_his
         SET GRJFE=NULL ,LX=NULL ,XGBZ=2
-        WHERE RYID=${ryid} AND QSNY>=${qsrq} AND QSNY&lt;=${zzrq}
+        WHERE RYID=#{ryid,jdbcType=VARCHAR} AND QSNY>=${qsrq} AND QSNY&lt;=${zzrq}
     </update>
     <select id="queryAmountByRyidWithDate" resultType="float">
        select  CONCAT(sum(nvl(a.GRJFE, 0)),sum(nvl(a.LX, 0)))
         from si3.aged_pay_his a
-        where a.RYID=${ryid}
+        where a.RYID=#{ryid,jdbcType=VARCHAR}
         and a.QSNY &lt;= ${zzrq}
         and a.QSNY >= ${qsrq}
     </select>
@@ -196,7 +197,22 @@
     <select id="queryPaymentHisByRyids" resultMap="paymentHistoryResult" parameterType="java.util.List">
         SELECT * FROM si3.aged_pay_his WHERE DWID=${dwid} AND
         <foreach collection="ryids" index="index" item="ryid" open="(" separator="or" close=")">
-            RYID IN ${ryid}
+            RYID IN #{ryid,jdbcType=VARCHAR}
         </foreach>
+    </select>
+    <select id="queryPaymentHisByZDLSH" resultMap="paymentHistoryResult">
+         SELECT * FROM (
+        SELECT A.*,ROWNUM RN FROM
+        (select * from
+        si3.aged_pay_his a
+        WHERE  a.ZDLSH =#{zdlsh,jdbcType=VARCHAR}) A
+        WHERE ROWNUM &lt; ${next}
+        ) WHERE RN >=${pre}
+    </select>
+
+    <select id="queryCountByZDLSH" resultType="int">
+       select  COUNT (*) from
+        si3.aged_pay_his a
+        WHERE  a.ZDLSH =#{zdlsh,jdbcType=VARCHAR}
     </select>
 </mapper>

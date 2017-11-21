@@ -47,20 +47,26 @@
             </div>
         </div>
         <div class="col-xs-3 col-md-3">
-            <button type="button" class="btn btn-primary" onclick="queryData()"> 查 询</button>
+            <div class="col-xs-6 col-md-6">
+                <button type="button" class="btn btn-primary" onclick="queryData()"> 查 询</button>
+            </div>
+            <div class="col-xs-6 col-md-6">
+                <button type="button" class="btn btn-primary" onclick="rebackPayment()">退费</button>
+            </div>
         </div>
+
+
     </div>
+
 
     <div class="row">
-        <div class="col-xs-3 col-md-3">
-            <button type="button" class="btn btn-primary" onclick="rebackPayment()"> 退 费</button>
-        </div>
-
+        <table id="person_jfls"></table>
     </div>
+
+
 </div>
-<div>
-    <table id="person_jfls"></table>
-</div>
+
+
 <script type="text/javascript">
     var ryid = "";
     var grbh1 =<%=request.getParameter("grbh1")%>;
@@ -68,36 +74,29 @@
 
 
     $(document).ready(function () {
-        $("#grbh").val(grbh1.toString()+grbh2.toString())
+        $("#grbh").val(grbh1.toString() + grbh2.toString())
+        queryData();
     });
 
     function queryData() {
         var grbh = $('#grbh').val();
         var qsrq = $('#qsrq').val();
         var zzrq = $('#zzrq').val();
-//
-//        $.ajax({
-//            type: "POST",
-//            url: "../paymentHistory/qyeryByRyidWithDate.action",
-//            data: {
-//                "grbh": grbh, "qsrq": qsrq,
-//                "zzrq": zzrq, "pageNumber": "1", "pageSize": "10"
-//            },
-//            async: false,
-//            dataType: "JSON",
-//            success: function (data, status) {
-//                console.log(data)
-//                ryid = data.ryid;
-//            },
-//            error: function (err, status) {
-//                console.log(err)
-//            }
-//
-//        });
+        if (qsrq == "" || qsrq == null) {
+            qsrq = "1900";
+        }
+        if (zzrq == "" || zzrq == null) {
+            var mydate = new Date();
+            var str = "" + mydate.getFullYear();
+            str += (mydate.getMonth() + 1);
+
+            zzrq = $.trim(str);
+        }
+        $('#person_jfls').bootstrapTable("destroy");
         $('#person_jfls').bootstrapTable({
             url: '../paymentHistory/qyeryByRyidWithDate.action',         //请求后台的URL（*）
             method: 'get',                      //请求方式（*）
-            // toolbar: '#toolbar',                //工具按钮用哪个容器
+            toolbar: '#toolbar',                //工具按钮用哪个容器
             striped: true,                      //是否显示行间隔色
             cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
             pagination: true,                   //是否显示分页（*）
@@ -109,7 +108,7 @@
                     pageSize: params.limit,
                     grbh: grbh,
                     qsrq: qsrq,
-                    zzrq:zzrq,
+                    zzrq: zzrq,
                 };
             },
             //传递参数（*）
@@ -133,13 +132,29 @@
             }, {
                 field: 'GRJFZE',
                 title: '个人缴费总额',
-            }]
+            },
+                {
+                    field: 'RYID',
+                    title: 'ryid',
+                }]
         });
     }
 
     function rebackPayment() {
+        var ryid =  $('#person_jfls').bootstrapTable;
         var qsrq = $('#qsrq').val();
         var zzrq = $('#zzrq').val();
+        if (qsrq == "" || qsrq == null) {
+            qsrq = "1900";
+        }
+        if (zzrq == "" || zzrq == null) {
+            var mydate = new Date();
+            var str = "" + mydate.getFullYear();
+            str += (mydate.getMonth() + 1);
+
+            zzrq = $.trim(str);
+        }
+
         $.ajax({
             type: "POST",
             url: "../paymentHistory/queryCountWithoutInterestByRyidWithDate.action",

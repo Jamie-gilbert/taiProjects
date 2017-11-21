@@ -19,15 +19,18 @@
 <body>
 <%@include file="commonTop.jsp"%>
 <div class="container-fluid">
+
+
     <div id="toolbar" class="btn-group" onclick="queryNeedCancel()">
         <button data-toggle="button" type="button" class="btn btn-default">
             <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>撤销计息
         </button>
+
     </div>
-    <div>
-        <table id="paymentHis"></table>
-    </div>
+    <table id="paymentHis"></table>
+
 </div>
+
 
 <script src="../js/jquery.js"></script>
 <script src="../js/bootstrap.js"></script>
@@ -38,15 +41,12 @@
 <script type="text/javascript" src="bootstrap-table/bootstrap-table-zh-CN.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#dwid").val(dwid);
-        $("#dwmc").val(dwmc);
-        $("#dwbh").val(dwbh);
         paymentHis_table();
     })
 
     function paymentHis_table() {
         var dwid =<%=request.getParameter("dwid")%>;
-//        $('#paymentHis').bootstrapTable('destroy');
+        $('#paymentHis').bootstrapTable('destroy');
         $('#paymentHis').bootstrapTable({
             url: '../paymentHistory/clearPaymentHistory.action',         //请求后台的URL（*）
             method: 'get',                      //请求方式（*）
@@ -120,7 +120,7 @@
 
                     }
                 })
-            } else {
+            }else {
                 Alert({
                     msg: '请先选择需要撤销计息的人员',
                     title: "提示",
@@ -162,15 +162,12 @@
                     msg: '撤销计息成功',
                     title: "提示",
 
-                })
+                });
+                paymentHis_table();
+
             },
             error: function (err, status) {
                 console.log(err)
-                Alert({
-                    msg: '撤销计息失败，请重试',
-                    title: "提示",
-
-                })
             }
         });
     }

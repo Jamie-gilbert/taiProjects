@@ -14,13 +14,7 @@
     <title>人员</title>
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="bootstrap-table/bootstrap-table.css" type="text/css">
-    <script type="text/javascript" src="bootstrap/js/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="bootstrap-table/bootstrap-table.js"></script>
-    <script type="text/javascript" src="bootstrap-table/tableExport.js"></script>
-    <script type="text/javascript" src="bootstrap-table/extensions/export/bootstrap-table-export.js"></script>
-    <script type="text/javascript" src="bootstrap-table/bootstrap-table-zh-CN.js"></script>
-    <script type="text/javascript" src="../js/dialog.js"></script>
+
 </head>
 <body>
 <%@include file="commonTop.jsp"%>
@@ -325,6 +319,14 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript" src="bootstrap/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="bootstrap-table/bootstrap-table.js"></script>
+<script type="text/javascript" src="bootstrap-table/tableExport.js"></script>
+<script type="text/javascript" src="bootstrap-table/extensions/export/bootstrap-table-export.js"></script>
+<script type="text/javascript" src="bootstrap-table/bootstrap-table-zh-CN.js"></script>
+<script type="text/javascript" src="../js/dialog.js"></script>
 <script type="text/javascript">
     var types = "";
     $(document).ready(function() {
