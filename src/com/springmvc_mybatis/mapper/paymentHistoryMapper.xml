@@ -193,12 +193,12 @@
 
         <foreach collection="list" open="begin" item="item" index="index" close=";end;" separator=";">
             UPDATE  si3.aged_pay_his
-            SET GRJFE=${item.GRJFE} ,LX=NULL
+            SET GRJFE=${item.GRJFE} ,LX=${item.LX}
             WHERE RYID=#{ryid,jdbcType=VARCHAR}  AND  QSNY  = #{item.QSNY,jdbcType=VARCHAR}
         </foreach>
     </update>
     <select id="queryAmountByRyidWithDate" resultType="float">
-       select  CONCAT(sum(nvl(a.GRJFE, 0)),sum(nvl(a.LX, 0)))
+       select  sum(nvl(a.GRJFE, 0))+sum(nvl(a.LX, 0))
         from si3.aged_pay_his a
         where a.RYID=#{ryid,jdbcType=VARCHAR} AND
         <foreach collection="list" index="index" item="qsny" open="(" separator="or" close=")">
