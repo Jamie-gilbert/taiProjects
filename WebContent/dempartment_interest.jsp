@@ -41,6 +41,9 @@
 <script type="text/javascript" src="bootstrap-table/bootstrap-table-zh-CN.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
+        $('#dwbh').val(dwbh);
+        $('#dwmc').val(dwmc);
+        $('dwid').val(dwid);
         paymentHis_table();
     })
 

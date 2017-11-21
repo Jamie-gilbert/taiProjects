@@ -21,8 +21,6 @@
     <input type="text" value="${requestScope.staff.ryid}" hidden="hidden" id="ryid">
 </div>
 <script type="text/javascript">
-    var ryid =<%=request.getParameter("ryid")%>;
-    var grbh = <%=request.getParameter("grbh")%>;
     var xm = "<%=request.getParameter("xm")%>";
 </script>
 

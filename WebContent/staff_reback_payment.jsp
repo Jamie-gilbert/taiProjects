@@ -74,7 +74,10 @@
 
 
     $(document).ready(function () {
-        $("#grbh").val(grbh1.toString() + grbh2.toString())
+
+     $("#grbh").val(grbh1.toString() + grbh2);
+
+
         queryData();
     });
 
@@ -132,6 +135,9 @@
             }, {
                 field: 'GRJFZE',
                 title: '个人缴费总额',
+            }, {
+                field: 'LX',
+                title: '利息',
             },
                 {
                     field: 'RYID',
@@ -221,7 +227,7 @@
                     msg: '退费成功',
                     title: "提示",
                 })
-
+                queryData();
             },
             error: function (err, status) {
                 Alert({

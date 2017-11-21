@@ -54,10 +54,12 @@
         <a id="rytf" class="page-action btn btn-primary btn-sm" href="#" title="人员退费">
             人员退费
         </a>
-        <a class="page-action btn btn-primary btn-sm"
-           href="../paymentHistory/qyeryInterestByRyid.action?ryid=11100000000000008807&pageNumber=1&pageSize=10">
+        <a id="grjx" class="page-action btn btn-primary btn-sm" href="#" title="个人计息">
             个人计息
         </a>
+        <a id="cxgrjx" class="page-action btn btn-primary btn-sm" href="#" title="撤销个人计息">
+        撤销个人计息
+         </a>
         <a class="btn btn-primary btn-sm" onclick="setData()" data-toggle="modal" data-target="#exampleModal">
             修改个人信息
         </a>
@@ -70,8 +72,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="personModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
-     data-backdrop="static" data-keyboard="false">
+<div class="modal fade" id="personModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -539,6 +540,14 @@
             $('#tczyyy').val(row[0]["ZYYY"]);
             $('#tcjyy').val(row[0]["JYYY"]);
         }
+        var grbh=$('#grbh').val();
+        var xm=$('#grxm').val();
+        var sfzhm=$('#grsfzhm').val();
+        var grbh1 = grbh.substr(0,5);
+        var grbh2 =grbh.substr(5,grbh.length);
+        $('#rytf').attr('data-href',"../staff_reback_payment.jsp?grbh1="+grbh1+"&xm="+"'"+xm+"'"+"&grbh2="+"'"+grbh2+"'");
+        $('#grjx').attr('data-href',"../person_interest.jsp?grbh1="+grbh1+"&xm="+"'"+xm+"'"+"&grbh2="+"'"+grbh2+"'");
+        $('#cxgrjx').attr('data-href',"../person_clear_interest.jsp?grbh1="+grbh1+"&xm="+xm+"&grbh2="+"'"+grbh2+"'");
         var grbh = $('#grbh').val();
         var xm = $('#grxm').val();
         var sfzhm = $('#grsfzhm').val();

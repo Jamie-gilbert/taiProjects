@@ -67,7 +67,7 @@
                         aria-hidden="true">×</span></button>
                 <h4 class="modal-title" id="exampleModalLabel">缴费历史</h4>
             </div>
-            <div class="modal-body">
+            <div class="modal-body table-responsive">
                 <table id="bil_history">
 
                 </table>

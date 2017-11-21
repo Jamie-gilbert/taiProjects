@@ -14,11 +14,18 @@
     <title>人员</title>
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="bootstrap-table/bootstrap-table.css" type="text/css">
-
+    <link rel="stylesheet" href="bootstrap/custom/department.css" type="text/css">
+    <script type="text/javascript" src="bootstrap/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="bootstrap-table/bootstrap-table.js"></script>
+    <script type="text/javascript" src="bootstrap-table/tableExport.js"></script>
+    <script type="text/javascript" src="bootstrap-table/extensions/export/bootstrap-table-export.js"></script>
+    <script type="text/javascript" src="bootstrap-table/bootstrap-table-zh-CN.js"></script>
+    <script type="text/javascript" src="../js/dialog.js"></script>
 </head>
 <body>
 <%@include file="commonTop.jsp"%>
-<div class="" style="margin-top: 1%;margin-left: 0px">
+<div class="staff_p" style="margin-top: 1%;margin-left: 0px">
 
     <div class="row">
         <div class="col-xs-4 col-md-4">
@@ -58,10 +65,14 @@
                             </div>
                         </div>
                     </div>
-
-
-                    <div class="form-group has-feedback">
-                        <div class="col-xs-6 col-md-6">
+                    <div class="form-group">
+                        <div class="col-xs-9 col-md-9">
+                        <div class="input-group">
+                            <span class="input-group-addon">身份证号码:</span>
+                            <input type="text" class="form-control" id="sfzhm" placeholder="身份证号码">
+                        </div>
+                        </div>
+                        <div class="col-xs-3 col-md-3">
                             <div class="input-group">
                                 <span class="input-group-addon">性别:</span>
                                 <select  id="xb" name="xb"  class="form-control">
@@ -70,10 +81,6 @@
                                     <option value="2">女</option>
                                 </select>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <span class="input-group-addon">身份证号码:</span>
-                            <input type="text" class="form-control" id="sfzhm" placeholder="身份证号码">
                         </div>
                     </div>
                     <%--<div class="form-group">--%>
@@ -314,19 +321,12 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" id="clear">清 空</button>
+                <button type="button" class="btn btn-default" id="close">关 闭</button>
                 <button type="button" class="btn btn-primary" id="save">保 存</button>
             </div>
         </div>
     </div>
 </div>
-
-<script type="text/javascript" src="bootstrap/js/jquery-3.2.1.min.js"></script>
-<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="bootstrap-table/bootstrap-table.js"></script>
-<script type="text/javascript" src="bootstrap-table/tableExport.js"></script>
-<script type="text/javascript" src="bootstrap-table/extensions/export/bootstrap-table-export.js"></script>
-<script type="text/javascript" src="bootstrap-table/bootstrap-table-zh-CN.js"></script>
-<script type="text/javascript" src="../js/dialog.js"></script>
 <script type="text/javascript">
     var types = "";
     $(document).ready(function() {
@@ -453,8 +453,12 @@
         $("#ygrbh").val("");
         $("#jbjgid").val("");
     });
+
+    $("#close").click(function () {
+        $('#exampleModal').modal('hide');
+    });
+
     $("#save").click(function () {
-        alert("11111")
         var xm = $("#xm").val();
         var cym = $("#cym").val();
         var xb = $("#xb").val();
@@ -494,10 +498,12 @@
             dataType: "JSON",
             async: false,
             success: function (data, status) {
-                alert("增员成功!")
+                alert("增员成功!");
+                $('#exampleModal').modal('hide');
             },
             error: function (err, status) {
-                alert("增员失败!")
+                alert("增员失败!");
+                $('#exampleModal').modal('hide');
             }
         });
 
