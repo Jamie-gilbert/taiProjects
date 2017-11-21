@@ -235,6 +235,6 @@
     <select id="queryAmountByZDLSH" resultMap="paymentHistoryResult">
 
         SELECT sum(GRJFE) as grjfes,sum(DWJFE) as dwjfes,sum(LX) as lxs ,JBR,JBSJ FROM  si3.aged_pay_his
-        where ryid=#{ryid,jdbcType=VARCHAR} AND LX&lt;0 AND GRJFE&lt;0 group by zdlsh,JBR,JBSJ
+        where ryid=#{ryid,jdbcType=VARCHAR} AND LX&lt;0 AND GRJFE&lt;0 group by JBR,JBSJ
     </select>
 </mapper>

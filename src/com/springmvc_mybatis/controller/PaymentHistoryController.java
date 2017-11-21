@@ -692,7 +692,7 @@ public class PaymentHistoryController {
         String zzny = Collections.max(qsrqList);
         String qsny = Collections.min(qsrqList);
         Staff staff = staffMapper.queryStaffByRyid(ryid);
-       float amount = paymentHistoryMapper.queryAmountByRyidWithDate(ryid, qsrqList);
+        float amount = paymentHistoryMapper.queryAmountByRyidWithDate(ryid, qsrqList);
         String txr = request.getParameter("txr");
         Date date = new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM");
@@ -815,22 +815,26 @@ public class PaymentHistoryController {
 //        if (num > 0) {
 //            List<DepartmentBill> departmentBills = departmentBillMapper.queryBillsByRyid(ryid
 //                    , page, String.valueOf(countNum + pageNum));
-            List< PaymentHistory> paymentHistorys = paymentHistoryMapper.queryAmountByZDLSH(ryid);
-            for (PaymentHistory departmentBill : paymentHistorys) {
-                JSONObject object = new JSONObject(departmentBill);
-                    object.put("dwjfes", departmentBill.getDwjfes());
-                    object.put("lxs", departmentBill.getLxs());
-                    object.put("grjfes", departmentBill.getDwjfes());
-                    object.put("zje", departmentBill.getDwjfes() + departmentBill.getGrjfes() + departmentBill.getLxs());
+        List<PaymentHistory> paymentHistorys = paymentHistoryMapper.queryAmountByZDLSH(ryid);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        for (PaymentHistory departmentBill : paymentHistorys) {
+            JSONObject object = new JSONObject(departmentBill);
+            object.put("dwjfes", departmentBill.getDwjfes());
+            object.put("lxs", departmentBill.getLxs());
+            object.put("grjfes", departmentBill.getDwjfes());
+            object.put("JBR", departmentBill.getJBR());
 
-                    jsonArray.put(object);
+            object.put("JBSJ", simpleDateFormat.format(departmentBill.getJBSJ()));
+            object.put("zje", departmentBill.getGrjfes() + departmentBill.getLxs());
+
+            jsonArray.put(object);
 
 //            }
         }
 //        jsonObject.put("total", num);
 //
 //        jsonObject.put("rows", jsonArray);
-System.out.println(jsonArray.toString());
+        System.out.println(jsonArray.toString());
         Writer writer = response.getWriter();
         writer.write(jsonArray.toString());
         writer.flush();
