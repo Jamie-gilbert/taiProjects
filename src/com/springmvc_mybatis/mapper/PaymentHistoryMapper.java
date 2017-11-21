@@ -84,6 +84,6 @@ public interface PaymentHistoryMapper {
 
     void cancelInterestByRyid(@Param(value = "ryid") String ryid);
 
-    PaymentHistory queryAmountByZDLSH(@Param(value = "zdlsh") String zdlsh);
+    List<PaymentHistory> queryAmountByZDLSH(@Param(value = "ryid") String ryid);
 
 }

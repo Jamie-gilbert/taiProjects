@@ -103,7 +103,7 @@
             toolbar: '#toolbar',                //工具按钮用哪个容器
             striped: true,                      //是否显示行间隔色
             cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
-            pagination: true,                   //是否显示分页（*）
+            pagination: false,                   //是否显示分页（*）
             sortable: false,                     //是否启用排序
             sortOrder: "asc",                   //排序方式
             queryParams: function (params) {
@@ -117,7 +117,7 @@
             },
             //传递参数（*）
             //传递参数（*）
-            sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+            sidePagination: "client",           //分页方式：client客户端分页，server服务端分页（*）
             pageNumber: 1,                       //初始化加载第一页，默认第一页
             pageSize: 1000,                       //每页的记录行数（*）
             pageList: [1000],        //可供选择的每页的行数（*）
@@ -135,10 +135,10 @@
                 field: 'zje',
                 title: '合计',
             }, {
-                field: 'txr',
+                field: 'JBR',
                 title: '填写人',
             }, {
-                field: 'txsj',
+                field: 'JBSJ',
                 title: '填写时间',
             }]
         });

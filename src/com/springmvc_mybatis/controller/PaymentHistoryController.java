@@ -806,35 +806,33 @@ public class PaymentHistoryController {
         String grbh = request.getParameter("grbh");
         String page = request.getParameter("pageNumber");
         String count = request.getParameter("pageSize");
-        int countNum = Integer.parseInt(count);
-        int pageNum = Integer.parseInt(page);
+//        int countNum = Integer.parseInt(count);
+//        int pageNum = Integer.parseInt(page);
         JSONObject jsonObject = new JSONObject();
         String ryid = staffMapper.queryStaffByGRBH(grbh);
         int num = departmentBillMapper.queryCountByRyid(ryid);
         JSONArray jsonArray = new JSONArray();
-        if (num > 0) {
-            List<DepartmentBill> departmentBills = departmentBillMapper.queryBillsByRyid(ryid
-                    , page, String.valueOf(countNum + pageNum));
+//        if (num > 0) {
+//            List<DepartmentBill> departmentBills = departmentBillMapper.queryBillsByRyid(ryid
+//                    , page, String.valueOf(countNum + pageNum));
+            List< PaymentHistory> paymentHistorys = paymentHistoryMapper.queryAmountByZDLSH(ryid);
+            for (PaymentHistory departmentBill : paymentHistorys) {
+                JSONObject object = new JSONObject(departmentBill);
+                    object.put("dwjfes", departmentBill.getDwjfes());
+                    object.put("lxs", departmentBill.getLxs());
+                    object.put("grjfes", departmentBill.getDwjfes());
+                    object.put("zje", departmentBill.getDwjfes() + departmentBill.getGrjfes() + departmentBill.getLxs());
 
-            for (DepartmentBill departmentBill : departmentBills) {
-                JSONObject object = new JSONObject(departmentBills);
-                PaymentHistory paymentHistory = paymentHistoryMapper.queryAmountByZDLSH(departmentBill.getZdlsh());
-                if (paymentHistory != null) {
-                    object.put("dwjfes", paymentHistory.getDwjfes());
-                    object.put("lxs", paymentHistory.getLxs());
-                    object.put("grjfes", paymentHistory.getDwjfes());
-                    object.put("zje", paymentHistory.getDwjfes() + paymentHistory.getGrjfes() + paymentHistory.getLxs());
                     jsonArray.put(object);
-                }
 
-            }
+//            }
         }
-        jsonObject.put("total", num);
-
-        jsonObject.put("rows", jsonArray);
-
+//        jsonObject.put("total", num);
+//
+//        jsonObject.put("rows", jsonArray);
+System.out.println(jsonArray.toString());
         Writer writer = response.getWriter();
-        writer.write(jsonObject.toString());
+        writer.write(jsonArray.toString());
         writer.flush();
         writer.close();
     }
