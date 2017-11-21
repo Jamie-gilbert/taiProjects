@@ -9,8 +9,20 @@
 <html>
 <head>
     <title>人员退费</title>
-
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../css/bootstrap.css">
+    <link rel="stylesheet" href="css/bootstrap.css" type="text/css">
+    <link rel="stylesheet" href="bootstrap/custom/department.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="./bootstrap/custom/department.css">
+    <script type="text/javascript" src="bootstrap/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="bootstrap-table/bootstrap-table.js"></script>
+    <script type="text/javascript" src="bootstrap-table/bootstrap-table-zh-CN.js"></script>
+    <script type="text/javascript" src="webTree/assets/js/bui-min.js"></script>
+    <script type="text/javascript" src="webTree/assets/js/config-min.js"></script>
+    <script type="text/javascript" src="js/dialog.js"></script>
 </head>
 <body>
 
@@ -18,8 +30,8 @@
     <div class="row">
         <div class="col-xs-3 col-md-3">
             <div class="input-group">
-                <span class="input-group-addon">身份证号码:</span>
-                <input type="text" class="form-control" id="sfzhm"/>
+                <span class="input-group-addon">个人编号:</span>
+                <input type="text" class="form-control" id="grbh"/>
             </div>
         </div>
         <div class="col-xs-3 col-md-3">
@@ -46,36 +58,82 @@
 
     </div>
 </div>
-
-
-<script src="../js/jquery.js"></script>
-<script src="../js/bootstrap.js"></script>
-<script src="../js/dialog.js"></script>
+<div>
+    <table id="person_jfls"></table>
+</div>
 <script type="text/javascript">
     var ryid = "";
+    var grbh1 =<%=request.getParameter("grbh1")%>;
+    var grbh2 =<%=request.getParameter("grbh2")%>;
+
+
+    $(document).ready(function () {
+        $("#grbh").val(grbh1.toString()+grbh2.toString())
+    });
 
     function queryData() {
-        var sfzhm = $('#sfzhm').val();
+        var grbh = $('#grbh').val();
         var qsrq = $('#qsrq').val();
         var zzrq = $('#zzrq').val();
-
-        $.ajax({
-            type: "POST",
-            url: "../paymentHistory/qyeryByRyidWithDate.action",
-            data: {
-                "sfzhm": sfzhm, "qsrq": qsrq,
-                "zzrq": zzrq, "pageNumber": "1", "pageSize": "10"
+//
+//        $.ajax({
+//            type: "POST",
+//            url: "../paymentHistory/qyeryByRyidWithDate.action",
+//            data: {
+//                "grbh": grbh, "qsrq": qsrq,
+//                "zzrq": zzrq, "pageNumber": "1", "pageSize": "10"
+//            },
+//            async: false,
+//            dataType: "JSON",
+//            success: function (data, status) {
+//                console.log(data)
+//                ryid = data.ryid;
+//            },
+//            error: function (err, status) {
+//                console.log(err)
+//            }
+//
+//        });
+        $('#person_jfls').bootstrapTable({
+            url: '../paymentHistory/qyeryByRyidWithDate.action',         //请求后台的URL（*）
+            method: 'get',                      //请求方式（*）
+            // toolbar: '#toolbar',                //工具按钮用哪个容器
+            striped: true,                      //是否显示行间隔色
+            cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+            pagination: true,                   //是否显示分页（*）
+            sortable: false,                     //是否启用排序
+            sortOrder: "asc",                   //排序方式
+            queryParams: function (params) {
+                return {
+                    pageNumber: params.offset + 1,
+                    pageSize: params.limit,
+                    grbh: grbh,
+                    qsrq: qsrq,
+                    zzrq:zzrq,
+                };
             },
-            async: false,
-            dataType: "JSON",
-            success: function (data, status) {
-                console.log(data)
-                ryid = data.ryid;
-            },
-            error: function (err, status) {
-                console.log(err)
-            }
-
+            //传递参数（*）
+            //传递参数（*）
+            sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+            pageNumber: 1,                       //初始化加载第一页，默认第一页
+            pageSize: 10,                       //每页的记录行数（*）
+            pageList: [10, 25, 50],        //可供选择的每页的行数（*）
+            clickToSelect: true,
+            columns: [{
+                checkbox: true
+            }, {
+                field: 'QSNY',
+                title: '起始年月',
+            }, {
+                field: 'ZZNY',
+                title: '终止年月',
+            }, {
+                field: 'DWJFZE',
+                title: '单位缴费总额',
+            }, {
+                field: 'GRJFZE',
+                title: '个人缴费总额',
+            }]
         });
     }
 

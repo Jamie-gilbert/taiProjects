@@ -23,7 +23,7 @@
     <link rel="stylesheet" type="text/css" href="./bootstrap/custom/department.css">
 </head>
 <body>
-<div>
+<div class="unit">
     <div style="border-bottom:1px solid cornflowerblue;padding-bottom: 5px">
         <div class="row department">
             <div class="col-xs-3 col-md-4">

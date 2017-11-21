@@ -44,123 +44,277 @@
     </table>
 </div>
 
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-body">
                 <form>
 
                     <div class="form-group">
-                        <label>姓名</label>
+                        <div class="col-xs-6 col-md-6">
+                            <div class="input-group">
+                        <span class="input-group-addon">姓名:</span>
                         <input type="text" class="form-control" id="xm" placeholder="姓名">
-                    </div>
-
-                    <div class="form-group">
-                        <label>曾用名</label>
-                        <input type="text" class="form-control" id="cym" placeholder="曾用名">
-                    </div>
-                    <div class="form-group has-feedback">
-                        <label for="sexBoy">性别</label>
-                        <div class="input-group" id="sexLable">
-                            <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <input name="xb" id="sexBoy" name="optionsRadiosinline" type="radio" value="1" checked>男&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <input name="xb" id="sexGirl" name="optionsRadiosinline" type="radio" value="2">女
+                            </div>
                         </div>
+                        <div class="col-xs-6 col-md-6">
+                            <div class="input-group">
+                            <span class="input-group-addon">曾用名:</span>
+                            <input type="text" class="form-control" id="cym" placeholder="曾用名">
+                            </div>
+                        </div>
+                    </div>
 
-                        <span style="color:red;display: none;" class="tips"></span>
-                        <span style="display: none;" class=" glyphicon glyphicon-remove form-control-feedback"></span>
-                        <span style="display: none;" class="glyphicon glyphicon-ok form-control-feedback"></span>
+
+                    <div class="form-group has-feedback">
+                        <div class="col-xs-6 col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-addon">性别:</span>
+                                <select  id="xb" name="xb"  class="form-control">
+                                    <option value=""></option>
+                                    <option value="1">男</option>
+                                    <option value="2">女</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <span class="input-group-addon">身份证号码:</span>
+                            <input type="text" class="form-control" id="sfzhm" placeholder="身份证号码">
+                        </div>
                     </div>
                     <%--<div class="form-group">--%>
                     <%--<label>性别</label>--%>
                     <%--<input type="text" class="form-control" id="xb" placeholder="性别">--%>
                     <%--</div>--%>
                     <div class="form-group">
-                        <label>身份证号码</label>
-                        <input type="text" class="form-control" id="sfzhm" placeholder="身份证号码">
-                    </div>
-
-                    <div class="form-group">
-                        <label>出生日期</label>
+                        <div class="col-xs-6 col-md-6">
+                            <div class="input-group">
+                        <span class="input-group-addon">出生日期:</span>
                         <input type="text" class="form-control" id="csrq" placeholder="出生日期">
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-addon">财政编码:</span>
+                            <input type="text" class="form-control" id="czbm" placeholder="财政编号">
+                        </div>
+                        </div>
                     </div>
 
 
+
+
+                    <%--<div class="form-group">--%>
+                        <%--<label>经办机构ID</label>--%>
+                        <%--<input type="text" class="form-control" id="jbjgid" placeholder="经办机构ID">--%>
+                    <%--</div>--%>
+
                     <div class="form-group">
-                        <label>财政编号</label>
-                        <input type="text" class="form-control" id="czbm" placeholder="财政编号">
+                        <div class="col-xs-6 col-md-6">
+                            <div class="input-group">
+                            <span class="input-group-addon">身份性质:</span>
+                            <select  id="sfxz" name="sfxz"  class="form-control">
+                                <option value=""></option>
+                                <option value="A">固定工</option>
+                                <option value="B">合同制</option>
+                                <option value="C">临时工</option>
+                            </select>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-6">
+                            <div class="input-group">
+                            <span class="input-group-addon">参保人员类别:</span>
+                            <select  id="cbrylb" name="cbrylb"  class="form-control">
+                                <option value=""></option>
+                                <option value="A0A">在职</option>
+                                <option value="A0F">离岗</option>
+                                <option value="A0C">退休</option>
+                            </select>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="form-group">
-                        <label>经办机构ID</label>
-                        <input type="text" class="form-control" id="jbjgid" placeholder="经办机构ID">
+                        <div class="col-xs-6 col-md-6">
+                            <div class="input-group">
+                        <span class="input-group-addon">民族:</span>
+                        <select  id="mz" name="mz"  class="form-control">
+                            <option value=""></option>
+                            <option value="01">汉族</option>
+                            <option value="02">蒙古族</option>
+                            <option value="03">回族</option>
+                            <option value="04">藏族</option>
+                            <option value="05">维吾尔族</option>
+                            <option value="06">苗族</option>
+                            <option value="07">彝族</option>
+                            <option value="08">壮族</option>
+                            <option value="09">布依族</option>
+                            <option value="10">朝鲜族</option>
+                            <option value="11">满族</option>
+                            <option value="12">侗族</option>
+                            <option value="13">瑶族</option>
+                            <option value="14">白族</option>
+                            <option value="15">土家族</option>
+                            <option value="16">哈尼族</option>
+                            <option value="17">哈萨克族</option>
+                            <option value="18">傣族</option>
+                            <option value="19">黎族</option>
+                            <option value="20">傈僳族</option>
+                            <option value="21">佤族</option>
+                            <option value="22">畲族</option>
+                            <option value="23">高山族</option>
+                            <option value="24">拉祜族</option>
+                            <option value="25">水族</option>
+                            <option value="26">东乡族</option>
+                            <option value="27">纳西族</option>
+                            <option value="28">景颇族</option>
+                            <option value="29">柯尔克孜族</option>
+                            <option value="30">土族</option>
+                            <option value="31">达斡尔族</option>
+                            <option value="32">仫佬族</option>
+                            <option value="33">羌族</option>
+                            <option value="34">布朗族</option>
+                            <option value="35">撒拉族</option>
+                            <option value="36">毛南族</option>
+                            <option value="37">仡佬族</option>
+                            <option value="38">锡伯族</option>
+                            <option value="39">阿昌族</option>
+                            <option value="40">普米族</option>
+                            <option value="41">塔吉克族</option>
+                            <option value="42">怒族</option>
+                            <option value="43">乌兹别克族</option>
+                            <option value="44">俄罗斯族</option>
+                            <option value="45">鄂温克族</option>
+                            <option value="46">德昂族</option>
+                            <option value="47">保安族</option>
+                            <option value="48">裕固族</option>
+                            <option value="49">京族</option>
+                            <option value="50">塔塔尔族</option>
+                            <option value="51">独龙族</option>
+                            <option value="52">鄂伦春族</option>
+                            <option value="53">赫哲族</option>
+                            <option value="54">门巴族</option>
+                            <option value="55">珞巴族</option>
+                            <option value="56">基诺族</option>
+                            <option value="90">外籍人士</option>
+                            <option value="99">其他</option>
+                        </select>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-6">
+                            <div class="input-group">
+                            <span class="input-group-addon">投保类别:</span>
+                            <select  id="tblb" name="tblb"  class="form-control">
+                                <option value=""></option>
+                                <option value="A">养老保险</option>
+                            </select>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="form-group">
-                        <label>身份性质</label>
-                        <input type="text" class="form-control" id="sfxz" placeholder="身份性质">
-                    </div>
 
+                    <%--<div class="form-group">--%>
+                        <%--<label>投保类别名称</label>--%>
+                        <%--<input type="text" class="form-control" id="tblbmc" placeholder="投保类别名称">--%>
+                    <%--</div>--%>
                     <div class="form-group">
-                        <label>参保人员类别</label>
-                        <input type="text" class="form-control" id="cbrylb" placeholder="参保人员类别">
-                    </div>
-                    <div class="form-group">
-                        <label>民族</label>
-                        <input type="text" class="form-control" id="mz" placeholder="民族">
-                    </div>
-                    <div class="form-group">
-                        <label>投保类别</label>
-                        <input type="text" class="form-control" id="tblb" placeholder="投保类别">
-                    </div>
-
-                    <div class="form-group">
-                        <label>投保类别名称</label>
-                        <input type="text" class="form-control" id="tblbmc" placeholder="投保类别名称">
-                    </div>
-                    <div class="form-group">
-                        <label>参加工作时间</label>
+                        <div class="col-xs-6 col-md-6">
+                            <div class="input-group">
+                        <span class="input-group-addon">参加工作时间:</span>
                         <input type="text" class="form-control" id="cjgzsj" placeholder="参加工作时间">
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-addon">缴费类型:</span>
+                            <select  id="jfly" name="jfly"  class="form-control">
+                                <option value=""></option>
+                                <option value="00">其他形式</option>
+                                <option value="01">自收自支</option>
+                                <option value="02">全额拨款</option>
+                                <option value="03">差额拨款</option>
+                            </select>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label>经费来源</label>
-                        <input type="text" class="form-control" id="jfly" placeholder="经费来源">
+                        <div class="col-xs-6 col-md-6">
+                            <div class="input-group">
+                        <span class="input-group-addon">户口性质:</span>
+                        <select  id="hkxz" name="hkxz"  class="form-control">
+                            <option value=""></option>
+                            <option value="01">城镇</option>
+                            <option value="02">农业</option>
+                        </select>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-addon">个人身份:</span>
+                            <select  id="grsf" name="grsf"  class="form-control">
+                                <option value=""></option>
+                                <option value="001">公务员</option>
+                                <option value="002">工人</option>
+                                <option value="003">干部</option>
+                                <option value="004">职工</option>
+                            </select>
+                        </div>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label>户口性质</label>
-                        <input type="text" class="form-control" id="hkxz" placeholder="户口性质">
-                    </div>
-                    <div class="form-group">
-                        <label>地址</label>
+                        <div class="col-xs-6 col-md-6">
+                            <div class="input-group">
+                        <span class="input-group-addon">地址:</span>
                         <input type="text" class="form-control" id="dz" placeholder="地址">
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-addon">电话:</span>
+                            <input type="text" class="form-control" id="dh" placeholder="电话">
+                        </div>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label>电话</label>
-                        <input type="text" class="form-control" id="dh" placeholder="电话">
+                        <div class="col-xs-6 col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-addon">入伍时间:</span>
+                                <input type="text" class="form-control" id="rwsj" placeholder="入伍时间">
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-6">
+                            <div class="input-group">
+                            <span class="input-group-addon">调入时间:</span>
+                            <input type="text" class="form-control" id="drsj" placeholder="调入时间">
+                             </div>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label>个人身份</label>
-                        <input type="text" class="form-control" id="grsf" placeholder="个人身份">
-                    </div>
-                    <div class="form-group">
-                        <label>入伍时间</label>
-                        <input type="text" class="form-control" id="rwsj" placeholder="入伍时间">
-                    </div>
-                    <div class="form-group">
-                        <label>调入时间</label>
-                        <input type="text" class="form-control" id="drsj" placeholder="调入时间">
-                    </div>
-                    <div class="form-group">
-                        <label>增员原因</label>
-                        <input type="text" class="form-control" id="zyyy" placeholder="增员原因">
-                    </div>
-                    <div class="form-group">
-                        <label>减员原因</label>
-                        <input type="text" class="form-control" id="jyyy" placeholder="减员原因">
-                    </div>
-                    <div class="form-group">
-                        <label>备注</label>
-                        <input type="text" class="form-control" id="bz" placeholder="备注">
+                        <div class="col-xs-6 col-md-6">
+                            <div class="input-group">
+                            <span class="input-group-addon">增员原因:</span>
+                            <select  id="zyyy" name="zyyy"  class="form-control">
+                            <option value=""></option>
+                            <option value="001">关系转入</option>
+                            <option value="002">毕业分配</option>
+                            <option value="003">退伍军人</option>
+                            <option value="004">调入</option>
+                            <option value="005">招考</option>
+                            </select>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-addon">减员原因:</span>
+                                <select  id="jyyy" name="jyyy"  class="form-control">
+                                    <option value=""></option>
+                                    <option value="001">基金转移</option>
+                                    <option value="002">在职死亡</option>
+                                    <option value="003">在职转退休</option>
+                                    <option value="004">系统删除</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -267,9 +421,6 @@
 
     }
 
-    function showGrbh() {
-
-    }
 
     $("#clear").click(function () {
 
@@ -301,6 +452,7 @@
         $("#jbjgid").val("");
     });
     $("#save").click(function () {
+        alert("11111")
         var xm = $("#xm").val();
         var cym = $("#cym").val();
         var xb = $("#xb").val();
@@ -310,7 +462,6 @@
         var cbrylb = $("#cbrylb").val();
         var mz = $("#mz").val();
         var tblb = $("#tblb").val();
-        var tblbmc = $("#tblbmc").val();
         var cjgzsj = $("#cjgzsj").val();
         var jfly = $("#jfly").val();
         var hkxz = $("#hkxz").val();
@@ -321,44 +472,30 @@
         var drsj = $("#drsj").val();
         var zyyy = $("#zyyy").val();
         var jyyy = $("#jyyy").val();
-        var bz = $("#bz").val();
-        var ryid = $("#ryid").val();
-        var rydjid = $("#rydjid").val();
         var czbm = $("#czbm").val();
-        var ygrbh = $("#ygrbh").val();
+        var ygrbh = "";
+        var grbh ="";
         var jbjgid = $("#jbjgid").val();
-
-
+        var dwid =  $("#dwid").val();
+        var bz ="";
         $.ajax({
             type: "POST",
             url: "staff/saveStaff.action",
             data: {
                 "xm": xm, "cym": cym, "xb": xb, "sfzhm": sfzhm, "csrq": csrq
-                , "sfxz": sfxz, "cbrylb": cbrylb, "mz": mz, "tblb": tblb, "tblbmc": tblbmc,
+                , "sfxz": sfxz, "cbrylb": cbrylb, "mz": mz, "tblb": tblb, "tblbmc": "养老保险",
                 "cjgzsj": cjgzsj, "jfly": jfly, "hkxz": hkxz, "dz": dz, "dh": dh,
-                "grsf": grsf, "rwsj": rwsj, "drsj": drsj, "zyyy": zyyy, "jyyy": jyyy, "bz": bz,
-                "dwid": dwid, "cbrylb": type, "ryid": ryid, "rydjid": rydjid, "czbm": czbm,
-                "ygrbh": ygrbh, "jbjgid": jbjgid
+                "grsf": grsf, "rwsj": rwsj, "drsj": drsj, "zyyy": zyyy, "jyyy": jyyy,
+                "dwid": dwid, "cbrylb": cbrylb, "czbm": czbm,
+                "ygrbh": ygrbh, "jbjgid": "37091103","bz":bz
             },
             dataType: "JSON",
             async: false,
             success: function (data, status) {
-                Alert({
-                    msg: '保存成功',
-                    title: "提示",
-                    onOk: function () {
-                        $('#exampleModal').modal('hide');
-                    },
-
-                })
+                alert("增员成功!")
             },
             error: function (err, status) {
-                Alert({
-                    msg: '添加人员失败，请重试',
-                    title: "提示",
-
-
-                })
+                alert("增员失败!")
             }
         });
 

@@ -50,7 +50,7 @@
         </div>
     </div>
     <div class="container-fluid" id="unitButton">
-        <a id="rytf" class="page-action btn btn-primary btn-sm" href="#" data-href="../staff_reback_payment.jsp" title="人员退费">
+        <a id="rytf" class="page-action btn btn-primary btn-sm" href="#"  title="人员退费">
             人员退费
         </a>
         <a class="page-action btn btn-primary btn-sm" href="../paymentHistory/qyeryInterestByRyid.action?ryid=11100000000000008807&pageNumber=1&pageSize=10">
@@ -58,6 +58,12 @@
         </a>
         <a class="btn btn-primary btn-sm" onclick="setData()" data-toggle="modal" data-target="#exampleModal">
             修改个人信息
+        </a>
+        <a class="btn btn-primary btn-sm" onclick="" data-toggle="modal" >
+            缴费历史维护
+        </a>
+        <a class="btn btn-primary btn-sm" onclick="" data-toggle="modal" >
+            个人单据管理
         </a>
     </div>
 </div>
@@ -270,13 +276,13 @@
         <div class="col-xs-6 col-md-6">
             <div class="input-group">
                 <span class="input-group-addon">参加工作时间:</span>
-                <input name="tblbmc" type="text" id="tctblbmc" class="form-control" readonly>
+                <input name="tblbmc" type="text" id="tccjgzsj" class="form-control" readonly>
             </div>
         </div>
         <div class="col-xs-6 col-md-6">
             <div class="input-group">
-                <span class="input-group-addon">缴费来源:</span>
-                <input name="cjgzsj" type="text" id="tccjgzsj" class="form-control" readonly>
+                <span class="input-group-addon">投保类别名称:</span>
+                <input name="cjgzsj" type="text" id="tctblbmc" class="form-control" readonly>
             </div>
         </div>
     </div>
@@ -497,7 +503,6 @@
     });
 
     function getPerson() {
-        alert(111);
         row = $.map($("#person_modal").bootstrapTable('getSelections'), function (row) {
             return row;
         });
@@ -505,29 +510,40 @@
             alert("请选择一个人员!");
         } else {
             $('#personModal').modal('hide');
-            alert(row[0]["grbh"]);
-            $('#grbh').val(row[0]["grbh"]);
-            $('#grsfzhm').val(row[0]["sfzhm"]);
-            $('#grxm').val(row[0]["xm"]);
+            $('#grbh').val(row[0]["GRBH"]);
+            $('#grsfzhm').val(row[0]["SFZHM"]);
+            $('#grxm').val(row[0]["XM"]);
             $('#grbh').attr("readonly", true);
             $('#grsfzhm').attr("readonly", true);
             $('#grxm').attr("readonly", true);
-            $('#tcxm').val(row[0]["xm"]);
-            $('#tcDwmc').val(row[0]["dwid"]);
-            $('#tccsrq').val(row[0]["csrq"]);
-            $('#jbjgid').val("岱岳区");
-            $('#tblbmc').val(row[0]["tblbmc"]);
-            $('#dwid').val(row[0]["dwid"]);
-            $('#xgDwid').val(row[0]["dwid"]);
+            $('#tcgrbh').val(row[0]["GRBH"]);
+            $('#tcsfzhm').val(row[0]["SFZHM"]);
+            $('#tcxm').val(row[0]["XM"]);
+            $('#tcDwmc').val(row[0]["DWID"]);
+            $('#tccsrq').val(row[0]["CSRQ"]);
+            $('#tccbrylb').val(row[0]["CBRYLB"]);
+            $('#tcxb').val(row[0]["XB"]);
+            $('#tcmz').val(row[0]["MZ"]);
+            $('#tcsfxz').val(row[0]["SFXZ"]);
+            $('#tccjgzsj').val(row[0]["CJGZSJ"]);
+            $('#tctblbmc').val(row[0]["TBLBMC"]);
+            $('#tcdz').val(row[0]["DZ"]);
+            $('#tcdh').val(row[0]["DH"]);
+            $('#tcgrsf').val(row[0]["GRSF"]);
+            $('#tcrwsj').val(row[0]["RWSJ"]);
+            $('#tcdrsj').val(row[0]["DRSJ"]);
+            $('#tczyyy').val(row[0]["ZYYY"]);
+            $('#tcjyy').val(row[0]["JYYY"]);
         }
-        var dwid=$('#dwid').val();
-        var dwmc=$('#dwmc').val();
-        var dwbh=$('#dwbh').val();
-
-        $('#rylb').attr('data-href',"../department_staff.jsp?dwid="+dwid+"&dwbh="+dwbh+"&dwmc="+dwmc);
-        $('#cxdj').attr('data-href',"../department_bils.jsp?dwid="+dwid+"&dwbh="+dwbh+"&dwmc="+dwmc);
-        $('#dwjx').attr('data-href',"../dempartment_interest.jsp?dwid="+dwid+"&dwbh="+dwbh+"&dwmc="+dwmc);
-        $('#cxdwjx').attr('data-href',"../dempartment_clear_interest.jsp?dwid="+dwid+"&dwbh="+dwbh+"&dwmc="+dwmc);
+        var grbh=$('#grbh').val();
+        var xm=$('#grxm').val();
+        var sfzhm=$('#grsfzhm').val();
+        var grbh1 = grbh.substr(0,5);
+        var grbh2 =grbh.substr(5,grbh.length);
+        $('#rytf').attr('data-href',"../staff_reback_payment.jsp?grbh1="+grbh1+"&xm="+"'"+xm+"'"+"&grbh2="+grbh2);
+//        $('#cxdj').attr('data-href',"../department_bils.jsp?dwid="+dwid+"&dwbh="+dwbh+"&dwmc="+dwmc);
+//        $('#dwjx').attr('data-href',"../dempartment_interest.jsp?dwid="+dwid+"&dwbh="+dwbh+"&dwmc="+dwmc);
+//        $('#cxdwjx').attr('data-href',"../dempartment_clear_interest.jsp?dwid="+dwid+"&dwbh="+dwbh+"&dwmc="+dwmc);
     }
 
 

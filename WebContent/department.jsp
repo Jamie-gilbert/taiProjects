@@ -95,7 +95,7 @@
             homePage:'parameter',
             menu:[{text:'系统管理',
                 items:[
-                    {id:'parameter',text:'参数设置',href:'/index.jsp'},
+                    {id:'parameter',text:'参数设置',href:'/maintain_interest.jsp'},
                     {id:'user',text:'添加用户',href:'/register.jsp'}
                 ]
             }]
