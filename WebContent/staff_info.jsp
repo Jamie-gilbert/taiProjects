@@ -349,6 +349,8 @@
     </div>
 </div>
 <script type="text/javascript">
+    var ryid;
+    var dwid
     //    var currentList;
     //    var grbh;
     //
@@ -539,12 +541,17 @@
             $('#tcdrsj').val(row[0]["DRSJ"]);
             $('#tczyyy').val(row[0]["ZYYY"]);
             $('#tcjyy').val(row[0]["JYYY"]);
+
         }
+        ryid = row[0]["RYID"];
+        dwid = row[0]["DWID"];
         var grbh=$('#grbh').val();
         var xm=$('#grxm').val();
         var sfzhm=$('#grsfzhm').val();
         var grbh1 = grbh.substr(0,5);
         var grbh2 =grbh.substr(5,grbh.length);
+        var ryid1 =ryid.substr(0,5);
+        var ryid2 = ryid.substr(5,ryid.length);
         $('#rytf').attr('data-href',"../staff_reback_payment.jsp?grbh1="+grbh1+"&xm="+"'"+xm+"'"+"&grbh2="+"'"+grbh2+"'");
         $('#grjx').attr('data-href',"../person_interest.jsp?grbh1="+grbh1+"&xm="+"'"+xm+"'"+"&grbh2="+"'"+grbh2+"'");
         $('#cxgrjx').attr('data-href',"../person_clear_interest.jsp?grbh1="+grbh1+"&xm="+xm+"&grbh2="+"'"+grbh2+"'");
@@ -553,8 +560,9 @@
         var sfzhm = $('#grsfzhm').val();
         var grbh1 = grbh.substr(0, 5);
         var grbh2 = grbh.substr(5, grbh.length);
-        $('#rytf').attr('data-href', "../staff_reback_payment.jsp?grbh1=" + grbh1 + "&xm=" + "'" + xm + "'" + "&grbh2=" + grbh2);
-        $('#whjfls').attr('data-href', "../maintain_paymenthistory.jsp?grbh1=" + grbh1 + "&xm=" + "'" + xm + "'" + "&grbh2=" + grbh2);
+        $('#rytf').attr('data-href', "../staff_reback_payment.jsp?grbh1=" + grbh1 + "&xm=" + "'" + xm + "'" + "&grbh2=" + "'"+grbh2+"'");
+        $('#whjfls').attr('data-href', "../maintain_paymenthistory.jsp?grbh1=" + grbh1 + "&xm=" + "'" + xm + "'" + "&grbh2=" +"'"+grbh2+"'"+"&dwid="+dwid
+            +"&ryid1="+ryid1+"&ryid2="+ryid2);
 //        $('#dwjx').attr('data-href',"../dempartment_interest.jsp?dwid="+dwid+"&dwbh="+dwbh+"&dwmc="+dwmc);
 //        $('#cxdwjx').attr('data-href',"../dempartment_clear_interest.jsp?dwid="+dwid+"&dwbh="+dwbh+"&dwmc="+dwmc);
     }

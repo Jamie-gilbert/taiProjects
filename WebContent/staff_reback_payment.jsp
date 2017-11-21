@@ -216,7 +216,7 @@
             data: {
                 "ryid": ryid,
                 "qsrqs": JSON.stringify(qsrqs),
-                "txr": "admin"
+                "txr": "11100000000000000002"
 
             },
             async: false,

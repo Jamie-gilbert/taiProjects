@@ -177,7 +177,7 @@ public class PaymentHistoryController {
     }
 
     /**
-     * 修改单位中人员的缴费历史记录或插入缴费记录
+     * 修改人员的缴费历史记录
      *
      * @param request
      * @param response
@@ -190,81 +190,146 @@ public class PaymentHistoryController {
         response.setHeader("Pragma", "No-cache");
         response.setHeader("Cache-Control", "no-cache");
         response.setCharacterEncoding("UTF-8");
-        String dwid = request.getParameter("dwid");
-        String infos = request.getParameter("infos");
+
+        String infos = request.getParameter("data");
         JSONArray jsonArray = new JSONArray(infos);
         ArrayList<PaymentHistory> updateParams = new ArrayList();
-        ArrayList<PaymentHistory> insetParams = new ArrayList();
+//        ArrayList<PaymentHistory> insetParams = new ArrayList();
         for (int i = 0; i < jsonArray.length(); i++) {
 
             JSONObject jsonObject = jsonArray.getJSONObject(i);
-            String flag = jsonObject.getString("flag");
+//            String flag = jsonObject.getString("flag");
 
-            String qsny = jsonObject.getString("qsny");
-            String zzny = jsonObject.getString("zzny");
-            String ryid = jsonObject.getString("ryid");
-            double dwjfjs = jsonObject.getDouble("dwjfjs");
-            double dwjfe = jsonObject.getDouble("dwjfe");
-            double lx = jsonObject.getDouble("lx");
-            double dwjfze = jsonObject.getDouble("dwjfze");
-            String zdlsh = jsonObject.getString("zdlsh");
-            String jflsid = jsonObject.getString("jflsid");
+            String JFRQ = jsonObject.getString("JFRQ");
+            String qsny = jsonObject.getString("QSNY");
+            String zzny = jsonObject.getString("ZZNY");
+            String XZBZ = jsonObject.getString("XZBZ");
+            String ryid = jsonObject.getString("RYID");
+            String JFLSID = jsonObject.getString("JFLSID");
+
+            double DWJFE = jsonObject.getDouble("DWJFE");
+            double GRJFE = jsonObject.getDouble("GRJFE");
+
+//            String zdlsh = jsonObject.getString("zdlsh");
             PaymentHistory paymentHistory = new PaymentHistory();
-            if ("isUpate".equalsIgnoreCase(flag)) {
-                paymentHistory.setQSNY(qsny);
-                paymentHistory.setRYID(ryid);
-                paymentHistory.setDWID(dwid);
-                paymentHistory.setLX(lx);
-                paymentHistory.setDWJFJS(dwjfjs);
-                paymentHistory.setDWJFE(dwjfe);
-                paymentHistory.setDWJFZE(dwjfze);
-                paymentHistory.setZZNY(zzny);
-                paymentHistory.setLX(lx);
-                paymentHistory.setXGBZ(1);
-                paymentHistory.setZDLSH(zdlsh);
-                paymentHistory.setJFLSID(jflsid);
-                updateParams.add(paymentHistory);
-            } else {
-                String fsrq = jsonObject.getString("fsrq");
-                double dwjfbl = jsonObject.getDouble("dwjfbl");
-                double grjfbl = jsonObject.getDouble("grjfbl");
-                double grjfjs = jsonObject.getDouble("grjfbl");
-                String jbjgid = jsonObject.getString("jbjgid");
-                String jbr = jsonObject.getString("jbr");
-                String jbsj = jsonObject.getString("jbsj");
-                String jfrq = jsonObject.getString("jfrq");
-                String bz = jsonObject.getString("bz");
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                paymentHistory.setDWJFBL(dwjfbl);
-                paymentHistory.setGRJFBL(grjfbl);
-                paymentHistory.setGRJFJS(grjfjs);
-                paymentHistory.setJBJGID(jbjgid);
-                paymentHistory.setJBR(jbr);
-                paymentHistory.setJBSJ(simpleDateFormat.parse(jbsj));
-                paymentHistory.setFSRQ(simpleDateFormat.parse(fsrq));
-                paymentHistory.setJFLSID(jflsid);
-                paymentHistory.setJFRQ(simpleDateFormat.parse(jfrq));
-                paymentHistory.setZDLSH(zdlsh);
-                paymentHistory.setBZ(bz);
-                paymentHistory.setQSNY(qsny);
-                paymentHistory.setRYID(ryid);
-                paymentHistory.setDWID(dwid);
-                paymentHistory.setLX(lx);
-                paymentHistory.setDWJFJS(dwjfjs);
-                paymentHistory.setDWJFE(dwjfe);
-                paymentHistory.setDWJFZE(dwjfze);
-                paymentHistory.setZZNY(zzny);
-                paymentHistory.setLX(lx);
-                paymentHistory.setXGBZ(1);
-                insetParams.add(paymentHistory);
-            }
+//            if ("isUpate".equalsIgnoreCase(flag)) {
+            paymentHistory.setQSNY(qsny);
+            paymentHistory.setRYID(ryid);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd hh:mm:ss");
+            paymentHistory.setJFRQ(dateFormat.parse(JFRQ));
+            paymentHistory.setFSRQ(dateFormat.parse(JFRQ));
+            paymentHistory.setGRJFE(GRJFE);
+            paymentHistory.setDWJFE(DWJFE);
+            paymentHistory.setZZNY(zzny);
+            paymentHistory.setXZBZ(XZBZ);
+            paymentHistory.setJFLSID(JFLSID);
+            updateParams.add(paymentHistory);
+//            } else {
+//                String fsrq = jsonObject.getString("fsrq");
+//                double dwjfbl = jsonObject.getDouble("dwjfbl");
+//                double grjfbl = jsonObject.getDouble("grjfbl");
+//                double grjfjs = jsonObject.getDouble("grjfbl");
+//                String jbjgid = jsonObject.getString("jbjgid");
+//                String jbr = jsonObject.getString("jbr");
+//                String jbsj = jsonObject.getString("jbsj");
+//                String jfrq = jsonObject.getString("jfrq");
+//                String bz = jsonObject.getString("bz");
+//                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//                paymentHistory.setDWJFBL(dwjfbl);
+//                paymentHistory.setGRJFBL(grjfbl);
+//                paymentHistory.setGRJFJS(grjfjs);
+//                paymentHistory.setJBJGID(jbjgid);
+//                paymentHistory.setJBR(jbr);
+//                paymentHistory.setJBSJ(simpleDateFormat.parse(jbsj));
+//                paymentHistory.setFSRQ(simpleDateFormat.parse(fsrq));
+//                paymentHistory.setJFLSID(jflsid);
+//                paymentHistory.setJFRQ(simpleDateFormat.parse(jfrq));
+//                paymentHistory.setZDLSH(zdlsh);
+//                paymentHistory.setBZ(bz);
+//                paymentHistory.setQSNY(qsny);
+//                paymentHistory.setRYID(ryid);
+//                paymentHistory.setLX(lx);
+//                paymentHistory.setDWJFJS(dwjfjs);
+//                paymentHistory.setDWJFE(dwjfe);
+//                paymentHistory.setDWJFZE(dwjfze);
+//                paymentHistory.setZZNY(zzny);
+//                paymentHistory.setLX(lx);
+//                paymentHistory.setXGBZ(1);
+//                insetParams.add(paymentHistory);
+//            }
         }
         if (updateParams.size() > 0) {
             paymentHistoryMapper.modifyPaymentHistory(updateParams);
         }
-        if (insetParams.size() > 0) {
-            paymentHistoryMapper.addPaymentHistory(insetParams);
-        }
+//        if (insetParams.size() > 0) {
+//            paymentHistoryMapper.addPaymentHistory(insetParams);
+//        }
+        JSONObject object = new JSONObject();
+        object.put("errorCode", 0);
+        object.put("errorText", "");
+        Writer writer = response.getWriter();
+        writer.write(object.toString());
+        writer.flush();
+        writer.close();
+
+    }
+
+
+    /**
+     * 添加人员的缴费历史记录
+     *
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    @RequestMapping("/addPaymentHistory")
+    public void addPaymentHistory(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        //设置页面不缓存
+        response.setContentType("application/json");
+        response.setHeader("Pragma", "No-cache");
+        response.setHeader("Cache-Control", "no-cache");
+        response.setCharacterEncoding("UTF-8");
+
+        String infos = request.getParameter("data");
+        JSONObject jsonObject = new JSONObject(infos);
+        String qsny = jsonObject.getString("QSNY");
+        String zzny = jsonObject.getString("ZZNY");
+
+        String ryid = jsonObject.getString("RYID");
+        String dwid = String.valueOf(jsonObject.get("dwid"));
+        double DWJFE = jsonObject.getDouble("DWJFE");
+        double GRJFE = jsonObject.getDouble("GRJFE");
+
+        PaymentHistory paymentHistory = new PaymentHistory();
+        ArrayList<PaymentHistory> paymentHistories=new ArrayList<>();
+        String jbr = jsonObject.getString("jbr");
+        Date jbsj = new Date();
+        String jfrq = jsonObject.getString("jfrq");
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd hh:mm:ss");
+        paymentHistory.setDWJFBL(0);
+        paymentHistory.setGRJFBL(0);
+        paymentHistory.setDWID(dwid);
+        paymentHistory.setRYDJID(ryid);
+        paymentHistory.setJBR(jbr);
+        paymentHistory.setJBSJ(jbsj);
+        paymentHistory.setFSRQ(simpleDateFormat.parse(jfrq));
+        paymentHistory.setJBJGID("37091103");
+        paymentHistory.setJFRQ(simpleDateFormat.parse(jfrq));
+        paymentHistory.setQSNY(qsny);
+        paymentHistory.setDWJFJS(0);
+        paymentHistory.setGRJFJS(0);
+        paymentHistory.setXZBZ("102");
+        paymentHistory.setGRJFE(GRJFE);
+        paymentHistory.setGRJFZE(GRJFE);
+        paymentHistory.setDWJFE(DWJFE);
+        paymentHistory.setDWJFZE(DWJFE);
+        paymentHistory.setRYID(ryid);
+        paymentHistory.setZZNY(zzny);
+        paymentHistories.add(paymentHistory);
+
+        paymentHistoryMapper.addPaymentHistory(paymentHistories);
+
         JSONObject object = new JSONObject();
         object.put("errorCode", 0);
         object.put("errorText", "");
@@ -396,6 +461,7 @@ public class PaymentHistoryController {
         for (PaymentHistory paymentHistory : paymentHistories) {
             paymentHistory.setStaff(null);
             JSONObject object = new JSONObject(paymentHistory);
+
             jsonArray.put(object);
 
         }
@@ -482,13 +548,21 @@ public class PaymentHistoryController {
         jsonObject.put("total", num);
         JSONArray jsonArray = new JSONArray();
         for (PaymentHistory paymentHistory : paymentHistories) {
-            paymentHistory.setStaff(null);
+
             JSONObject object = new JSONObject(paymentHistory);
+            object.put("XM", paymentHistory.getStaff().getXM());
+            Date date = paymentHistory.getJFRQ();
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd hh:mm:ss");
+            object.put("JFRQ", simpleDateFormat.format(date));
+            paymentHistory.setStaff(null);
             jsonArray.put(object);
+
 
         }
         jsonObject.put("rows", jsonArray);
         jsonObject.put("ryid", ryid);
+
+        System.out.println(jsonObject.toString());
         Writer writer = response.getWriter();
         writer.write(jsonObject.toString());
         writer.flush();
@@ -527,7 +601,8 @@ public class PaymentHistoryController {
      * @throws IOException
      */
     @RequestMapping("/queryCountWithoutInterestByRyid")
-    public void queryCountWithoutInterestByRyid(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void queryCountWithoutInterestByRyid(HttpServletRequest request, HttpServletResponse response) throws
+            IOException {
         //设置页面不缓存
         response.setContentType("application/json");
         response.setHeader("Pragma", "No-cache");
@@ -556,7 +631,8 @@ public class PaymentHistoryController {
      * @throws IOException
      */
     @RequestMapping("/queryCountWithoutInterestByRyidWithDate")
-    public void queryCountWithoutInterestByRyidWithDate(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void queryCountWithoutInterestByRyidWithDate(HttpServletRequest request, HttpServletResponse response) throws
+            IOException {
         //设置页面不缓存
         response.setContentType("application/json");
         response.setHeader("Pragma", "No-cache");
@@ -589,7 +665,8 @@ public class PaymentHistoryController {
      * @throws IOException
      */
     @RequestMapping("/rebackPaymentByRyIdWithDate")
-    public void rebackPaymentByRyIdWithDate(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void rebackPaymentByRyIdWithDate(HttpServletRequest request, HttpServletResponse response) throws
+            IOException {
         //设置页面不缓存
         response.setContentType("application/json");
         response.setHeader("Pragma", "No-cache");
@@ -640,7 +717,8 @@ public class PaymentHistoryController {
      * @throws IOException
      */
     @RequestMapping("/queryCountWithInterestByRyid")
-    public void queryCountWithInterestByRyid(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void queryCountWithInterestByRyid(HttpServletRequest request, HttpServletResponse response) throws
+            IOException {
         //设置页面不缓存
         response.setContentType("application/json");
         response.setHeader("Pragma", "No-cache");
@@ -718,6 +796,7 @@ public class PaymentHistoryController {
      * @param payment
      * @return
      */
+
     private float calInterest(int year, int currentYear, float scale, double payment) {
         float finalInterest = 0f;
 

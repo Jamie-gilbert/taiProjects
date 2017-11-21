@@ -81,6 +81,7 @@
 <script type="text/javascript" src="bootstrap/js/bootstrap-datetimepicker.min.js"></script>
 <script type="text/javascript" src="bootstrap/editable/bootstrap-table-editable.js"></script>
 <script src="../x-editable/dist/bootstrap3-editable/js/bootstrap-editable.js"></script>
+
 <script type="text/javascript">
     $('.form_date').datetimepicker({
         language: 'fr',
