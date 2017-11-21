@@ -148,7 +148,7 @@
 <script type="text/javascript">
     var ryid1 =<%=request.getParameter("ryid1")%>;
     var ryid2 =<%=request.getParameter("ryid2")%>;
-    var ryid = "" + ryid1 + "" + ryid2;
+    var ryid =  ryid1.toString() + ryid2.toString();
     var dwid =<%=request.getParameter("dwid")%>;
     var grbh1 =<%=request.getParameter("grbh1")%>;
     var grbh2 =<%=request.getParameter("grbh2")%>;
@@ -184,11 +184,12 @@
         var infos = {};
         infos.QSNY = qsny;
         infos.ZZNY = zzny;
-        infos.RYID = qsny;
-        infos.QSNY = qsny;
+        infos.RYID = ryid;
+        infos.RYDJID = ryid;
         infos.DWJFE = dwjfe;
         infos.GRJFE = grjfe;
         infos.jfrq = jfsj;
+        infos.fsrq = jfsj;
         infos.dwid = dwid;
         infos.jbr = "11100000000000000002";
         $.ajax({

@@ -4,6 +4,8 @@ html {
 
 body {
     background:-moz-linear-gradient(bottom,#0000ff, #fff);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#cccccc', endColorstr='#000000');
+    background:-webkit-gradient(linear, 0 0, 0 top, from(#CECED0), to(rgba(138, 122, 255, 1)));
 }
 
 body .container {
