@@ -66,7 +66,7 @@ public interface PaymentHistoryMapper {
                                                 @Param(value = "zzrq") String zzrq);
 
     int rebackPaymentByRyId(@Param(value = "ryid") String ryid,
-                            @Param(value = "list") List<String> qsrqs);
+                            @Param(value = "list") List<PaymentHistory> list);
 
     float queryAmountByRyidWithDate(@Param(value = "ryid") String ryid,
                                     @Param(value = "list") List<String> qsrqs);

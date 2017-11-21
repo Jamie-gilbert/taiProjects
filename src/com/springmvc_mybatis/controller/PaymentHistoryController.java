@@ -599,9 +599,14 @@ public class PaymentHistoryController {
         String qsrqs = request.getParameter("qsrqs");
         JSONArray array = new JSONArray(qsrqs);
         List<String> qsrqList = new ArrayList<>();
+        List<PaymentHistory> list = new ArrayList<>();
         for (int i = 0; i < array.length(); i++) {
             JSONObject object = array.getJSONObject(i);
             qsrqList.add(String.valueOf(object.get("qsrq")));
+            PaymentHistory paymentHistory = new PaymentHistory();
+            paymentHistory.setQSNY(String.valueOf(object.get("qsrq")));
+            paymentHistory.setGRJFE(0 - object.getFloat("grjfe"));
+            list.add(paymentHistory);
         }
         String zzny = Collections.max(qsrqList);
         String qsny = Collections.min(qsrqList);
@@ -615,7 +620,7 @@ public class PaymentHistoryController {
         departmentBillMapper.addRebackBill(zdlsh, staff.getDWID()
                 , staff.getJBJGID(), txr, dateStr, txr, dateStr, amount, ryid);
         departmentBillMapper.addBillDel(zdlsh, "102", "AL1", qsny, zzny, amount);
-        paymentHistoryMapper.rebackPaymentByRyId(ryid, qsrqList);
+        paymentHistoryMapper.rebackPaymentByRyId(ryid, list);
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("errorCode", 0);

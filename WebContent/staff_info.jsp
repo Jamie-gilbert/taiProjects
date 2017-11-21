@@ -44,31 +44,34 @@
                 <input type="text" class="form-control" id="grsfzhm"/>
             </div>
         </div>
-        <div class="col-xs-1 col-md-2" >
-            <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#personModal" id="query_person">查询</button>
+        <div class="col-xs-1 col-md-2">
+            <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#personModal" id="query_person">查询
+            </button>
             <button class="btn btn-primary btn-sm" data-toggle="button" id="reset" type="reset">重置</button>
         </div>
     </div>
     <div class="container-fluid" id="unitButton">
-        <a id="rytf" class="page-action btn btn-primary btn-sm" href="#"  title="人员退费">
+        <a id="rytf" class="page-action btn btn-primary btn-sm" href="#" title="人员退费">
             人员退费
         </a>
-        <a class="page-action btn btn-primary btn-sm" href="../paymentHistory/qyeryInterestByRyid.action?ryid=11100000000000008807&pageNumber=1&pageSize=10">
+        <a class="page-action btn btn-primary btn-sm"
+           href="../paymentHistory/qyeryInterestByRyid.action?ryid=11100000000000008807&pageNumber=1&pageSize=10">
             个人计息
         </a>
         <a class="btn btn-primary btn-sm" onclick="setData()" data-toggle="modal" data-target="#exampleModal">
             修改个人信息
         </a>
-        <a class="btn btn-primary btn-sm" onclick="" data-toggle="modal" >
+        <a id="whjfls" class="page-action btn btn-primary btn-sm" href="#" title="缴费历史维护">
             缴费历史维护
         </a>
-        <a class="btn btn-primary btn-sm" onclick="" data-toggle="modal" >
+        <a class="btn btn-primary btn-sm" onclick="" data-toggle="modal">
             个人单据管理
         </a>
     </div>
 </div>
 
-<div class="modal fade" id="personModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+<div class="modal fade" id="personModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+     data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -380,9 +383,9 @@
     //        $("#ygrbh").val(currentList[currentIndex].YGRBH);
     //        $("#jbjgid").val(currentList[currentIndex].JBJGID);
     //    };
-    var grbh ="";
-    var grsfzhm ="";
-    var grxm =""
+    var grbh = "";
+    var grsfzhm = "";
+    var grxm = ""
     BUI.use('common/page');
 
     $(document).ready(function () {
@@ -406,13 +409,13 @@
             pagination: true,                   //是否显示分页（*）
             sortable: false,                     //是否启用排序
             sortOrder: "asc",                   //排序方式
-            queryParams : function (params) {
+            queryParams: function (params) {
                 return {
                     pageNumber: params.offset + 1,
                     pageSize: params.limit,
                     grbh: grbh,
                     grxm: grxm,
-                    grsfzhm:grsfzhm
+                    grsfzhm: grsfzhm
                 };
             },
             //传递参数（*）
@@ -421,13 +424,13 @@
             pageNumber: 1,                       //初始化加载第一页，默认第一页
             pageSize: 10,                       //每页的记录行数（*）
             pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
-            clickToSelect:true,
+            clickToSelect: true,
             columns: [{
                 checkbox: true
             }, {
                 field: 'GRBH',
                 title: '个人编号',
-            },  {
+            }, {
                 field: 'XM',
                 title: '姓名',
             }, {
@@ -536,25 +539,25 @@
             $('#tczyyy').val(row[0]["ZYYY"]);
             $('#tcjyy').val(row[0]["JYYY"]);
         }
-        var grbh=$('#grbh').val();
-        var xm=$('#grxm').val();
-        var sfzhm=$('#grsfzhm').val();
-        var grbh1 = grbh.substr(0,5);
-        var grbh2 =grbh.substr(5,grbh.length);
-        $('#rytf').attr('data-href',"../staff_reback_payment.jsp?grbh1="+grbh1+"&xm="+"'"+xm+"'"+"&grbh2="+grbh2);
-//        $('#cxdj').attr('data-href',"../department_bils.jsp?dwid="+dwid+"&dwbh="+dwbh+"&dwmc="+dwmc);
+        var grbh = $('#grbh').val();
+        var xm = $('#grxm').val();
+        var sfzhm = $('#grsfzhm').val();
+        var grbh1 = grbh.substr(0, 5);
+        var grbh2 = grbh.substr(5, grbh.length);
+        $('#rytf').attr('data-href', "../staff_reback_payment.jsp?grbh1=" + grbh1 + "&xm=" + "'" + xm + "'" + "&grbh2=" + grbh2);
+        $('#whjfls').attr('data-href', "../maintain_paymenthistory.jsp?grbh1=" + grbh1 + "&xm=" + "'" + xm + "'" + "&grbh2=" + grbh2);
 //        $('#dwjx').attr('data-href',"../dempartment_interest.jsp?dwid="+dwid+"&dwbh="+dwbh+"&dwmc="+dwmc);
 //        $('#cxdwjx').attr('data-href',"../dempartment_clear_interest.jsp?dwid="+dwid+"&dwbh="+dwbh+"&dwmc="+dwmc);
     }
 
 
-    $("#reset").off().on("click",function(){
+    $("#reset").off().on("click", function () {
         $("#grbh").val("");
         $("#grxm").val("");
         $("#grsfzhm").val("");
-        $('#grbh').attr("readonly",false)
-        $('#grxm').attr("readonly",false)
-        $('#grsfzhm').attr("readonly",false)
+        $('#grbh').attr("readonly", false)
+        $('#grxm').attr("readonly", false)
+        $('#grsfzhm').attr("readonly", false)
     });
 
 </script>

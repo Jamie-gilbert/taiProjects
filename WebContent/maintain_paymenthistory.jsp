@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="css/bootstrap.css" type="text/css">
     <link rel="stylesheet" href="bootstrap/custom/department.css" type="text/css">
     <link rel="stylesheet" type="text/css" href="./bootstrap/custom/department.css">
+    <link rel="stylesheet" href="../x-editable/dist/bootstrap3-editable/css/bootstrap-editable.css">
 
 </head>
 <body>
@@ -44,9 +45,7 @@
             <div class="col-xs-6 col-md-6">
                 <button type="button" class="btn btn-primary" onclick="queryData()"> 查 询</button>
             </div>
-            <div class="col-xs-6 col-md-6">
-                <button type="button" class="btn btn-primary" onclick="rebackPayment()">退费</button>
-            </div>
+
         </div>
 
 
@@ -101,7 +100,8 @@
             cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
             pagination: true,                   //是否显示分页（*）
             sortable: false,                     //是否启用排序
-            sortOrder: "asc",                   //排序方式
+            sortOrder: "asc",
+            editable: true,//排序方式
             queryParams: function (params) {
                 return {
                     pageNumber: params.offset + 1,
@@ -117,21 +117,35 @@
             pageNumber: 1,                       //初始化加载第一页，默认第一页
             pageSize: 10,                       //每页的记录行数（*）
             pageList: [10, 25, 50],        //可供选择的每页的行数（*）
-            clickToSelect: true,
-            columns: [{
-                checkbox: true
-            }, {
+
+            columns: [ {
                 field: 'QSNY',
                 title: '起始年月',
+                editable: {
+                    type: 'text',
+                    title: '起始年月'
+                }
             }, {
                 field: 'ZZNY',
                 title: '终止年月',
+                editable: {
+                    type: 'text',
+                    title: '终止年月'
+                }
             }, {
                 field: 'DWJFZE',
                 title: '单位缴费总额',
+                editable: {
+                    type: 'text',
+                    title: '单位缴费总额'
+                }
             }, {
                 field: 'GRJFZE',
                 title: '个人缴费总额',
+                editable: {
+                    type: 'text',
+                    title: '个人缴费总额'
+                }
             },
                 {
                     field: 'RYID',
@@ -201,7 +215,6 @@
         for (var i = 0; i < datas.length; i++) {
             var qsrq = {};
             qsrq.qsrq = datas[i].QSNY;
-            qsrq.grjfe=datas[i].GRJFZE;
             qsrqs.push(qsrq);
         }
         $.ajax({

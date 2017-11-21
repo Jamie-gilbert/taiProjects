@@ -181,12 +181,13 @@
             , ${ZDLSH},${JBJGID},${BZ}, ${JBR}, ${JBSJ},${LX}, ${XGBZ})
         </foreach>
     </insert>
+
     <update id="rebackPaymentByRyId">
-        UPDATE  si3.aged_pay_his
-        SET GRJFE=NULL ,LX=NULL ,XGBZ=2
-        WHERE RYID=#{ryid,jdbcType=VARCHAR}  AND
-        <foreach collection="list" index="index" item="qsny" open="(" separator="or" close=")">
-            QSNY  IN #{qsny,jdbcType=VARCHAR}
+
+        <foreach collection="list" open="begin" item="item" index="index" close=";end;" separator=";">
+            UPDATE  si3.aged_pay_his
+            SET GRJFE=${item.GRJFE} ,LX=NULL
+            WHERE RYID=#{ryid,jdbcType=VARCHAR}  AND  QSNY  = #{item.QSNY,jdbcType=VARCHAR}
         </foreach>
     </update>
     <select id="queryAmountByRyidWithDate" resultType="float">
