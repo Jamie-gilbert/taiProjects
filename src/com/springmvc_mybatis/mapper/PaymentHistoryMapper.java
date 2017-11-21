@@ -66,15 +66,14 @@ public interface PaymentHistoryMapper {
                                                 @Param(value = "zzrq") String zzrq);
 
     int rebackPaymentByRyId(@Param(value = "ryid") String ryid,
-                            @Param(value = "qsrq") String qsrq,
-                            @Param(value = "zzrq") String zzrq);
+                            @Param(value = "list") List<String> qsrqs);
 
     float queryAmountByRyidWithDate(@Param(value = "ryid") String ryid,
-                                    @Param(value = "qsrq") String qsrq,
-                                    @Param(value = "zzrq") String zzrq);
+                                    @Param(value = "list") List<String> qsrqs);
 
 
     int queryCountWithInterestByRyid(@Param(value = "ryid") String ryid);
+
     int queryCountByZDLSH(@Param(value = "zdlsh") String zdlsh);
 
     List<PaymentHistory> queryPaymentHisByZDLSH(

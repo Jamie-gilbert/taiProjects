@@ -184,14 +184,19 @@
     <update id="rebackPaymentByRyId">
         UPDATE  si3.aged_pay_his
         SET GRJFE=NULL ,LX=NULL ,XGBZ=2
-        WHERE RYID=#{ryid,jdbcType=VARCHAR} AND QSNY>=${qsrq} AND QSNY&lt;=${zzrq}
+        WHERE RYID=#{ryid,jdbcType=VARCHAR}  AND
+        <foreach collection="list" index="index" item="qsny" open="(" separator="or" close=")">
+            QSNY  IN #{qsny,jdbcType=VARCHAR}
+        </foreach>
     </update>
     <select id="queryAmountByRyidWithDate" resultType="float">
        select  CONCAT(sum(nvl(a.GRJFE, 0)),sum(nvl(a.LX, 0)))
         from si3.aged_pay_his a
-        where a.RYID=#{ryid,jdbcType=VARCHAR}
-        and a.QSNY &lt;= ${zzrq}
-        and a.QSNY >= ${qsrq}
+        where a.RYID=#{ryid,jdbcType=VARCHAR} AND
+        <foreach collection="list" index="index" item="qsny" open="(" separator="or" close=")">
+            a.QSNY  IN #{qsny,jdbcType=VARCHAR}
+        </foreach>
+
     </select>
 
     <select id="queryPaymentHisByRyids" resultMap="paymentHistoryResult" parameterType="java.util.List">

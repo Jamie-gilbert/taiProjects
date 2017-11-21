@@ -16,13 +16,7 @@
     <link rel="stylesheet" href="css/bootstrap.css" type="text/css">
     <link rel="stylesheet" href="bootstrap/custom/department.css" type="text/css">
     <link rel="stylesheet" type="text/css" href="./bootstrap/custom/department.css">
-    <script type="text/javascript" src="bootstrap/js/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="bootstrap-table/bootstrap-table.js"></script>
-    <script type="text/javascript" src="bootstrap-table/bootstrap-table-zh-CN.js"></script>
-    <script type="text/javascript" src="webTree/assets/js/bui-min.js"></script>
-    <script type="text/javascript" src="webTree/assets/js/config-min.js"></script>
-    <script type="text/javascript" src="js/dialog.js"></script>
+
 </head>
 <body>
 
@@ -66,7 +60,13 @@
 
 </div>
 
-
+<script type="text/javascript" src="bootstrap/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="bootstrap-table/bootstrap-table.js"></script>
+<script type="text/javascript" src="bootstrap-table/bootstrap-table-zh-CN.js"></script>
+<script type="text/javascript" src="webTree/assets/js/bui-min.js"></script>
+<script type="text/javascript" src="webTree/assets/js/config-min.js"></script>
+<script type="text/javascript" src="js/dialog.js"></script>
 <script type="text/javascript">
     var ryid = "";
     var grbh1 =<%=request.getParameter("grbh1")%>;
@@ -136,80 +136,98 @@
                 {
                     field: 'RYID',
                     title: 'ryid',
+                    visible: false
                 }]
         });
     }
 
     function rebackPayment() {
-        var ryid =  $('#person_jfls').bootstrapTable;
-        var qsrq = $('#qsrq').val();
-        var zzrq = $('#zzrq').val();
-        if (qsrq == "" || qsrq == null) {
-            qsrq = "1900";
-        }
-        if (zzrq == "" || zzrq == null) {
-            var mydate = new Date();
-            var str = "" + mydate.getFullYear();
-            str += (mydate.getMonth() + 1);
+        var datas = $('#person_jfls').bootstrapTable("getSelections");
+        if (datas == null || datas.length <= 0) {
+            Alert({
+                msg: '请先选择缴费历史',
+                title: "提示"
+            });
+        } else {
 
-            zzrq = $.trim(str);
-        }
-
-        $.ajax({
-            type: "POST",
-            url: "../paymentHistory/queryCountWithoutInterestByRyidWithDate.action",
-            data: {
-                "ryid": ryid,
-                "qsrq": qsrq,
-                "zzrq": zzrq
-            },
-            async: false,
-            dataType: "JSON",
-            success: function (data, status) {
-                console.log(data)
-                var needInterest = data.needInterest;
-                if (needInterest == true) {
-                    Alert({
-                        msg: '该人员有未计息的缴费，请先计息',
-                        title: "提示",
-                    })
-                } else {
-                    rebackPay();
-                }
-            },
-            error: function (err, status) {
-                console.log(err)
+            var ryid = datas[0].RYID;
+            var qsrq = $('#qsrq').val();
+            var zzrq = $('#zzrq').val();
+            if (qsrq == "" || qsrq == null) {
+                qsrq = "1900";
             }
+            if (zzrq == "" || zzrq == null) {
+                var mydate = new Date();
+                var str = "" + mydate.getFullYear();
+                str += (mydate.getMonth() + 1);
 
-        });
+                zzrq = $.trim(str);
+            }
+            $.ajax({
+                type: "POST",
+                url: "../paymentHistory/queryCountWithoutInterestByRyidWithDate.action",
+                data: {
+                    "ryid": ryid,
+                    "qsrq": qsrq,
+                    "zzrq": zzrq
+                },
+                async: false,
+                dataType: "JSON",
+                success: function (data, status) {
+                    console.log(data)
+                    var needInterest = data.needInterest;
+                    if (needInterest == true) {
+                        Alert({
+                            msg: '该人员有未计息的缴费，请先计息',
+                            title: "提示",
+                        })
+                    } else {
+                        rebackPay(datas);
+                    }
+                },
+                error: function (err, status) {
+                    console.log(err)
+                }
+
+            });
+        }
     }
 
-    function rebackPay() {
-        var qsrq = $('#qsrq').val();
-        var zzrq = $('#zzrq').val();
+    function rebackPay(datas) {
+        debugger
+        var ryid = datas[0].RYID;
+        var qsrqs = [];
+
+        for (var i = 0; i < datas.length; i++) {
+            var qsrq = {};
+            qsrq.qsrq = datas[i].QSNY;
+            qsrqs.push(qsrq);
+        }
         $.ajax({
             type: "POST",
             url: "../paymentHistory/rebackPaymentByRyIdWithDate.action",
             data: {
                 "ryid": ryid,
-                "qsrq": qsrq,
-                "txr": "111",
-                "zzrq": zzrq
+                "qsrqs": JSON.stringify(qsrqs),
+                "txr": "admin"
+
             },
             async: false,
             dataType: "JSON",
             success: function (data, status) {
-                console.log(data)
-                var needInterest = data.errorCode;
-                if (needInterest == 0) {
-                    Alert({
-                        msg: '退费成功',
-                        title: "提示",
-                    })
-                }
+
+                Alert({
+                    msg: '退费成功',
+                    title: "提示",
+                })
+
             },
             error: function (err, status) {
-                console.log(err)
+                Alert({
+                    msg: '退费失败',
+                    title: "提示",
+                })
+
             }
 
         });
