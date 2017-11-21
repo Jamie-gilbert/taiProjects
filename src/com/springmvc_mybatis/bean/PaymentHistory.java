@@ -33,6 +33,9 @@ public class PaymentHistory implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date JBSJ;
     private double LX;
+    private double lxs;
+    private double grjfes;
+    private double dwjfes;
 
     private Staff staff;
     private int FSYY;
@@ -244,5 +247,29 @@ public class PaymentHistory implements Serializable {
 
     public void setZJE(double ZJE) {
         this.ZJE = ZJE;
+    }
+
+    public double getLxs() {
+        return lxs;
+    }
+
+    public void setLxs(double lxs) {
+        this.lxs = lxs;
+    }
+
+    public double getGrjfes() {
+        return grjfes;
+    }
+
+    public void setGrjfes(double grjfes) {
+        this.grjfes = grjfes;
+    }
+
+    public double getDwjfes() {
+        return dwjfes;
+    }
+
+    public void setDwjfes(double dwjfes) {
+        this.dwjfes = dwjfes;
     }
 }

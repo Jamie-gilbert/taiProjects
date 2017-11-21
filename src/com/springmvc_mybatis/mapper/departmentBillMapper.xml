@@ -12,6 +12,7 @@
         <result column="qrr" property="qrr"/>
         <result column="qrsj" property="qrsj"/>
         <result column="zje" property="zje"/>
+        <result column="ryid" property="ryid"/>
         <result column="bz" property="bz"/>
     </resultMap>
 
@@ -67,4 +68,16 @@ SELECT A.* ,ROWNUM RN FROM
             , ${ZDLSH},${JBJGID},${BZ}, ${JBR}, ${JBSJ},${LX}, ${XGBZ})
         </foreach>
     </insert>
+    <select id="queryCountByRyid" resultType="int">
+        SELECT  COUNT (*) FROM si3.bill_genl where ryid=#{ryid,jdbcType=VARCHAR}
+    </select>
+    <select id="queryBillsByRyid" resultMap="departmentBillResult">
+         SELECT * FROM (
+        SELECT A.*,ROWNUM RN FROM
+        (select * from
+        si3.bill_genl a
+        WHERE  a.ryid =#{ryid,jdbcType=VARCHAR}) A
+        WHERE ROWNUM &lt; ${next}
+        ) WHERE RN >=${pre}
+    </select>
 </mapper>

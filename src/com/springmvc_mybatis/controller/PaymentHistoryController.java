@@ -1,5 +1,6 @@
 package com.springmvc_mybatis.controller;
 
+import com.springmvc_mybatis.bean.DepartmentBill;
 import com.springmvc_mybatis.bean.PaymentHistory;
 import com.springmvc_mybatis.bean.Staff;
 import com.springmvc_mybatis.json.JSONArray;
@@ -777,6 +778,55 @@ public class PaymentHistoryController {
                 object.put("xzbz", paymentHistory.getXZBZ());
                 object.put("lx", paymentHistory.getLX());
                 jsonArray.put(object);
+            }
+        }
+        jsonObject.put("total", num);
+
+        jsonObject.put("rows", jsonArray);
+
+        Writer writer = response.getWriter();
+        writer.write(jsonObject.toString());
+        writer.flush();
+        writer.close();
+    }
+
+
+    /**
+     * @param request
+     * @param response
+     * @throws IOException
+     */
+    @RequestMapping("/queryBillByRyid")
+    public void queryBillByRyid(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        //设置页面不缓存
+        response.setContentType("application/json");
+        response.setHeader("Pragma", "No-cache");
+        response.setHeader("Cache-Control", "no-cache");
+        response.setCharacterEncoding("UTF-8");
+        String grbh = request.getParameter("grbh");
+        String page = request.getParameter("pageNumber");
+        String count = request.getParameter("pageSize");
+        int countNum = Integer.parseInt(count);
+        int pageNum = Integer.parseInt(page);
+        JSONObject jsonObject = new JSONObject();
+        String ryid = staffMapper.queryStaffByGRBH(grbh);
+        int num = departmentBillMapper.queryCountByRyid(ryid);
+        JSONArray jsonArray = new JSONArray();
+        if (num > 0) {
+            List<DepartmentBill> departmentBills = departmentBillMapper.queryBillsByRyid(ryid
+                    , page, String.valueOf(countNum + pageNum));
+
+            for (DepartmentBill departmentBill : departmentBills) {
+                JSONObject object = new JSONObject(departmentBills);
+                PaymentHistory paymentHistory = paymentHistoryMapper.queryAmountByZDLSH(departmentBill.getZdlsh());
+                if (paymentHistory != null) {
+                    object.put("dwjfes", paymentHistory.getDwjfes());
+                    object.put("lxs", paymentHistory.getLxs());
+                    object.put("grjfes", paymentHistory.getDwjfes());
+                    object.put("zje", paymentHistory.getDwjfes() + paymentHistory.getGrjfes() + paymentHistory.getLxs());
+                    jsonArray.put(object);
+                }
+
             }
         }
         jsonObject.put("total", num);

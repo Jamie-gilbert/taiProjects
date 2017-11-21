@@ -66,7 +66,7 @@
         <a id="whjfls" class="page-action btn btn-primary btn-sm" href="#" title="缴费历史维护">
             缴费历史维护
         </a>
-        <a class="btn btn-primary btn-sm" onclick="" data-toggle="modal">
+        <a id="grdjgl" class="page-action btn btn-primary btn-sm" href="#" title="个人单据管理">
             个人单据管理
         </a>
     </div>
@@ -434,6 +434,9 @@
         $('#rytf').attr('data-href', "../staff_reback_payment.jsp?grbh1=" + grbh1 + "&xm=" + "'" + xm + "'" + "&grbh2=" + "'"+grbh2+"'");
         $('#whjfls').attr('data-href', "../maintain_paymenthistory.jsp?grbh1=" + grbh1 + "&xm=" + "'" + xm + "'" + "&grbh2=" +"'"+grbh2+"'"+"&dwid="+dwid
             +"&ryid1="+ryid1+"&ryid2="+"'"+ryid2+"'");
+        $('#grdjgl').attr('data-href', "../person_bill.jsp?grbh1=" + grbh1 + "&xm=" + "'" + xm + "'" + "&grbh2=" +"'"+grbh2+"'"+"&dwid="+dwid
+            +"&ryid1="+ryid1+"&ryid2="+"'"+ryid2+"'");
+        //
     }
 
 

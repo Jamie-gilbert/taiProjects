@@ -50,7 +50,7 @@ public interface PaymentHistoryMapper {
 
     void modifyPaymentHistory(@Param(value = "list") ArrayList<PaymentHistory> list);
 
-    void addPaymentHistory(@Param(value = "list")  ArrayList<PaymentHistory> list);
+    void addPaymentHistory(@Param(value = "list") ArrayList<PaymentHistory> list);
 
     void modifyInterestByRyid(@Param(value = "list") ArrayList<PaymentHistory> list);
 
@@ -83,4 +83,7 @@ public interface PaymentHistoryMapper {
 
 
     void cancelInterestByRyid(@Param(value = "ryid") String ryid);
+
+    PaymentHistory queryAmountByZDLSH(@Param(value = "zdlsh") String zdlsh);
+
 }

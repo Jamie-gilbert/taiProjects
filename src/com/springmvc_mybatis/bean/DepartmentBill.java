@@ -19,6 +19,7 @@ public class DepartmentBill implements Serializable {
     private Date qrsj;
     private double zje;
     private String bz;
+    private String ryid;
 
     public String getJbjgid() {
         return jbjgid;
@@ -92,6 +93,13 @@ public class DepartmentBill implements Serializable {
         this.qrr = qrr;
     }
 
+    public String getRyid() {
+        return ryid;
+    }
+
+    public void setRyid(String ryid) {
+        this.ryid = ryid;
+    }
 
     public double getZje() {
         return zje;

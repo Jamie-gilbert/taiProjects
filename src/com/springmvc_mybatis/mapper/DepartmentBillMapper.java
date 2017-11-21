@@ -20,8 +20,8 @@ public interface DepartmentBillMapper {
                    @Param(value = "djzt") String type);
 
     void modifyStatusByDwid(@Param("zdlshs") List<DepartmentBill> zdlshs,
-                           @Param("dwid") String dwid,
-                           @Param("djzt") String djzt);
+                            @Param("dwid") String dwid,
+                            @Param("djzt") String djzt);
 
     void addRebackBill(@Param(value = "zdlsh") String zdlsh,
                        @Param(value = "dwid") String dwid,
@@ -44,4 +44,9 @@ public interface DepartmentBillMapper {
 
     String queryZDLSH();
 
+    List<DepartmentBill> queryBillsByRyid(@Param(value = "ryid") String ryid,
+                                          @Param(value = "pre") String pre,
+                                          @Param(value = "next") String next);
+
+    int queryCountByRyid(@Param(value = "ryid") String ryid);
 }

@@ -27,6 +27,9 @@
         <result column="LX" property="LX"/>
         <result column="ZJE" property="ZJE"/>
         <result column="FSYY" property="FSYY"/>
+        <result column="grjfes" property="grjfes"/>
+        <result column="dwjfes" property="dwjfes"/>
+        <result column="lxs" property="lxs"/>
 
         <association property="staff"
                      column="RYID"
@@ -227,5 +230,10 @@
        select  COUNT (*) from
         si3.aged_pay_his a
         WHERE  a.ZDLSH =#{zdlsh,jdbcType=VARCHAR}
+    </select>
+
+    <select id="queryAmountByZDLSH" resultMap="paymentHistoryResult">
+        SELECT sum(GRJFE) as grjfes,sum(DWJFE) as dwjfes,sum(LX) as lxs FROM  si3.aged_pay_his
+        where zdlsh=#{zdlsh,jdbcType=VARCHAR} group by zdlsh
     </select>
 </mapper>
