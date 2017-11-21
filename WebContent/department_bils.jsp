@@ -43,14 +43,14 @@
     </div>
     <div class="col-xs-3 col-md-4">
         <button id="query" class="btn btn-primary btn-sm" data-toggle="button">查询</button>
-        <button id="modify_status" onclick="modifyStatusByDwid()" class="btn btn-primary btn-sm"
-                data-toggle="button">
-            修改单据状态
-        </button>
-        <button id="modify_status2" onclick="toVoidByDwid()" class="btn btn-primary btn-sm"
-                data-toggle="button">
-            作废单据
-        </button>
+        <%--<button id="modify_status" onclick="modifyStatusByDwid()" class="btn btn-primary btn-sm"--%>
+                <%--data-toggle="button">--%>
+            <%--修改单据状态--%>
+        <%--</button>--%>
+        <%--<button id="modify_status2" onclick="toVoidByDwid()" class="btn btn-primary btn-sm"--%>
+                <%--data-toggle="button">--%>
+            <%--作废单据--%>
+        <%--</button>--%>
     </div>
 </div>
 <div>
@@ -130,15 +130,48 @@
             }, {
                 field: 'dwid',
                 title: '单位名称',
+                formatter : function (value, row, index) {
+                    return $("#dwmc").val();
+                }
             }, {
                 field: 'djlb',
                 title: '单据类别',
+                formatter : function (value, row, index) {
+                    if (row['djlb'] === 'SI1001') {
+                        return '收缴单据';
+                    }
+                    if (row['djlb'] === 'SI1002') {
+                        return '退费单据';
+                    }
+                    return value;
+                }
             }, {
                 field: 'djzt',
                 title: '单据状态',
+                formatter : function (value, row, index) {
+                    if (row['djzt'] === '0') {
+                        return '未确认';
+                    }
+                    if (row['djzt'] === '1') {
+                        return '已确认';
+                    }
+                    if (row['djzt'] === '2') {
+                        return '已作废';
+                    }
+                    if (row['djzt'] === '3') {
+                        return '冲销';
+                    }
+                    if (row['djzt'] === '4') {
+                        return '被冲销';
+                    }
+                    return value;
+                }
             }, {
                 field: 'txr',
-                title: '填写人'
+                title: '填写人',
+                formatter : function (value, row, index) {
+                    return 'admin';
+                }
             }, {
                 field: 'txsj',
                 title: '填写时间',
@@ -148,6 +181,9 @@
             }, {
                 field: 'qrr',
                 title: '确认人',
+                formatter: function (value, row, index) {
+                    return 'admin'
+                }
             }, {
                 field: 'qrsj',
                 title: '确认时间',

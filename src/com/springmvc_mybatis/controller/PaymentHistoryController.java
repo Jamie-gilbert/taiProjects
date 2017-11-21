@@ -692,7 +692,7 @@ public class PaymentHistoryController {
         String zzny = Collections.max(qsrqList);
         String qsny = Collections.min(qsrqList);
         Staff staff = staffMapper.queryStaffByRyid(ryid);
-        float amount = paymentHistoryMapper.queryAmountByRyidWithDate(ryid, qsrqList);
+       float amount = paymentHistoryMapper.queryAmountByRyidWithDate(ryid, qsrqList);
         String txr = request.getParameter("txr");
         Date date = new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM");
