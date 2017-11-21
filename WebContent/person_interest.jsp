@@ -138,7 +138,8 @@
                     title: "提示",
 
                 });
-                paymentHis_table();
+
+
             },
             error: function (err, status) {
                 console.log(err)

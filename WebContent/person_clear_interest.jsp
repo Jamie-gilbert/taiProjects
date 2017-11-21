@@ -17,7 +17,7 @@
 
 </head>
 <body>
-<%@include file="pcommonTop.jsp"%>
+<%@include file="pcommonTop.jsp" %>
 <div class="container-fluid">
     <div id="toolbar" class="btn-group" onclick="queryNeedCancel()">
         <button data-toggle="button" type="button" class="btn btn-default">
@@ -109,95 +109,81 @@
     }
 
 
-    <%--function queryNeedCancel() {--%>
-        <%--var currentData = $('#paymentHis').bootstrapTable('getData');--%>
-        <%--var all = currentData.length;--%>
-        <%--var selectData = $('#paymentHis').bootstrapTable('getSelections');--%>
+    function queryNeedCancel() {
+        var currentData = $('#person_jfls').bootstrapTable('getData', false);
+        var all = currentData.length;
 
-        <%--if (all > 0) {--%>
-            <%--if (selectData != null && selectData.length > 0) {--%>
-                <%--Confirm({--%>
-                    <%--msg: '你确定撤销计息吗',--%>
-                    <%--title: "提示",--%>
-                    <%--onOk: function () {--%>
+        if (all > 0) {
 
-                        <%--clearInterest(selectData);--%>
-                    <%--},--%>
-                    <%--onCancel: function () {--%>
+            Confirm({
+                msg: '你确定撤销计息吗',
+                title: "提示",
+                onOk: function () {
 
-                    <%--}--%>
-                <%--})--%>
-            <%--}else {--%>
-                <%--Alert({--%>
-                    <%--msg: '请先选择需要撤销计息的人员',--%>
-                    <%--title: "提示",--%>
+                    clearInterest(currentData);
+                },
+                onCancel: function () {
 
-                <%--})--%>
-            <%--}--%>
-        <%--} else {--%>
-            <%--Alert({--%>
-                <%--msg: '该单位不存在已计息',--%>
-                <%--title: "提示"--%>
-            <%--})--%>
-        <%--}--%>
-    <%--};--%>
+                }
+            })
 
-    <%--function clearInterest(selectData) {--%>
+        } else {
+            Alert({
+                msg: '该人员没有缴费历史',
+                title: "提示"
+            })
+        }
+    };
 
-        <%--var dwid =<%=request.getParameter("dwid")%>;--%>
-        <%--var infos = [];--%>
+    function clearInterest(selectData) {
+        var ryid = selectData[0].RYID;
+        $.ajax({
+            type: "POST",
+            url: "../paymentHistory/cancelInterestByRyid.action",
+            data: {"ryid": ryid},
+            dataType: "JSON",
+            async: true,
+            success: function (data, status) {
 
-        <%--for (var i = 0; i < selectData.length; i++) {--%>
-            <%--var ryidObj = {};--%>
-            <%--ryidObj.ryid = selectData[i].RYID;--%>
-            <%--infos.push(ryidObj);--%>
-        <%--}--%>
+                Alert({
+                    msg: '撤销计息成功',
+                    title: "提示",
+
+                });
 
 
-        <%--$.ajax({--%>
-            <%--type: "POST",--%>
-            <%--url: "../paymentHistory/clear.action",--%>
-            <%--data: {--%>
-                <%--"dwid": dwid,--%>
-                <%--"ryids": JSON.stringify(infos)--%>
-            <%--},--%>
-            <%--dataType: "JSON",--%>
-            <%--async: true,--%>
-            <%--success: function (data, status) {--%>
-                <%--console.log(data)--%>
-                <%--Alert({--%>
-                    <%--msg: '撤销计息成功',--%>
-                    <%--title: "提示",--%>
+            },
+            error: function (err, status) {
+                debugger
+                console.log(err)
+                Alert({
+                    msg: '撤销计息失败',
+                    title: "提示",
 
-                <%--});--%>
-                <%--paymentHis_table();--%>
+                });
+            }
+        });
+    }
 
-            <%--},--%>
-            <%--error: function (err, status) {--%>
-                <%--console.log(err)--%>
-            <%--}--%>
-        <%--});--%>
-    <%--}--%>
-
-    <%--$("#yqrdj").click(function () {--%>
-        <%--type = "1";--%>
-        <%--queryBils();--%>
-    <%--});--%>
-    <%--$("#wqrdj").click(function () {--%>
-        <%--type = "0";--%>
-        <%--queryBils();--%>
-    <%--});--%>
-    <%--$("#yzfdj").click(function () {--%>
-        <%--type = "2";--%>
-        <%--queryBils();--%>
-    <%--});--%>
-    <%--$("#ycxdj").click(function () {--%>
-        <%--type = "3";--%>
-        <%--queryBils();--%>
-    <%--});--%>
-    <%--$("#query").click(function () {--%>
-        <%--queryBils();--%>
-    <%--});--%>
+    $("#yqrdj").click(function () {
+        type = "1";
+        queryBils();
+    });
+    $("#wqrdj").click(function () {
+        type = "0";
+        queryBils();
+    });
+    $("#yzfdj").click(function () {
+        type = "2";
+        queryBils();
+    });
+    $("#ycxdj").click(function () {
+        type = "3";
+        queryBils();
+    });
+    $("#query").click(function () {
+        queryBils();
+    });
 
 </script>
 </body>
