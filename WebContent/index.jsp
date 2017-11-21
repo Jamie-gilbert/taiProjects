@@ -4,10 +4,10 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="../bootstrap/custom/login.css" type="text/css">
-    <script type="text/javascript" src="../bootstrap/js/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="bootstrap/custom/login.css" type="text/css">
+    <script type="text/javascript" src="bootstrap/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
     <title>登录</title>
 </head>
 <body scroll="no">
@@ -33,9 +33,9 @@
                     <span class="text">记住账号</span>
                     <button type="submit" class="btn btn-default">登录</button>
                 </div>
-                <div>
-                    <a href="register.jsp">立即注册</a>
-                </div>
+                <%--<div>--%>
+                    <%--<a href="register.jsp">立即注册</a>--%>
+                <%--</div>--%>
             </form>
         </div>
     </div>

@@ -101,26 +101,6 @@
             <div class="modal-body">
                 <form>
                     <div class="form-group">
-                        <label>人员ID</label>
-                        <input type="text" class="form-control" id="ryid" placeholder="人员ID">
-                    </div>
-                    <div class="form-group">
-                        <label>人员登记ID</label>
-                        <input type="text" class="form-control" id="rydjid" placeholder="人员登记ID">
-                    </div>
-                    <div class="form-group">
-                        <label>财政编号</label>
-                        <input type="text" class="form-control" id="czbm" placeholder="财政编号">
-                    </div>
-                    <div class="form-group">
-                        <label>原个人编号</label>
-                        <input type="text" class="form-control" id="ygrbh" placeholder="原个人编号">
-                    </div>
-                    <div class="form-group">
-                        <label>经办机构ID</label>
-                        <input type="text" class="form-control" id="jbjgid" placeholder="经办机构ID">
-                    </div>
-                    <div class="form-group">
                         <label>姓名</label>
                         <input type="text" class="form-control" id="xm" placeholder="姓名">
                     </div>
@@ -128,11 +108,6 @@
                     <div class="form-group">
                         <label>曾用名</label>
                         <input type="text" class="form-control" id="cym" placeholder="曾用名">
-                    </div>
-
-                    <div class="form-group">
-                        <label>性别</label>
-                        <input type="text" class="form-control" id="xb" placeholder="性别">
                     </div>
                     <div class="form-group">
                         <label>身份证号码</label>
@@ -142,73 +117,6 @@
                     <div class="form-group">
                         <label>出生日期</label>
                         <input type="text" class="form-control" id="csrq" placeholder="出生日期">
-                    </div>
-
-                    <div class="form-group">
-                        <label>身份性质</label>
-                        <input type="text" class="form-control" id="sfxz" placeholder="身份性质">
-                    </div>
-
-                    <div class="form-group">
-                        <label>参保人员类别</label>
-                        <input type="text" class="form-control" id="cbrylb" placeholder="参保人员类别">
-                    </div>
-                    <div class="form-group">
-                        <label>民族</label>
-                        <input type="text" class="form-control" id="mz" placeholder="民族">
-                    </div>
-                    <div class="form-group">
-                        <label>投保类别</label>
-                        <input type="text" class="form-control" id="tblb" placeholder="投保类别">
-                    </div>
-
-                    <div class="form-group">
-                        <label>投保类别名称</label>
-                        <input type="text" class="form-control" id="tblbmc" placeholder="投保类别名称">
-                    </div>
-                    <div class="form-group">
-                        <label>参加工作时间</label>
-                        <input type="text" class="form-control" id="cjgzsj" placeholder="参加工作时间">
-                    </div>
-                    <div class="form-group">
-                        <label>经费来源</label>
-                        <input type="text" class="form-control" id="jfly" placeholder="经费来源">
-                    </div>
-                    <div class="form-group">
-                        <label>户口性质</label>
-                        <input type="text" class="form-control" id="hkxz" placeholder="户口性质">
-                    </div>
-                    <div class="form-group">
-                        <label>地址</label>
-                        <input type="text" class="form-control" id="dz" placeholder="地址">
-                    </div>
-                    <div class="form-group">
-                        <label>电话</label>
-                        <input type="text" class="form-control" id="dh" placeholder="电话">
-                    </div>
-                    <div class="form-group">
-                        <label>个人身份</label>
-                        <input type="text" class="form-control" id="grsf" placeholder="个人身份">
-                    </div>
-                    <div class="form-group">
-                        <label>入伍时间</label>
-                        <input type="text" class="form-control" id="rwsj" placeholder="入伍时间">
-                    </div>
-                    <div class="form-group">
-                        <label>调入时间</label>
-                        <input type="text" class="form-control" id="drsj" placeholder="调入时间">
-                    </div>
-                    <div class="form-group">
-                        <label>增员原因</label>
-                        <input type="text" class="form-control" id="zyyy" placeholder="增员原因">
-                    </div>
-                    <div class="form-group">
-                        <label>减员原因</label>
-                        <input type="text" class="form-control" id="jyyy" placeholder="减员原因">
-                    </div>
-                    <div class="form-group">
-                        <label>备注</label>
-                        <input type="text" class="form-control" id="bz" placeholder="备注">
                     </div>
                 </form>
             </div>
@@ -445,65 +353,28 @@
 
 
     $("#save").click(function () {
-
         var xm = $("#xm").val();
         var cym = $("#cym").val();
-        var xb = $("#xb").val();
         var sfzhm = $("#sfzhm").val();
         var csrq = $("#csrq").val();
-        var sfxz = $("#sfxz").val();
-        var cbrylb = $("#cbrylb").val();
-        var mz = $("#mz").val();
-        var tblb = $("#tblb").val();
-        var tblbmc = $("#tblbmc").val();
-        var cjgzsj = $("#cjgzsj").val();
-        var jfly = $("#jfly").val();
-        var hkxz = $("#hkxz").val();
-        var dz = $("#dz").val();
-        var dh = $("#dh").val();
-        var grsf = $("#grsf").val();
-        var rwsj = $("#rwsj").val();
-        var drsj = $("#drsj").val();
-        var zyyy = $("#zyyy").val();
-        var jyyy = $("#jyyy").val();
-        var bz = $("#bz").val();
-        var ryid = $("#ryid").val();
-        var rydjid = $("#rydjid").val();
-        var czbm = $("#czbm").val();
-        var ygrbh = $("#ygrbh").val();
-        var jbjgid = $("#jbjgid").val();
+        var grbh=$('#grbh').val();
 
 
         $.ajax({
             type: "POST",
             url: "staff/modifyStaff.action",
             data: {
-                "xm": xm, "cym": cym, "xb": xb, "sfzhm": sfzhm, "csrq": csrq
-                , "sfxz": sfxz, "cbrylb": cbrylb, "mz": mz, "tblb": tblb, "tblbmc": tblbmc,
-                "cjgzsj": cjgzsj, "jfly": jfly, "hkxz": hkxz, "dz": dz, "dh": dh,
-                "grsf": grsf, "rwsj": rwsj, "drsj": drsj, "zyyy": zyyy, "jyyy": jyyy, "bz": bz,
-                "cbrylb": cbrylb, "ryid": ryid, "rydjid": rydjid, "czbm": czbm,
-                "ygrbh": ygrbh, "jbjgid": jbjgid, "grbh": grbh
+                "xm": xm, "cym": cym, "sfzhm": sfzhm, "csrq": csrq,"grbh": grbh
             },
             dataType: "JSON",
             async: false,
             success: function (data, status) {
-                Alert({
-                    msg: '修改成功',
-                    title: "提示",
-                    onOk: function () {
-                        $('#exampleModal').modal('hide');
-                    },
-
-                })
+                alert("修改成功!");
+                $('#exampleModal').modal('hide');
             },
             error: function (err, status) {
-                Alert({
-                    msg: '添加人员失败，请重试',
-                    title: "提示",
-
-
-                })
+                alert("修改失败!");
+                $('#exampleModal').modal('hide');
             }
         });
 
@@ -541,9 +412,13 @@
             $('#tcdrsj').val(row[0]["DRSJ"]);
             $('#tczyyy').val(row[0]["ZYYY"]);
             $('#tcjyy').val(row[0]["JYYY"]);
+            $('#xm').val(row[0]["XM"]);
+            $('#cym').val(row[0]["CYM"]);
+            $('#sfzhm').val(row[0]['SFZHM']);
+            $('#csrq').val(row[0]['CSRQ']);
+            ryid = row[0]["RYID"];
 
         }
-        ryid = row[0]["RYID"];
         dwid = row[0]["DWID"];
         var grbh=$('#grbh').val();
         var xm=$('#grxm').val();
@@ -554,19 +429,11 @@
         var ryid2 = ryid.substr(5,ryid.length);
         $('#rytf').attr('data-href',"../staff_reback_payment.jsp?grbh1="+grbh1+"&xm="+"'"+xm+"'"+"&grbh2="+"'"+grbh2+"'");
         $('#grjx').attr('data-href',"../person_interest.jsp?grbh1="+grbh1+"&xm="+"'"+xm+"'"+"&grbh2="+"'"+grbh2+"'"+"&dwid="+dwid
-            +"&ryid1="+ryid1+"&ryid2="+ryid2);
-
+        +"&ryid1="+ryid1+"&ryid2="+"'"+ryid2+"'");
         $('#cxgrjx').attr('data-href',"../person_clear_interest.jsp?grbh1="+grbh1+"&xm="+xm+"&grbh2="+"'"+grbh2+"'");
-        var grbh = $('#grbh').val();
-        var xm = $('#grxm').val();
-        var sfzhm = $('#grsfzhm').val();
-        var grbh1 = grbh.substr(0, 5);
-        var grbh2 = grbh.substr(5, grbh.length);
         $('#rytf').attr('data-href', "../staff_reback_payment.jsp?grbh1=" + grbh1 + "&xm=" + "'" + xm + "'" + "&grbh2=" + "'"+grbh2+"'");
         $('#whjfls').attr('data-href', "../maintain_paymenthistory.jsp?grbh1=" + grbh1 + "&xm=" + "'" + xm + "'" + "&grbh2=" +"'"+grbh2+"'"+"&dwid="+dwid
-            +"&ryid1="+ryid1+"&ryid2="+ryid2);
-//        $('#dwjx').attr('data-href',"../dempartment_interest.jsp?dwid="+dwid+"&dwbh="+dwbh+"&dwmc="+dwmc);
-//        $('#cxdwjx').attr('data-href',"../dempartment_clear_interest.jsp?dwid="+dwid+"&dwbh="+dwbh+"&dwmc="+dwmc);
+            +"&ryid1="+ryid1+"&ryid2="+"'"+ryid2+"'");
     }
 
 
