@@ -236,6 +236,10 @@
     $("#resetBtn").off().on("click", function () {
         $("#dwmc").val("");
         $("#dwbh").val("");
+        $("#jbjgid").val("");
+        $("#tcDwmc").val("");
+        $("#tcDwbh").val("");
+        $("#tblbmc").val("");
         $('#dwbh').attr("readonly", false)
         $('#dwmc').attr("readonly", false)
     });

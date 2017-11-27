@@ -89,9 +89,9 @@ SELECT * FROM (
       GRBH LIKE  concat(concat('%',#{GRBH}),'%')
 
             and XM LIKE concat(concat('%',#{XM}),'%')
-
+        <if test="SFZHM != null and SFZHM != ''" >
             and SFZHM LIKE concat(concat('%',#{SFZHM}),'%')
-
+        </if>
        ) A
         WHERE ROWNUM &lt; #{next}
         ) WHERE RN >=#{pre}
@@ -103,7 +103,9 @@ SELECT * FROM (
         where
         GRBH LIKE  concat(concat('%',#{GRBH}),'%')
         and XM LIKE concat(concat('%',#{XM}),'%')
-        and SFZHM LIKE concat(concat('%',#{SFZHM}),'%')
+        <if test="SFZHM != null and SFZHM != ''" >
+             and SFZHM LIKE concat(concat('%',#{SFZHM}),'%')
+        </if>
     </select>
 
 

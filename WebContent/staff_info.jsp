@@ -51,9 +51,9 @@
         </div>
     </div>
     <div class="container-fluid" id="unitButton">
-        <a id="rytf" class="page-action btn btn-primary btn-sm" href="#" title="人员退费">
-            人员退费
-        </a>
+        <%--<a id="rytf" class="page-action btn btn-primary btn-sm" href="#" title="人员退费">--%>
+            <%--人员退费--%>
+        <%--</a>--%>
         <a id="grjx" class="page-action btn btn-primary btn-sm" href="#" title="个人计息">
             个人计息
         </a>
@@ -66,9 +66,9 @@
         <a id="whjfls" class="page-action btn btn-primary btn-sm" href="#" title="缴费历史维护">
             缴费历史维护
         </a>
-        <a id="grdjgl" class="page-action btn btn-primary btn-sm" href="#" title="个人单据管理">
-            个人单据管理
-        </a>
+        <%--<a id="grdjgl" class="page-action btn btn-primary btn-sm" href="#" title="个人单据管理">--%>
+            <%--个人单据管理--%>
+        <%--</a>--%>
     </div>
 </div>
 
@@ -444,6 +444,28 @@
         $("#grbh").val("");
         $("#grxm").val("");
         $("#grsfzhm").val("");
+        $('#tcgrbh').val("");
+        $('#tcsfzhm').val("");
+        $('#tcxm').val("");
+        $('#tcDwmc').val("");
+        $('#tccsrq').val("");
+        $('#tccbrylb').val("");
+        $('#tcxb').val("");
+        $('#tcmz').val("");
+        $('#tcsfxz').val("");
+        $('#tccjgzsj').val("");
+        $('#tctblbmc').val("");
+        $('#tcdz').val("");
+        $('#tcdh').val("");
+        $('#tcgrsf').val("");
+        $('#tcrwsj').val("");
+        $('#tcdrsj').val("");
+        $('#tczyyy').val("");
+        $('#tcjyy').val("");
+        $('#xm').val("");
+        $('#cym').val("");
+        $('#sfzhm').val("");
+        $('#csrq').val("");
         $('#grbh').attr("readonly", false)
         $('#grxm').attr("readonly", false)
         $('#grsfzhm').attr("readonly", false)

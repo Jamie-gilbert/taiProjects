@@ -401,13 +401,6 @@
                 field: 'TBLBMC',
                 title: '投保类别',
                 soetable: true
-            }, {
-                field: 'personOpId',
-                title: '操作',
-                align: 'center',
-                width: 150,
-                formatter: operateFormatter
-
             }]
         });
     }
