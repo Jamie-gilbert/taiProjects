@@ -49,4 +49,6 @@ public interface DepartmentBillMapper {
                                           @Param(value = "next") String next);
 
     int queryCountByRyid(@Param(value = "ryid") String ryid);
+
+    void rebackPaymentByDWID(@Param(value = "bill") DepartmentBill departmentBill);
 }

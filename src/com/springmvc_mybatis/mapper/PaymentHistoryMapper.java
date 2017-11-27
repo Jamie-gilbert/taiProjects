@@ -1,5 +1,6 @@
 package com.springmvc_mybatis.mapper;
 
+import com.springmvc_mybatis.bean.DepartmentHistory;
 import com.springmvc_mybatis.bean.PaymentHistory;
 import org.apache.ibatis.annotations.Param;
 
@@ -36,6 +37,8 @@ public interface PaymentHistoryMapper {
                                  @Param(value = "zzrq") String zzrq);
 
     int queryCountWithoutInterest(@Param(value = "dwid") String dwid);
+
+    int queryCountByDWID(@Param(value = "dwid") String dwid);
 
     int queryCountWithInterest(@Param(value = "dwid") String dwid);
 
@@ -76,14 +79,36 @@ public interface PaymentHistoryMapper {
 
     int queryCountByZDLSH(@Param(value = "zdlsh") String zdlsh);
 
+    List<PaymentHistory> queryAllHistoryByDWID(
+            @Param(value = "dwid") String dwid,
+            @Param(value = "pre") String pre,
+            @Param(value = "next") String next);
+
     List<PaymentHistory> queryPaymentHisByZDLSH(
             @Param(value = "zdlsh") String zdlsh,
             @Param(value = "pre") String pre,
             @Param(value = "next") String next);
 
-
     void cancelInterestByRyid(@Param(value = "ryid") String ryid);
 
     List<PaymentHistory> queryAmountByZDLSH(@Param(value = "ryid") String ryid);
+
+    void rebackPaymentByDWID(@Param(value = "dwid") String dwid);
+
+    float calPaymentByDWID(@Param(value = "dwid") String dwid);
+
+    int queryCountWithRebackByDWID(@Param(value = "dwid") String dwid);
+
+    int queryAllDepartmentCount();
+
+    int queryDepartmentCountWithReback();
+
+    int queryDepartmentCountWithoutReback();
+
+    List<DepartmentHistory> queryRebackHistory(@Param(value = "pre") String pre,
+                                               @Param(value = "next") String next);
+
+    List<DepartmentHistory> queryNoRebackHistory(@Param(value = "pre") String pre,
+                                                 @Param(value = "next") String next);
 
 }

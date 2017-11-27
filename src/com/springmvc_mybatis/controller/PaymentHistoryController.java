@@ -1,6 +1,7 @@
 package com.springmvc_mybatis.controller;
 
 import com.springmvc_mybatis.bean.DepartmentBill;
+import com.springmvc_mybatis.bean.DepartmentHistory;
 import com.springmvc_mybatis.bean.PaymentHistory;
 import com.springmvc_mybatis.bean.Staff;
 import com.springmvc_mybatis.json.JSONArray;
@@ -81,6 +82,55 @@ public class PaymentHistoryController {
 //        return "dempartment_interest";
 
     }
+
+
+    /**
+     * 根据单位id查询缴费明细
+     *
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/queryAllHistory")
+    public void queryAllHistory(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        response.setContentType("application/json");
+        response.setHeader("Pragma", "No-cache");
+        response.setHeader("Cache-Control", "no-cache");
+        response.setCharacterEncoding("UTF-8");
+
+        String dwid = request.getParameter("dwid");
+        String page = request.getParameter("pageNumber");
+        String count = request.getParameter("pageSize");
+
+        int countNum = Integer.parseInt(count);
+        int pageNum = Integer.parseInt(page);
+        List<PaymentHistory> paymentHistories = new ArrayList<>();
+        int num = paymentHistoryMapper.queryCountByDWID(dwid);
+        if (num > 0) {
+            paymentHistories = paymentHistoryMapper.queryAllHistoryByDWID(dwid, page, String.valueOf(countNum + pageNum));
+        }
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("total", num);
+        JSONArray jsonArray = new JSONArray();
+
+        for (PaymentHistory paymentHistory : paymentHistories) {
+            JSONObject object = new JSONObject(paymentHistory.getStaff());
+            object.put("QSNY", paymentHistory.getQSNY());
+            object.put("ZZNY", paymentHistory.getZZNY());
+            object.put("GRJFE", paymentHistory.getGRJFE());
+            object.put("LX", paymentHistory.getLX());
+            jsonArray.put(object);
+        }
+        jsonObject.put("rows", jsonArray);
+        Writer writer = response.getWriter();
+        writer.write(jsonObject.toString());
+        writer.flush();
+        writer.close();
+
+
+    }
+
 
     /**
      * 根据dwid 查询需要已经计息的人员
@@ -175,6 +225,58 @@ public class PaymentHistoryController {
         writer.write(object.toString());
         writer.flush();
         writer.close();
+    }
+
+
+    /**
+     * 根据dwid 进行退费
+     *
+     * @param request
+     * @param response
+     * @throws IOException
+     */
+    @RequestMapping("/rebackPaymentByDWID")
+    public void rebackPaymentByDWID(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        //设置页面不缓存
+        response.setContentType("application/json");
+        response.setHeader("Pragma", "No-cache");
+        response.setHeader("Cache-Control", "no-cache");
+        response.setCharacterEncoding("UTF-8");
+        String dwid = request.getParameter("dwid");
+        String txr = request.getParameter("txr");
+        String jbjgid = request.getParameter("jbjgid");
+        int count = paymentHistoryMapper.queryCountWithoutInterest(dwid);
+        JSONObject jsonObject = new JSONObject();
+        if (count == 0) {
+            paymentHistoryMapper.rebackPaymentByDWID(dwid);
+            double zje = paymentHistoryMapper.calPaymentByDWID(dwid);
+            DepartmentBill departmentBill = new DepartmentBill();
+            departmentBill.setZje(zje);
+            departmentBill.setDwid(dwid);
+            departmentBill.setDjzt("0");
+            departmentBill.setDjlb("0");
+            departmentBill.setTxr(txr);
+            departmentBill.setQrr(txr);
+            Date date = new Date();
+            departmentBill.setTxsj(date);
+            departmentBill.setQrsj(date);
+            departmentBill.setJbjgid(jbjgid);
+            departmentBillMapper.rebackPaymentByDWID(departmentBill);
+            int rebackCount = paymentHistoryMapper.queryCountWithRebackByDWID(dwid);
+            jsonObject.put("errorCode", "0");
+            jsonObject.put("errorText", "");
+            jsonObject.put("count", rebackCount);
+        } else {
+
+            jsonObject.put("errorCode", "1");
+            jsonObject.put("errorText", "单位中存在未计息的人员，请先计息");
+        }
+
+        Writer writer = response.getWriter();
+        writer.write(jsonObject.toString());
+        writer.flush();
+        writer.close();
+
     }
 
     /**
@@ -791,8 +893,118 @@ public class PaymentHistoryController {
         writer.close();
     }
 
+    /**
+     * 查询缴费历史这得数量
+     *
+     * @param request
+     * @param response
+     * @throws IOException
+     */
+    @RequestMapping("/queryCountInPaymentHistory")
+    public void queryCountInPaymentHistory(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        //设置页面不缓存
+        response.setContentType("application/json");
+        response.setHeader("Pragma", "No-cache");
+        response.setHeader("Cache-Control", "no-cache");
+        response.setCharacterEncoding("UTF-8");
+
+        JSONObject jsonObject = new JSONObject();
+        int allCount = paymentHistoryMapper.queryAllDepartmentCount();
+        int rebackCount = paymentHistoryMapper.queryDepartmentCountWithReback();
+        int noRebackCount = paymentHistoryMapper.queryDepartmentCountWithoutReback();
+        jsonObject.put("all", allCount);
+        jsonObject.put("reback", rebackCount);
+        jsonObject.put("noReback", noRebackCount);
+        Writer writer = response.getWriter();
+        writer.write(jsonObject.toString());
+        writer.flush();
+        writer.close();
+    }
 
     /**
+     * 查询已退费的单位记录
+     *
+     * @param request
+     * @param response
+     * @throws IOException
+     */
+    @RequestMapping("/queryRebackHistory")
+    public void queryRebackHistory(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        //设置页面不缓存
+        response.setContentType("application/json");
+        response.setHeader("Pragma", "No-cache");
+        response.setHeader("Cache-Control", "no-cache");
+        response.setCharacterEncoding("UTF-8");
+        String page = request.getParameter("pageNumber");
+        String count = request.getParameter("pageSize");
+        int countNum = Integer.parseInt(count);
+        int pageNum = Integer.parseInt(page);
+        JSONObject jsonObject = new JSONObject();
+        int rebackCount = paymentHistoryMapper.queryDepartmentCountWithReback();
+        JSONArray jsonArray = new JSONArray();
+        if (rebackCount > 0) {
+            List<DepartmentHistory> departmentHistories = paymentHistoryMapper.queryRebackHistory(page
+                    , String.valueOf(countNum + pageNum));
+            if (departmentHistories != null) {
+                for (DepartmentHistory departmentHistory : departmentHistories) {
+                    JSONObject object = new JSONObject(departmentHistory);
+                    jsonArray.put(object);
+                }
+            }
+
+        }
+        jsonObject.put("total", rebackCount);
+        jsonObject.put("rows", jsonArray);
+        Writer writer = response.getWriter();
+        writer.write(jsonObject.toString());
+        writer.flush();
+        writer.close();
+    }
+
+    /**
+     * 查询未退费的单位记录
+     *
+     * @param request
+     * @param response
+     * @throws IOException
+     */
+    @RequestMapping("/queryNoRebackHistory")
+    public void queryNoRebackHistory(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        //设置页面不缓存
+        response.setContentType("application/json");
+        response.setHeader("Pragma", "No-cache");
+        response.setHeader("Cache-Control", "no-cache");
+        response.setCharacterEncoding("UTF-8");
+        String page = request.getParameter("pageNumber");
+        String count = request.getParameter("pageSize");
+        int countNum = Integer.parseInt(count);
+        int pageNum = Integer.parseInt(page);
+        JSONObject jsonObject = new JSONObject();
+        int noRebackCount = paymentHistoryMapper.queryDepartmentCountWithoutReback();
+        JSONArray jsonArray = new JSONArray();
+        if (noRebackCount > 0) {
+            List<DepartmentHistory> departmentHistories = paymentHistoryMapper.queryNoRebackHistory(page
+                    , String.valueOf(countNum + pageNum));
+            if (departmentHistories != null) {
+                for (DepartmentHistory departmentHistory : departmentHistories) {
+                    JSONObject object = new JSONObject(departmentHistory);
+                    jsonArray.put(object);
+                }
+            }
+
+        }
+        jsonObject.put("total", noRebackCount);
+        jsonObject.put("rows", jsonArray);
+        Writer writer = response.getWriter();
+        writer.write(jsonObject.toString());
+        writer.flush();
+        writer.close();
+    }
+
+
+    /**
+     * 根据ryid 查询退费记录
+     *
      * @param request
      * @param response
      * @throws IOException

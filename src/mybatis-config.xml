@@ -16,6 +16,7 @@
         <typeAlias type="com.springmvc_mybatis.bean.DepartmentBill" alias="DepartmentBill"/>
         <typeAlias type="com.springmvc_mybatis.bean.PaymentHistory" alias="PaymentHistory"/>
         <typeAlias type="com.springmvc_mybatis.bean.InterestScale" alias="InterestScale"/>
+        <typeAlias type="com.springmvc_mybatis.bean.DepartmentHistory" alias="DepartmentHistory"/>
     </typeAliases>
     <!-- 设置数据库连接环境 -->
     <!-- 映射文件 -->

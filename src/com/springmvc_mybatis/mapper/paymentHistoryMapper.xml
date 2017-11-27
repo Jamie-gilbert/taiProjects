@@ -30,7 +30,7 @@
         <result column="grjfes" property="grjfes"/>
         <result column="dwjfes" property="dwjfes"/>
         <result column="lxs" property="lxs"/>
-
+        <result column="tfbz" property="tfbz"/>
         <association property="staff"
                      column="RYID"
                      select="selectStaffBystaffRYID">
@@ -149,7 +149,7 @@
     <update id="modifyInterestByRyid" parameterType="java.util.List">
         <foreach collection="list" open="begin" item="item" index="index" close=";end;" separator=";">
             UPDATE si3.aged_pay_his SET LX=${item.LX} WHERE RYID=#{item.RYID,jdbcType=VARCHAR}
-             AND QSNY=${item.QSNY }
+            AND QSNY=${item.QSNY }
         </foreach>
     </update>
 
@@ -167,7 +167,7 @@
     <update id="modifyPaymentHistory" parameterType="java.util.List">
         <foreach collection="list" open="begin" item="item" index="index" close=";end;" separator=";">
             UPDATE si3.aged_pay_his SET QSNY=${item.QSNY}, ZZNY=${item.ZZNY}
-           ,DWJFE=${item.DWJFE},GRJFE=${item.GRJFE},DWJFZE=${item.DWJFE}
+            ,DWJFE=${item.DWJFE},GRJFE=${item.GRJFE},DWJFZE=${item.DWJFE}
             ,GRJFZE=${item.GRJFE},JFRQ=#{item.JFRQ,jdbcType=TIMESTAMP},FSRQ=#{item.FSRQ,jdbcType=TIMESTAMP}
 
             WHERE RYID=#{item.RYID,jdbcType=VARCHAR}
@@ -179,7 +179,7 @@
         <foreach collection="list" open="begin" item="paymentHistoryResult" index="index" close=";end;" separator=";">
             INSERT INTO si3.aged_pay_his(JFLSID,RYID,RYDJID, DWID,FSRQ,JFRQ, QSNY, ZZNY,
             DWJFJS, GRJFJS, DWJFBL, GRJFBL, DWJFE,GRJFE, DWJFZE, GRJFZE, ZDLSH,JBJGID,
-             JBR, JBSJ, FSYY ,XZBZ)
+            JBR, JBSJ, FSYY ,XZBZ)
             VALUES (SI3.SQ_JFLSID.NEXTVAL,${paymentHistoryResult.RYID},${paymentHistoryResult.RYDJID}
             , ${paymentHistoryResult.DWID},#{paymentHistoryResult.FSRQ,jdbcType=TIMESTAMP}
             ,#{paymentHistoryResult.JFRQ,jdbcType=TIMESTAMP}, ${paymentHistoryResult.QSNY}
@@ -188,24 +188,25 @@
             , ${paymentHistoryResult.DWJFBL}, ${paymentHistoryResult.GRJFBL}
             , ${paymentHistoryResult.DWJFE},${paymentHistoryResult.GRJFE}
             , ${paymentHistoryResult.DWJFZE}, ${paymentHistoryResult.GRJFZE}
-            ,SI3.SQ_ZDLSH.NEXTVAL,${paymentHistoryResult.JBJGID}, ${paymentHistoryResult.JBR}, #{paymentHistoryResult.JBSJ,jdbcType=TIMESTAMP}, 9,${paymentHistoryResult.XZBZ})
+            ,SI3.SQ_ZDLSH.NEXTVAL,${paymentHistoryResult.JBJGID}, ${paymentHistoryResult.JBR},
+            #{paymentHistoryResult.JBSJ,jdbcType=TIMESTAMP}, 9,${paymentHistoryResult.XZBZ})
         </foreach>
     </insert>
 
     <update id="rebackPaymentByRyId">
 
         <foreach collection="list" open="begin" item="item" index="index" close=";end;" separator=";">
-            UPDATE  si3.aged_pay_his
+            UPDATE si3.aged_pay_his
             SET GRJFE=${item.GRJFE} ,LX=${item.LX},GRJFZE=${item.GRJFZE}
-            WHERE RYID=#{ryid,jdbcType=VARCHAR}  AND  QSNY  = #{item.QSNY,jdbcType=VARCHAR}
+            WHERE RYID=#{ryid,jdbcType=VARCHAR} AND QSNY = #{item.QSNY,jdbcType=VARCHAR}
         </foreach>
     </update>
     <select id="queryAmountByRyidWithDate" resultType="float">
-       select  sum(nvl(a.GRJFE, 0))+sum(nvl(a.LX, 0))
+        select sum(nvl(a.GRJFE, 0))+sum(nvl(a.LX, 0))
         from si3.aged_pay_his a
         where a.RYID=#{ryid,jdbcType=VARCHAR} AND
         <foreach collection="list" index="index" item="qsny" open="(" separator="or" close=")">
-            a.QSNY  IN #{qsny,jdbcType=VARCHAR}
+            a.QSNY IN #{qsny,jdbcType=VARCHAR}
         </foreach>
 
     </select>
@@ -236,5 +237,71 @@
 
         SELECT sum(GRJFE) as grjfes,sum(DWJFE) as dwjfes,sum(LX) as lxs ,JBR,JBSJ FROM  si3.aged_pay_his
         where ryid=#{ryid,jdbcType=VARCHAR} AND LX&lt;0 AND GRJFE&lt;0 group by JBR,JBSJ
+    </select>
+
+    <update id="rebackPaymentByDWID">
+        UPDATE si3.aged_pay_his SET tfbz='1' WHERE  dwid=#{dwid,jdbcType=VARCHAR}
+    </update>
+    <select id="calPaymentByDWID" resultType="float">
+        SELECT (sum(GRJFE)+sum(lx)) AS  ZJE WHERE  dwid=#{dwid,jdbcType=VARCHAR}
+        AND  tfbz='1'
+    </select>
+    <select id="queryCountByDWID" resultMap="paymentHistoryResult">
+      select COUNT (*) from
+        si3.aged_pay_his a
+        WHERE  a.dwid =#{dwid,jdbcType=VARCHAR})
+    </select>
+
+    <select id="queryAllHistoryByDWID" resultMap="paymentHistoryResult">
+        SELECT * FROM (
+        SELECT A.*,ROWNUM RN FROM
+        (select * from
+        si3.aged_pay_his a
+        WHERE  a.dwid =#{dwid,jdbcType=VARCHAR}) A
+        WHERE ROWNUM &lt; ${next}
+        ) WHERE RN >=${pre}
+    </select>
+
+    <select id="queryCountWithRebackByDWID" resultType="int">
+        SELECT  COUNT (*)  FROM   si3.aged_pay_his  WHERE dwid =#{dwid,jdbcType=VARCHAR}
+        AND tfbz='1'
+    </select>
+
+    <select id="queryAllDepartmentCount" resultType="int">
+        SELECT  count(DISTINCT dwid) FROM   si3.aged_pay_his
+    </select>
+    <select id="queryDepartmentCountWithReback" resultType="int">
+         SELECT  count(DISTINCT dwid) FROM   si3.aged_pay_his
+         WHERE tfbz='1'
+    </select>
+    <select id="queryDepartmentCountWithoutReback" resultType="int">
+        SELECT  count(DISTINCT dwid) FROM   si3.aged_pay_his
+        WHERE tfbz='0'
+    </select>
+
+    <select id="queryRebackHistory" resultType="DepartmentHistory">
+         SELECT * FROM (
+        SELECT A.*,ROWNUM RN FROM
+        (select org.dwmc, sum(aph.grjfe) as grjfes
+        , sum(aph.lx) as lxs ,(sum(aph.grjfe)+sum(aph.lx)) as zje
+        from si3.aged_pay_his aph, si3.orgn_reg org
+        where aph.tfbz = '1'
+        and org.dwid = aph.dwid
+          group by aph.dwid, org.dwmc) A
+        WHERE ROWNUM &lt; ${next}
+        ) WHERE RN >=${pre}
+    </select>
+
+    <select id="queryNoRebackHistory" resultMap="DepartmentHistory">
+        SELECT * FROM (
+        SELECT A.*,ROWNUM RN FROM
+        (select org.dwmc,aph.dwid, sum(aph.grjfe) as grjfes
+        , sum(aph.lx) as lxs ,(sum(aph.grjfe)+sum(aph.lx)) as zje
+        from si3.aged_pay_his aph, si3.orgn_reg org
+        where aph.tfbz = '0'
+        and org.dwid = aph.dwid
+        group by aph.dwid, org.dwmc) A
+        WHERE ROWNUM &lt; ${next}
+        ) WHERE RN >=${pre}
     </select>
 </mapper>

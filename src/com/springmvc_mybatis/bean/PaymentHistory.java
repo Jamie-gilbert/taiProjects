@@ -36,6 +36,7 @@ public class PaymentHistory implements Serializable {
     private double lxs;
     private double grjfes;
     private double dwjfes;
+    private String tfbz;
 
     private Staff staff;
     private int FSYY;
@@ -271,5 +272,13 @@ public class PaymentHistory implements Serializable {
 
     public void setDwjfes(double dwjfes) {
         this.dwjfes = dwjfes;
+    }
+
+    public String getTfbz() {
+        return tfbz;
+    }
+
+    public void setTfbz(String tfbz) {
+        this.tfbz = tfbz;
     }
 }
