@@ -246,10 +246,10 @@
         SELECT (sum(GRJFE)+sum(lx)) AS  ZJE WHERE  dwid=#{dwid,jdbcType=VARCHAR}
         AND  tfbz='1'
     </select>
-    <select id="queryCountByDWID" resultMap="paymentHistoryResult">
+    <select id="queryCountByDWID" resultType="int">
       select COUNT (*) from
         si3.aged_pay_his a
-        WHERE  a.dwid =#{dwid,jdbcType=VARCHAR})
+        WHERE  a.dwid =#{dwid,jdbcType=VARCHAR}
     </select>
 
     <select id="queryAllHistoryByDWID" resultMap="paymentHistoryResult">
@@ -279,28 +279,28 @@
         WHERE tfbz='0'
     </select>
 
-    <select id="queryRebackHistory" resultType="DepartmentHistory">
+    <select id="queryRebackHistory" resultType="com.springmvc_mybatis.bean.DepartmentHistory">
          SELECT * FROM (
         SELECT A.*,ROWNUM RN FROM
-        (select org.dwmc, sum(aph.grjfe) as grjfes
+        (select org.dwmc,org.dwbh as dwbh, sum(aph.grjfe) as grjfes
         , sum(aph.lx) as lxs ,(sum(aph.grjfe)+sum(aph.lx)) as zje
         from si3.aged_pay_his aph, si3.orgn_reg org
         where aph.tfbz = '1'
         and org.dwid = aph.dwid
-          group by aph.dwid, org.dwmc) A
+          group by aph.dwid, org.dwmc,org.dwbh) A
         WHERE ROWNUM &lt; ${next}
         ) WHERE RN >=${pre}
     </select>
 
-    <select id="queryNoRebackHistory" resultMap="DepartmentHistory">
+    <select id="queryNoRebackHistory" resultType="com.springmvc_mybatis.bean.DepartmentHistory">
         SELECT * FROM (
         SELECT A.*,ROWNUM RN FROM
-        (select org.dwmc,aph.dwid, sum(aph.grjfe) as grjfes
+        (select org.dwmc,aph.dwid,org.dwbh as dwbh, sum(aph.grjfe) as grjfes
         , sum(aph.lx) as lxs ,(sum(aph.grjfe)+sum(aph.lx)) as zje
         from si3.aged_pay_his aph, si3.orgn_reg org
         where aph.tfbz = '0'
         and org.dwid = aph.dwid
-        group by aph.dwid, org.dwmc) A
+        group by aph.dwid, org.dwmc,org.dwbh) A
         WHERE ROWNUM &lt; ${next}
         ) WHERE RN >=${pre}
     </select>

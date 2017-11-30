@@ -5,11 +5,19 @@ import java.io.Serializable;
 public class DepartmentHistory  implements Serializable {
 
     private String dwid;
+    private String dwbh;
     private String dwmc;
     private double zje;
     private double lxs;
     private double grjfes;
 
+    public String getDwbh() {
+        return dwbh;
+    }
+
+    public void setDwbh(String dwbh) {
+        this.dwbh = dwbh;
+    }
 
     public String getDwid() {
         return dwid;
