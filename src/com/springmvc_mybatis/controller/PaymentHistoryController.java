@@ -981,6 +981,11 @@ public class PaymentHistoryController {
         String dwid = request.getParameter("dwid");
         DepartmentHistory departmentHistory = paymentHistoryMapper.queryNobackHistoryByDWID(dwid);
         JSONObject object = new JSONObject(departmentHistory);
+        JSONObject jsonObject = new JSONObject();
+        JSONArray jsonArray = new JSONArray();
+        jsonArray.put(object);
+        jsonObject.put("total", "1");
+        jsonObject.put("rows", jsonArray);
         Writer writer = response.getWriter();
         writer.write(object.toString());
         writer.flush();
