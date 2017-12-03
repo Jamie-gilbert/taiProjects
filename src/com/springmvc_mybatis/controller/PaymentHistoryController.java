@@ -988,6 +988,7 @@ public class PaymentHistoryController {
         jsonObject.put("rows", jsonArray);
         Writer writer = response.getWriter();
         writer.write(object.toString());
+
         writer.flush();
         writer.close();
     }
