@@ -31,6 +31,7 @@
         <result column="dwjfes" property="dwjfes"/>
         <result column="lxs" property="lxs"/>
         <result column="tfbz" property="tfbz"/>
+
         <association property="staff"
                      column="RYID"
                      select="selectStaffBystaffRYID">
@@ -134,7 +135,7 @@
         WHERE  a.DWID =#{dwid,jdbcType=VARCHAR} AND  a.LX IS not NULL
     </select>
     <select id="selectStaffBystaffRYID" parameterType="string" resultType="Staff">
-        SELECT * FROM si3.per_reg WHERE RYID=#{RYID,jdbcType=VARCHAR}
+        SELECT * FROM si3.per_reg WHERE RYID=#{RYID,jdbcType=VARCHAR} ORDER BY GRBH
     </select>
 
     <update id="modifyInterest" parameterType="java.util.List">
@@ -254,9 +255,10 @@
     <select id="queryAllHistoryByDWID" resultMap="paymentHistoryResult">
         SELECT * FROM (
         SELECT A.*,ROWNUM RN FROM
-        (select a.* from
-        si3.aged_pay_his a,si3.per_reg b
-        WHERE  a.dwid =#{dwid,jdbcType=VARCHAR} AND a.dwid=b.dwid ORDER BY b.grbh) A
+        (select *  from
+        si3.aged_pay_his a
+        WHERE  a.dwid =#{dwid,jdbcType=VARCHAR}
+         ORDER BY a.ryid DESC ) A
         WHERE ROWNUM &lt; ${next}
         ) WHERE RN >=${pre}
     </select>
@@ -281,8 +283,8 @@
     <select id="queryRebackHistory" resultType="com.springmvc_mybatis.bean.DepartmentHistory">
          SELECT * FROM (
         SELECT A.*,ROWNUM RN FROM
-        (select org.dwmc,org.dwbh as dwbh, sum(aph.grjfe) as grjfes
-        , sum(aph.lx) as lxs ,(sum(aph.grjfe)+sum(aph.lx)) as zje
+        (select org.dwmc,org.dwbh as dwbh, sum(nvl(aph.grjfe,0)) as grjfes
+        , sum(nvl(aph.lx,0)) as lxs ,(sum(nvl(aph.grjfe,0))+sum(nvl(aph.lx,0))) as zje
         from si3.aged_pay_his aph, si3.orgn_reg org
         where aph.tfbz = '1'
         and org.dwid = aph.dwid
@@ -291,11 +293,25 @@
         ) WHERE RN >=${pre}
     </select>
 
+    <select id="queryNobackHistoryByDWID" resultType="com.springmvc_mybatis.bean.DepartmentHistory">
+        SELECT * FROM (
+        SELECT A.*,ROWNUM RN FROM
+        (select org.dwmc,org.dwbh as dwbh, sum(nvl(aph.grjfe,0)) as grjfes
+        , sum(nvl(aph.lx,0)) as lxs ,(sum(nvl(aph.grjfe,0))+sum(nvl(aph.lx,0))) as zje
+        from si3.aged_pay_his aph, si3.orgn_reg org
+        where aph.tfbz = '0' AND aph.dwid=#{dwid,jdbcType=VARCHAR}
+        and org.dwid = aph.dwid
+        group by aph.dwid, org.dwmc,org.dwbh) A
+        WHERE ROWNUM &lt; ${next}
+        ) WHERE RN >=${pre}
+    </select>
+
+
     <select id="queryNoRebackHistory" resultType="com.springmvc_mybatis.bean.DepartmentHistory">
         SELECT * FROM (
         SELECT A.*,ROWNUM RN FROM
-        (select org.dwmc,aph.dwid,org.dwbh as dwbh, sum(aph.grjfe) as grjfes
-        , sum(aph.lx) as lxs ,(sum(aph.grjfe)+sum(aph.lx)) as zje
+        (select org.dwmc,aph.dwid,org.dwbh as dwbh, sum(nvl(aph.grjfe,0)) as grjfes
+        , sum(nvl(aph.lx,0)) as lxs ,(sum(nvl(aph.grjfe,0))+sum(nvl(aph.lx,0))) as zje
         from si3.aged_pay_his aph, si3.orgn_reg org
         where aph.tfbz = '0'
         and org.dwid = aph.dwid
