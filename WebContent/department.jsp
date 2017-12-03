@@ -59,6 +59,7 @@
         <ul id="J_Nav"  class="nav-list ks-clear">
             <li class="nav-item dl-selected"><div class="nav-item-inner nav-home">单位管理</div></li>
             <li class="nav-item dl-selected"><div class="nav-item-inner nav-supplier">个人管理</div></li>
+            <li class="nav-item dl-selected"><div class="nav-item-inner nav-supplychain">查询统计</div></li>
             <li class="nav-item dl-selected"><div class="nav-item-inner nav-sample">系统管理</div></li>
         </ul>
     </div>
@@ -91,6 +92,15 @@
                 ]
             }]
         }, {
+            id:'search',
+            homePage:'unitSearch',
+            menu:[{text:'查询统计',
+                items:[
+                    {id:'unitSearch',text:'单位明细',href:'/queryallhistory.jsp'},
+                    {id:'refund',text:'退费明细',href:'/department_payment_history.jsp'}
+                ]
+            }]
+        },{
             id:'systemSet',
             homePage:'parameter',
             menu:[{text:'系统管理',

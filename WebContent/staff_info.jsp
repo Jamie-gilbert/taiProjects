@@ -14,18 +14,18 @@
     <title>人员信息</title>
     <link rel="stylesheet" href="css/bootstrap.css" type="text/css">
     <link rel="stylesheet" href="bootstrap/custom/department.css" type="text/css">
-    <link rel="stylesheet" type="text/css" href="./bootstrap/custom/department.css">
-    <script type="text/javascript" src="/bootstrap/js/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/bootstrap-table/bootstrap-table.js"></script>
-    <script type="text/javascript" src="/bootstrap-table/bootstrap-table-zh-CN.js"></script>
-    <script type="text/javascript" src="../webTree/assets/js/bui-min.js"></script>
-    <script type="text/javascript" src="../webTree/assets/js/config-min.js"></script>
-    <script type="text/javascript" src="../js/dialog.js"></script>
+    <link rel="stylesheet" type="text/css" href="bootstrap/custom/department.css">
+    <script type="text/javascript" src="bootstrap/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="bootstrap-table/bootstrap-table.js"></script>
+    <script type="text/javascript" src="bootstrap-table/bootstrap-table-zh-CN.js"></script>
+    <script type="text/javascript" src="webTree/assets/js/bui-min.js"></script>
+    <script type="text/javascript" src="webTree/assets/js/config-min.js"></script>
+    <script type="text/javascript" src="js/dialog.js"></script>
 </head>
 <body>
 <div style="border-bottom:1px solid cornflowerblue;padding-bottom: 5px">
-    <div class="row department">
+    <div class="row department" style="margin-left: 1%;margin-top: 1%">
         <div class="col-xs-2 col-md-3">
             <div class="input-group">
                 <span class="input-group-addon">个人编号:</span>
