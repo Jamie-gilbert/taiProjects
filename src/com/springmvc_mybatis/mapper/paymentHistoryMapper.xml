@@ -34,7 +34,6 @@
         <association property="staff"
                      column="RYID"
                      select="selectStaffBystaffRYID">
-
         </association>
     </resultMap>
     <!--select * from #T a where ID=(select min(ID) from #T where Name=a.Name)-->
@@ -255,9 +254,9 @@
     <select id="queryAllHistoryByDWID" resultMap="paymentHistoryResult">
         SELECT * FROM (
         SELECT A.*,ROWNUM RN FROM
-        (select * from
-        si3.aged_pay_his a
-        WHERE  a.dwid =#{dwid,jdbcType=VARCHAR}) A
+        (select a.* from
+        si3.aged_pay_his a,si3.per_reg b
+        WHERE  a.dwid =#{dwid,jdbcType=VARCHAR} AND a.dwid=b.dwid ORDER BY b.grbh) A
         WHERE ROWNUM &lt; ${next}
         ) WHERE RN >=${pre}
     </select>
