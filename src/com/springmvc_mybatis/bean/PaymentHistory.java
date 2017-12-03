@@ -41,6 +41,8 @@ public class PaymentHistory implements Serializable {
     private Staff staff;
     private int FSYY;
 
+
+
     public int getFSYY() {
         return FSYY;
     }
@@ -281,4 +283,6 @@ public class PaymentHistory implements Serializable {
     public void setTfbz(String tfbz) {
         this.tfbz = tfbz;
     }
+
+
 }

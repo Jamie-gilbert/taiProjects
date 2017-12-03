@@ -101,6 +101,8 @@ public class PaymentHistoryController {
         String dwid = request.getParameter("dwid");
         String page = request.getParameter("pageNumber");
         String count = request.getParameter("pageSize");
+        String sort = request.getParameter("sort");
+        String sortOrder = request.getParameter("sortOrder");
 
         int countNum = Integer.parseInt(count);
         int pageNum = Integer.parseInt(page);
@@ -116,6 +118,7 @@ public class PaymentHistoryController {
 
         for (PaymentHistory paymentHistory : paymentHistories) {
             JSONObject object = new JSONObject(paymentHistory.getStaff());
+            object.put("QSNY", paymentHistory.getQSNY());
             object.put("QSNY", paymentHistory.getQSNY());
             object.put("ZZNY", paymentHistory.getZZNY());
             object.put("GRJFE", paymentHistory.getGRJFE());
@@ -957,6 +960,29 @@ public class PaymentHistoryController {
         jsonObject.put("rows", jsonArray);
         Writer writer = response.getWriter();
         writer.write(jsonObject.toString());
+        writer.flush();
+        writer.close();
+    }
+
+    /**
+     * 根据dwid查询已退费的单位记录
+     *
+     * @param request
+     * @param response
+     * @throws IOException
+     */
+    @RequestMapping("/queryNobackHistoryByDWID")
+    public void queryNobackHistoryByDWID(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        //设置页面不缓存
+        response.setContentType("application/json");
+        response.setHeader("Pragma", "No-cache");
+        response.setHeader("Cache-Control", "no-cache");
+        response.setCharacterEncoding("UTF-8");
+        String dwid = request.getParameter("dwid");
+        DepartmentHistory departmentHistory = paymentHistoryMapper.queryNobackHistoryByDWID(dwid);
+        JSONObject object = new JSONObject(departmentHistory);
+        Writer writer = response.getWriter();
+        writer.write(object.toString());
         writer.flush();
         writer.close();
     }
