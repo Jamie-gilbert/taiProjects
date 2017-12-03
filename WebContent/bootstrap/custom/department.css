@@ -3,10 +3,10 @@ body {
     height: 100%;
 }
 
-body .department {
-    margin-top: 1%;
-    margin-left:1%;
-}
+/*body .department {*/
+    /*margin-top: 1%;*/
+    /*margin-left:1%;*/
+/*}*/
 
 body #unitButton {
     margin-top: 13px;

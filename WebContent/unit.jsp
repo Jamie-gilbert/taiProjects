@@ -25,39 +25,42 @@
 <body>
 <div class="unit">
     <div style="border-bottom:1px solid cornflowerblue;padding-bottom: 5px">
-        <div class="row department">
-            <div class="col-xs-3 col-md-4">
-                <div class="input-group">
-                    <span class="input-group-addon">单位编号:</span>
-                    <input type="text" class="form-control" id="dwbh"/>
-                </div>
-            </div>
-            <div class="col-xs-3 col-md-4">
-                <div class="input-group">
-                    <span class="input-group-addon">单位名称:</span>
-                    <input type="text" class="form-control" id="dwmc"/>
-                </div>
-            </div>
-            <div class="col-xs-2 col-md-3">
-                <button class="btn btn-primary btn-sm" data-toggle="modal" id="query"  data-target="#unitModal">查询</button>
-                <button class="btn btn-primary btn-sm" id="resetBtn" type="reset">重置</button>
+    <div class="row department" style="margin-left: 1%;margin-top: 1%">
+        <div class="col-xs-3 col-md-4">
+            <div class="input-group">
+                <span class="input-group-addon">单位编号:</span>
+                <input type="text" class="form-control" id="dwbh"/>
             </div>
         </div>
-        <div class="container-fluid" id="unitButton">
-            <a id='rylb' class="page-action btn btn-primary btn-sm" href="#" title="人员列表">人员列表
-            </a>
-            <a id="xgdwxx" class="btn btn-primary btn-sm" href="#unitChangeModal" data-toggle="modal" title="修改单位信息">
-                修改单位信息</a>
-            <a id='cxdj' class="page-action btn btn-primary btn-sm" href="#"  title="查询单据">
-                查询单据</a>
-            <a id='dwjx' class="page-action btn btn-primary btn-sm" href="#"  title="单位计息">
-                单位计息
-            </a>
-            <a id='cxdwjx' class="page-action btn btn-primary btn-sm" href="#" title="撤销单位计息">
-                撤销单位计息
-            </a>
+        <div class="col-xs-3 col-md-4">
+            <div class="input-group">
+                <span class="input-group-addon">单位名称:</span>
+                <input type="text" class="form-control" id="dwmc"/>
+            </div>
+        </div>
+        <div class="col-xs-2 col-md-3">
+            <button class="btn btn-primary btn-sm" data-toggle="modal" id="query"  data-target="#unitModal">查询</button>
+            <button class="btn btn-primary btn-sm" id="resetBtn" type="reset">重置</button>
         </div>
     </div>
+    <div class="container-fluid" id="unitButton">
+        <a id='rylb' class="page-action btn btn-primary btn-sm" href="#" title="人员列表">人员列表
+        </a>
+        <a id="xgdwxx" class="btn btn-primary btn-sm" href="#unitChangeModal" data-toggle="modal" title="修改单位信息">
+            修改单位信息</a>
+        <a id='cxdj' class="page-action btn btn-primary btn-sm" href="#"  title="查询单据">
+            查询单据</a>
+        <a id='dwjx' class="page-action btn btn-primary btn-sm" href="#"  title="单位计息">
+            单位计息
+        </a>
+        <a id='cxdwjx' class="page-action btn btn-primary btn-sm" href="#" title="撤销单位计息">
+            撤销单位计息
+        </a>
+        <a id='dwtf' class="page-action btn btn-primary btn-sm" href="#" title="单位退费">
+            单位退费
+        </a>
+    </div>
+</div>
     <div class="modal fade" id="unitModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -229,6 +232,7 @@
         $('#cxdj').attr('data-href',"../department_bils.jsp?dwid="+dwid+"&dwbh="+dwbh+"&dwmc="+dwmc);
         $('#dwjx').attr('data-href',"../dempartment_interest.jsp?dwid="+dwid+"&dwbh="+dwbh+"&dwmc="+dwmc);
         $('#cxdwjx').attr('data-href',"../dempartment_clear_interest.jsp?dwid="+dwid+"&dwbh="+dwbh+"&dwmc="+dwmc);
+        $('#dwtf').attr('data-href',"../department_reback_payment.jsp?dwid="+dwid+"&txr="+"'"+"admin"+"'" +"&jbjgid="+"37091103"+"&dwbh="+dwbh+"&dwmc="+dwmc);
     }
 
 

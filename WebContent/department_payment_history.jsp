@@ -18,19 +18,34 @@
 </head>
 <body>
 <div class="container-fluid">
-    <div class="row">
-        <input id="allCount" readonly="readonly">
-        <input id="noBack" readonly="readonly">
-        <input id="backed" readonly="readonly">
-    </div>
-    <div class="row">
-        <div class="col-xs-4 col-md-4">
-            <button class="btn btn-primary" onclick="rebackedDepartment()" data-toggle="button">已退费单位</button>
+    <div class="row department" style="border-bottom:1px solid cornflowerblue;padding-bottom: 5px;margin-top: 1%">
+        <div class="row">
+        <div class="col-xs-3 col-md-4">
+            <div class="input-group">
+                <span class="input-group-addon">单位总数:</span>
+                <input id="allCount" class="form-control" readonly="readonly">
+            </div>
         </div>
-        <div class="col-xs-4 col-md-4">
-            <button class="btn btn-primary" onclick="noRebackDeparment()" data-toggle="button">未退费单位</button>
+        <div class="col-xs-3 col-md-4">
+            <div class="input-group">
+                <span class="input-group-addon">未退费数:</span>
+                <input id="noBack" class="form-control" readonly="readonly">
+            </div>
         </div>
-    </div>
+        <div class="col-xs-3 col-md-4">
+            <div class="input-group">
+                <span class="input-group-addon">已退费数:</span>
+                <input id="backed" class="form-control" readonly="readonly">
+            </div>
+        </div>
+        </div>
+        <div class="container-fluid" style="margin-top: 1%;padding-left: 0px">
+        <div class="col-xs-2 col-md-3">
+                <button class="btn btn-primary" onclick="rebackedDepartment()" data-toggle="button">已退费单位</button>
+                <button class="btn btn-primary" onclick="noRebackDeparment()" data-toggle="button">未退费单位</button>
+         </div>
+        </div>
+     </div>
     <div class="modal-body table-responsive">
         <table id="table_department">
 
@@ -38,7 +53,6 @@
     </div>
 
 </div>
-
 
 <script src="../js/jquery.js"></script>
 <script src="../js/bootstrap.js"></script>
@@ -70,9 +84,9 @@
             async: true,
             success: function (data, status) {
                 console.log(data)
-                $('#allCount').val('全部：' + data.all);
-                $('#noBack').val('未退费：' + data.noReback);
-                $('#backed').val('已退费：' + data.reback);
+                $('#allCount').val(data.all);
+                $('#noBack').val(data.noReback);
+                $('#backed').val(data.reback);
 
             },
             error: function (err, status) {
@@ -121,17 +135,17 @@
 
                 }, {
                     field: 'lxs',
-                    title: '利息',
+                    title: '总利息(单位:元)',
                     align: 'center',
 
                 }, {
                     field: 'grjfes',
-                    title: '个人缴费额',
+                    title: '个人缴费总额(单位:元)',
                     align: 'center',
 
                 }, {
                     field: 'zje',
-                    title: '总计',
+                    title: '总计(单位:元)',
                     align: 'center',
 
                 }]

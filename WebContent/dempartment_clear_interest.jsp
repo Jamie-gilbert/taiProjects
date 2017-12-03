@@ -14,7 +14,6 @@
     <title>撤销单位计息</title>
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
     <link rel="stylesheet" href="bootstrap-table/bootstrap-table.css" type="text/css">
-
 </head>
 <body>
 <%@include file="commonTop.jsp"%>
@@ -27,14 +26,12 @@
         </button>
 
     </div>
-    <table id="paymentHis"></table>
+    <table id="paymentcHis"></table>
 
 </div>
-
-
-<script src="js/jquery.js"></script>
-<script src="js/bootstrap.js"></script>
-<script src="js/dialog.js"></script>
+<script type="text/javascript" src="../js/jquery.js"></script>
+<script type="text/javascript" src="../js/bootstrap.js"></script>
+<script type="text/javascript" src="../js/dialog.js"></script>
 <script type="text/javascript" src="bootstrap-table/bootstrap-table.js"></script>
 <script type="text/javascript" src="bootstrap-table/tableExport.js"></script>
 <script type="text/javascript" src="bootstrap-table/extensions/export/bootstrap-table-export.js"></script>
@@ -43,14 +40,14 @@
     $(document).ready(function () {
         $('#dwbh').val(dwbh);
         $('#dwmc').val(dwmc);
-        $('dwid').val(dwid);
+        $('#dwid').val(dwid);
         paymentHis_table();
     })
 
     function paymentHis_table() {
         var dwid =<%=request.getParameter("dwid")%>;
-        $('#paymentHis').bootstrapTable('destroy');
-        $('#paymentHis').bootstrapTable({
+        $('#paymentcHis').bootstrapTable('destroy');
+        $('#paymentcHis').bootstrapTable({
             url: '../paymentHistory/clearPaymentHistory.action',         //请求后台的URL（*）
             method: 'get',                      //请求方式（*）
             toolbar: '#toolbar',                //工具按钮用哪个容器
@@ -69,8 +66,8 @@
             //传递参数（*）
             sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
             pageNumber: 1,                       //初始化加载第一页，默认第一页
-            pageSize: 10,                       //每页的记录行数（*）
-            pageList: [10, 25, 50, 100, 1000],        //可供选择的每页的行数（*）
+            pageSize: 1000,                       //每页的记录行数（*）
+            pageList: [1000],        //可供选择的每页的行数（*）
             clickToSelect: true,
             showExport: true,                     //是否显示导出
             exportDataType: "all",              //basic', 'all', 'selected'.
@@ -106,9 +103,9 @@
 
 
     function queryNeedCancel() {
-        var currentData = $('#paymentHis').bootstrapTable('getData');
+        var currentData = $('#paymentcHis').bootstrapTable('getData');
         var all = currentData.length;
-        var selectData = $('#paymentHis').bootstrapTable('getSelections');
+        var selectData = $('#paymentcHis').bootstrapTable('getSelections');
 
         if (all > 0) {
             if (selectData != null && selectData.length > 0) {
@@ -116,7 +113,6 @@
                     msg: '你确定撤销计息吗',
                     title: "提示",
                     onOk: function () {
-
                         clearInterest(selectData);
                     },
                     onCancel: function () {

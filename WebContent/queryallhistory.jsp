@@ -11,38 +11,80 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>查询单位中所有人的缴费明明细</title>
-    <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
-    <link rel="stylesheet" href="bootstrap-table/bootstrap-table.css" type="text/css">
+    <title>单位缴费明细</title>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
+
 
 </head>
 <body>
-<div class="container-fluid">
-
-    <div class="modal-body table-responsive">
-        <table id="table_department">
-
-        </table>
+<div>
+<div class="row" style="margin-top: 1%;border-bottom:1px solid cornflowerblue;">
+<div style="padding-bottom: 5px;margin-left: 2%">
+    <div class="row department">
+        <input type="text" id="dwid" hidden="hidden">
+        <div class="col-xs-3 col-md-4">
+            <div class="input-group">
+                <span class="input-group-addon">单位编号:</span>
+                <input type="text" class="form-control" id="dwbh"/>
+            </div>
+        </div>
+        <div class="col-xs-3 col-md-4">
+            <div class="input-group">
+                <span class="input-group-addon">单位名称:</span>
+                <input type="text" class="form-control" id="dwmc"/>
+            </div>
+        </div>
+        <div class="col-xs-2 col-md-3">
+            <button class="btn btn-primary btn-sm" data-toggle="modal" id="query"  data-target="#unitModal">查询</button>
+            <button class="btn btn-primary btn-sm" id="resetBtn" type="reset">重置</button>
+        </div>
     </div>
+</div>
+</div>
+<div class="modal fade" id="unitModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myModalLabel">单位信息</h4>
+                </div>
+                <div class="modal-body">
+                    <table id="unit_modal"></table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" onclick="getUnit()">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <div id="toolbar">
+    </div>
+    <table id="table_department">
 
+    </table>
 </div>
 
-
-<script src="../js/jquery.js"></script>
-<script src="../js/bootstrap.js"></script>
-<script src="../js/dialog.js"></script>
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/dialog.js"></script>
 <script type="text/javascript" src="bootstrap-table/bootstrap-table.js"></script>
 <script type="text/javascript" src="bootstrap-table/tableExport.js"></script>
 <script type="text/javascript" src="bootstrap-table/extensions/export/bootstrap-table-export.js"></script>
 <script type="text/javascript" src="bootstrap-table/bootstrap-table-zh-CN.js"></script>
 <script type="text/javascript">
-    $(document).ready(function () {
+    var dwmc ="";
+    var dwbh ="";
+    var dwid ="";
 
-        showHistory();
+    $('#query').click(function () {
+        dwbh = $('#dwbh').val();
+        dwmc = $('#dwmc').val();
+        alert(dwid);
+        unit();
     });
-
-
-
 
     function showHistory() {
         $('#table_department').bootstrapTable('destroy');
@@ -59,7 +101,7 @@
                 return {
                     pageNumber: params.offset + 1,
                     pageSize: params.limit,
-                    dwid:'100000000000007'
+                    dwid:dwid
 
                 };
             },
@@ -101,6 +143,74 @@
         });
     }
 
+    function unit() {
+        $("#unit_modal").bootstrapTable('destroy');
+        $('#unit_modal').bootstrapTable({
+            url: '../department/querybykey.action',         //请求后台的URL（*）
+            method: 'get',                      //请求方式（*）
+            striped: true,                      //是否显示行间隔色
+            cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+            pagination: true,                   //是否显示分页（*）
+            sortable: false,                     //是否启用排序
+            queryParams: function (params) {
+                return {
+                    pageNumber: params.offset + 1,
+                    pageSize: params.limit,
+                    dwbh: dwbh,
+                    dwmc: dwmc
+                };
+            },
+            sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+            pageNumber: 1,                       //初始化加载第一页，默认第一页
+            pageSize: 10,                       //每页的记录行数（*）
+            pageList: [10, 25, 50],        //可供选择的每页的行数（*）
+            clickToSelect: true,
+            showExport: false,
+            columns: [{
+                checkbox: true
+            }, {
+                field: 'dwbh',
+                title: '单位编号',
+            }, {
+                field: 'dwmc',
+                title: '单位名称',
+            }, {
+                field: 'tblbmc',
+                title: '投保类别',
+            }]
+        });
+    }
+
+    function getUnit() {
+        row = $.map($("#unit_modal").bootstrapTable('getSelections'), function (row) {
+            return row;
+        });
+        if (row == "") {
+            alert("请选择一个单位!");
+        } else {
+            $('#unitModal').modal('hide');
+            $('#dwmc').val(row[0]["dwmc"]);
+            $('#dwbh').val(row[0]["dwbh"]);
+            $('#dwbh').attr("readonly", true);
+            $('#dwmc').attr("readonly", true);
+            $('#dwid').val(row[0]["dwid"]);
+        }
+        dwid =$("#dwid").val();
+        showHistory();
+    }
+
+
+    //重置按钮事件
+    $("#resetBtn").off().on("click", function () {
+        $("#dwmc").val("");
+        $("#dwbh").val("");
+        $("#jbjgid").val("");
+        $("#tcDwmc").val("");
+        $("#tcDwbh").val("");
+        $("#tblbmc").val("");
+        $('#dwbh').attr("readonly", false)
+        $('#dwmc').attr("readonly", false)
+    });
 
 </script>
 </body>
