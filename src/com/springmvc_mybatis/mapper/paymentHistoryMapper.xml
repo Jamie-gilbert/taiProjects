@@ -37,6 +37,7 @@
                      select="selectStaffBystaffRYID">
         </association>
     </resultMap>
+
     <!--select * from #T a where ID=(select min(ID) from #T where Name=a.Name)-->
     <select id="queryBillsWithoutInterest" resultMap="paymentHistoryResult">
        SELECT * FROM (
@@ -243,7 +244,7 @@
         UPDATE si3.aged_pay_his SET tfbz='1' WHERE  dwid=#{dwid,jdbcType=VARCHAR}
     </update>
     <select id="calPaymentByDWID" resultType="float">
-        SELECT (sum(GRJFE)+sum(lx)) AS  ZJE WHERE  dwid=#{dwid,jdbcType=VARCHAR}
+        SELECT (sum(GRJFE)+sum(lx)) AS  ZJE  FROM  si3.aged_pay_his WHERE  dwid=#{dwid,jdbcType=VARCHAR}
         AND  tfbz='1'
     </select>
     <select id="queryCountByDWID" resultType="int">
@@ -294,16 +295,12 @@
     </select>
 
     <select id="queryNobackHistoryByDWID" resultType="com.springmvc_mybatis.bean.DepartmentHistory">
-        SELECT * FROM (
-        SELECT A.*,ROWNUM RN FROM
-        (select org.dwmc,org.dwbh as dwbh, sum(nvl(aph.grjfe,0)) as grjfes
-        , sum(nvl(aph.lx,0)) as lxs ,(sum(nvl(aph.grjfe,0))+sum(nvl(aph.lx,0))) as zje
-        from si3.aged_pay_his aph, si3.orgn_reg org
-        where aph.tfbz = '0' AND aph.dwid=#{dwid,jdbcType=VARCHAR}
-        and org.dwid = aph.dwid
-        group by aph.dwid, org.dwmc,org.dwbh) A
-        WHERE ROWNUM &lt; ${next}
-        ) WHERE RN >=${pre}
+  select sum(nvl(grjfe,0)) as grjfes
+        , sum(nvl(lx,0)) as lxs ,(sum(nvl(grjfe,0))+sum(nvl(lx,0))) as zje
+        from si3.aged_pay_his
+        where tfbz = '0'
+        and  dwid=#{dwid,jdbcType=VARCHAR}
+
     </select>
 
 

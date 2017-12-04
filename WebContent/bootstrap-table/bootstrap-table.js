@@ -505,7 +505,7 @@
         valign: undefined, // top, middle, bottom
         width: undefined,
         sortable: false,
-        order: 'asc', // asc, desc
+        order: 'desc', // asc, desc
         visible: true,
         switchable: true,
         clickToSelect: true,

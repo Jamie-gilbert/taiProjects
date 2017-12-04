@@ -81,8 +81,9 @@ SELECT A.* ,ROWNUM RN FROM
         ) WHERE RN >=${pre}
     </select>
     <insert id="rebackPaymentByDWID" parameterType="DepartmentBill">
-         INSERT INTO si3.bill_genl(zdlsh,dwid,djzt,djlb,txr,txsj,qrr,qrsj,zje)
-            VALUES (SI3.SQ_JFLSID.NEXTVAL,#{bill.dwid,jdbcType=VARCHAR},${bill.djzt}
-            , ${bill.djlb},${bill.txr},${bill.txsj},${bill.qrr}, ${bill.qrsj}, ${bill.zje})
+         INSERT INTO si3.bill_genl(zdlsh,dwid,djzt,djlb,txr,txsj,qrr,qrsj,zje,jbjgid)
+            VALUES (#{bill.zdlsh,jdbcType=VARCHAR},#{bill.dwid,jdbcType=VARCHAR},${bill.djzt}
+            , ${bill.djlb},#{bill.txr,jdbcType=VARCHAR},SYSDATE
+            ,#{bill.qrr,jdbcType=VARCHAR},SYSDATE, ${bill.zje},${bill.jbjgid})
     </insert>
 </mapper>

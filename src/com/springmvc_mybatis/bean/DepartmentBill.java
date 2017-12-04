@@ -12,11 +12,11 @@ public class DepartmentBill implements Serializable {
     private String djzt;
     private String djlb;
     private String txr;
-    @DateTimeFormat(pattern="yyyy-MM-dd")
-    private Date txsj;
+
+    private String txsj;
     private String qrr;
-    @DateTimeFormat(pattern="yyyy-MM-dd")
-    private Date qrsj;
+
+    private String qrsj;
     private double zje;
     private String bz;
     private String ryid;
@@ -69,19 +69,19 @@ public class DepartmentBill implements Serializable {
         this.txr = txr;
     }
 
-    public Date getTxsj() {
+    public String getTxsj() {
         return txsj;
     }
 
-    public void setTxsj(Date txsj) {
+    public void setTxsj(String txsj) {
         this.txsj = txsj;
     }
 
-    public Date getQrsj() {
+    public String getQrsj() {
         return qrsj;
     }
 
-    public void setQrsj(Date qrsj) {
+    public void setQrsj(String qrsj) {
         this.qrsj = qrsj;
     }
 

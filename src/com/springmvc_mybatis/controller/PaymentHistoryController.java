@@ -253,17 +253,24 @@ public class PaymentHistoryController {
         if (count == 0) {
             paymentHistoryMapper.rebackPaymentByDWID(dwid);
             double zje = paymentHistoryMapper.calPaymentByDWID(dwid);
+            String zdlsh = departmentBillMapper.queryZDLSH();
             DepartmentBill departmentBill = new DepartmentBill();
             departmentBill.setZje(zje);
             departmentBill.setDwid(dwid);
             departmentBill.setDjzt("0");
             departmentBill.setDjlb("0");
+            departmentBill.setZdlsh(zdlsh);
             departmentBill.setTxr(txr);
             departmentBill.setQrr(txr);
             Date date = new Date();
-            departmentBill.setTxsj(date);
-            departmentBill.setQrsj(date);
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM");
+            String dateStr = simpleDateFormat.format(date);
+            departmentBill.setTxsj(dateStr);
+            departmentBill.setQrsj(dateStr);
             departmentBill.setJbjgid(jbjgid);
+            SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("yyyyMM");
+            departmentBillMapper.addBillDel(zdlsh, "102", "AL1", simpleDateFormat1.format(date)
+                    , simpleDateFormat1.format(date), (float) zje);
             departmentBillMapper.rebackPaymentByDWID(departmentBill);
             int rebackCount = paymentHistoryMapper.queryCountWithRebackByDWID(dwid);
             jsonObject.put("errorCode", "0");
@@ -979,15 +986,15 @@ public class PaymentHistoryController {
         response.setHeader("Cache-Control", "no-cache");
         response.setCharacterEncoding("UTF-8");
         String dwid = request.getParameter("dwid");
-        DepartmentHistory departmentHistory = paymentHistoryMapper.queryNobackHistoryByDWID(dwid);
-        JSONObject object = new JSONObject(departmentHistory);
-        JSONObject jsonObject = new JSONObject();
         JSONArray jsonArray = new JSONArray();
+        DepartmentHistory departmentHistories = paymentHistoryMapper.queryNobackHistoryByDWID(dwid);
+        JSONObject object = new JSONObject(departmentHistories);
         jsonArray.put(object);
-        jsonObject.put("total", "1");
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("total", jsonArray.length());
         jsonObject.put("rows", jsonArray);
         Writer writer = response.getWriter();
-        writer.write(object.toString());
+        writer.write(jsonObject.toString());
 
         writer.flush();
         writer.close();

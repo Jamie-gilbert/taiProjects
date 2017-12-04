@@ -19,7 +19,7 @@
 
 </head>
 <body>
-<%@include file="commonTop.jsp"%>
+<%@include file="commonTop.jsp" %>
 <div class="container-fluid">
     <div class="row">
         <div class="col-xs-3 col-md-3">
@@ -72,7 +72,7 @@
                 return {
                     pageNumber: params.offset + 1,
                     pageSize: params.limit,
-                    dwid:dwid
+                    dwid: dwid
                 };
             },
             //传递参数（*）
@@ -85,16 +85,6 @@
             exportDataType: "all",              //basic', 'all', 'selected'.
             columns: [
                 {
-                    field: 'dwbh',
-                    title: '单位编号',
-                    align: 'center',
-
-                }, {
-                    field: 'dwmc',
-                    title: '单位名称',
-                    align: 'center',
-
-                }, {
                     field: 'lxs',
                     title: '总利息(单位:元)',
                     align: 'center',
@@ -114,49 +104,39 @@
     }
 
 
-
     function rebackPayment() {
-        var datas = $('#person_jfls').bootstrapTable("getSelections");
-        if (datas == null || datas.length <= 0) {
+        var size = $('#table_department').bootstrapTable('getData', false).length;
+        if (size == 0) {
             Alert({
-                msg: '请先选择缴费历史',
-                title: "提示"
-            });
+                msg: '该单位没有缴费记录',
+                title: "提示",
+            })
         } else {
 
-            var ryid = datas[0].RYID;
-            var qsrq = $('#qsrq').val();
-            var zzrq = $('#zzrq').val();
-            if (qsrq == "" || qsrq == null) {
-                qsrq = "1900";
-            }
-            if (zzrq == "" || zzrq == null) {
-                var mydate = new Date();
-                var str = "" + mydate.getFullYear();
-                str += (mydate.getMonth() + 1);
-
-                zzrq = $.trim(str);
-            }
             $.ajax({
                 type: "POST",
-                url: "../paymentHistory/queryCountWithoutInterestByRyidWithDate.action",
+                url: "../paymentHistory/rebackPaymentByDWID.action",
                 data: {
-                    "ryid": ryid,
-                    "qsrq": qsrq,
-                    "zzrq": zzrq
+                    "dwid": dwid,
+                    "txr": txr,
+                    "jbjgid": jbjgid
+
                 },
                 async: false,
                 dataType: "JSON",
                 success: function (data, status) {
                     console.log(data)
-                    var needInterest = data.needInterest;
-                    if (needInterest == true) {
+                    var errorCode = data.errorCode;
+                    if (errorCode == "1") {
                         Alert({
                             msg: '该人员有未计息的缴费，请先计息',
                             title: "提示",
                         })
                     } else {
-                        rebackPay(datas);
+                        Alert({
+                            msg: '退费成功',
+                            title: "提示",
+                        })
                     }
                 },
                 error: function (err, status) {
@@ -165,50 +145,10 @@
 
             });
         }
+
     }
 
-    function rebackPay(datas) {
-        debugger
-        var ryid = datas[0].RYID;
-        var qsrqs = [];
 
-        for (var i = 0; i < datas.length; i++) {
-            var qsrq = {};
-            qsrq.qsrq = datas[i].QSNY;
-            qsrq.grjfe=datas[i].GRJFZE;
-            qsrq.grjfze = datas[i].GRJFZE;
-            qsrq.lx=datas[i].LX;
-            qsrqs.push(qsrq);
-        }
-        $.ajax({
-            type: "POST",
-            url: "../paymentHistory/rebackPaymentByRyIdWithDate.action",
-            data: {
-                "ryid": ryid,
-                "qsrqs": JSON.stringify(qsrqs),
-                "txr": "11100000000000000002"
-
-            },
-            async: false,
-            dataType: "JSON",
-            success: function (data, status) {
-
-                Alert({
-                    msg: '退费成功',
-                    title: "提示",
-                })
-                queryData();
-            },
-            error: function (err, status) {
-                Alert({
-                    msg: '退费失败',
-                    title: "提示",
-                })
-
-            }
-
-        });
-    }
 </script>
 </body>
 </html>
