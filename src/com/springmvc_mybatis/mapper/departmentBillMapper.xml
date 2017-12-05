@@ -49,13 +49,10 @@ SELECT A.* ,ROWNUM RN FROM
     <select id="queryZDLSH" useCache="false" flushCache="true" resultType="String">
  select si3.sq_zdlsh.nextval from dual
 </select>
-    <update id="modifyStatusByDwid" parameterType="java.util.List">
+    <update id="modifyStatusByZDLSH" >
         update si3.bill_genl set djzt=${djzt}
         WHERE
-        dwid=${dwid,jdbcType=VARCHAR} AND
-        <foreach collection="zdlshs" index="index" item="item" open="(" separator="or" close=")">
-            zdlsh=#{item.zdlsh,jdbcType=VARCHAR}
-        </foreach>
+        dwid=#{dwid,jdbcType=VARCHAR} AND  zdlsh=#{zdlsh,jdbcType=VARCHAR}
     </update>
 
     <insert id="addBillForWriteOff" parameterType="java.util.List">

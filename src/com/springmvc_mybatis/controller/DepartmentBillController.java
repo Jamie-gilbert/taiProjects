@@ -4,6 +4,7 @@ import com.springmvc_mybatis.bean.DepartmentBill;
 import com.springmvc_mybatis.json.JSONArray;
 import com.springmvc_mybatis.json.JSONObject;
 import com.springmvc_mybatis.mapper.DepartmentBillMapper;
+import com.springmvc_mybatis.mapper.PaymentHistoryMapper;
 import netscape.javascript.JSObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,7 +28,8 @@ public class DepartmentBillController {
 
     @Autowired
     private DepartmentBillMapper departmentBillMapper;
-
+    @Autowired
+    private PaymentHistoryMapper paymentHistoryMapper;
 
     @RequestMapping("/querydepartmentbils")
     public void queryDepartmentBils(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -91,30 +93,22 @@ public class DepartmentBillController {
      * @param response
      * @throws IOException
      */
-    @RequestMapping("/modifyStatusByDwid")
-    public void modifyStatusByDwid(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    @RequestMapping("/modifyStatusByZDLSH")
+    public void modifyStatusByZDLSH(HttpServletRequest request, HttpServletResponse response) throws IOException {
         //设置页面不缓存
         response.setContentType("application/json");
         response.setHeader("Pragma", "No-cache");
         response.setHeader("Cache-Control", "no-cache");
         response.setCharacterEncoding("UTF-8");
-
-//        String dwid = request.getParameter("dwid");
-        String dwid = "100000000000012";
-        String zdlshs = request.getParameter("zdlshs");
+        String dwid = request.getParameter("dwid");
+        String zdlsh = request.getParameter("zdlsh");
         String djzt = request.getParameter("djzt");
-
-        List<DepartmentBill> zdlshsList = new ArrayList<>();
-        JSONArray jsonArray = new JSONArray(zdlshs);
-        for (int i = 0; i < jsonArray.length(); i++) {
-            DepartmentBill bill = new DepartmentBill();
-            bill.setZdlsh(String.valueOf(jsonArray.getJSONObject(i).get("zdlsh")));
-            bill.setZje((0 - (jsonArray.getJSONObject(i).getDouble("zje"))));
-            zdlshsList.add(bill);
-        }
-        departmentBillMapper.modifyStatusByDwid(zdlshsList, dwid, djzt);
-        if (djzt.equals("3")) {
-
+        departmentBillMapper.modifyStatusByZDLSH(zdlsh, dwid, djzt);
+       /*
+       作废
+        */
+        if (djzt.equals("2")) {
+            paymentHistoryMapper.calPaymentByDWID(dwid);
         }
         PrintWriter out = response.getWriter();
         JSONObject jsonObject = new JSONObject();

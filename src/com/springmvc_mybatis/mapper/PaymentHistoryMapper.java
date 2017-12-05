@@ -113,4 +113,6 @@ public interface PaymentHistoryMapper {
 
     DepartmentHistory queryNobackHistoryByDWID(@Param(value = "dwid") String dwid);
 
+    List<PaymentHistory> extportHistoryByDWID(@Param(value = "dwid") String dwid);
+    void cancelBill(@Param(value = "dwid") String dwid);
 }

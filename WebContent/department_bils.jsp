@@ -12,14 +12,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>单位单据查询</title>
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="bootstrap-table/bootstrap-table.css" type="text/css">
-    <script type="text/javascript" src="bootstrap/js/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="bootstrap-table/bootstrap-table.js"></script>
-    <script type="text/javascript" src="bootstrap-table/tableExport.js"></script>
-    <script type="text/javascript" src="bootstrap-table/extensions/export/bootstrap-table-export.js"></script>
-    <script type="text/javascript" src="bootstrap-table/bootstrap-table-zh-CN.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.css" type="text/css">
+    <link rel="stylesheet" href="bootstrap/custom/department.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="./bootstrap/custom/department.css">
+
 </head>
 <body>
 <%@include file="commonTop.jsp" %>
@@ -44,12 +40,12 @@
     <div class="col-xs-3 col-md-4">
         <button id="query" class="btn btn-primary btn-sm" data-toggle="button">查询</button>
         <%--<button id="modify_status" onclick="modifyStatusByDwid()" class="btn btn-primary btn-sm"--%>
-                <%--data-toggle="button">--%>
-            <%--修改单据状态--%>
+        <%--data-toggle="button">--%>
+        <%--修改单据状态--%>
         <%--</button>--%>
         <%--<button id="modify_status2" onclick="toVoidByDwid()" class="btn btn-primary btn-sm"--%>
-                <%--data-toggle="button">--%>
-            <%--作废单据--%>
+        <%--data-toggle="button">--%>
+        <%--作废单据--%>
         <%--</button>--%>
     </div>
 </div>
@@ -79,6 +75,14 @@
 
 
 </div>
+
+<script type="text/javascript" src="/bootstrap/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/bootstrap-table/bootstrap-table.js"></script>
+<script type="text/javascript" src="/bootstrap-table/bootstrap-table-zh-CN.js"></script>
+<script type="text/javascript" src="../webTree/assets/js/bui-min.js"></script>
+<script type="text/javascript" src="../webTree/assets/js/config-min.js"></script>
+<script type="text/javascript" src="../js/dialog.js"></script>
 <script type="text/javascript">
     var type = "";
     var time = "";
@@ -130,13 +134,13 @@
             }, {
                 field: 'dwid',
                 title: '单位名称',
-                formatter : function (value, row, index) {
+                formatter: function (value, row, index) {
                     return $("#dwmc").val();
                 }
             }, {
                 field: 'djlb',
                 title: '单据类别',
-                formatter : function (value, row, index) {
+                formatter: function (value, row, index) {
                     if (row['djlb'] === 'SI1001') {
                         return '收缴单据';
                     }
@@ -148,7 +152,7 @@
             }, {
                 field: 'djzt',
                 title: '单据状态',
-                formatter : function (value, row, index) {
+                formatter: function (value, row, index) {
                     if (row['djzt'] === '0') {
                         return '未确认';
                     }
@@ -169,7 +173,7 @@
             }, {
                 field: 'txr',
                 title: '填写人',
-                formatter : function (value, row, index) {
+                formatter: function (value, row, index) {
                     return 'admin';
                 }
             }, {
@@ -211,88 +215,94 @@
         return [
             "<button type='button' " +
             "  class='btn btn-small btn-info' " +
-            "style='margin-right:15px;' id='m-callback-this-start' " +
-            "data-toggle='modal' id='query'  data-target='#exampleModal'" +
-            " onclick ='showData(" + JSON.stringify(row) + ")'>查看 </button>"
+            "style='margin-right:15px;'  " +
+            " onclick ='cancelBill(" + JSON.stringify(row) + ")'>作废 </button>"
+            ,
+            "<button type='button' " +
+            "  class='btn btn-small btn-info' " +
+            "style='margin-right:15px;' " +
+            " onclick ='queryBill(" + JSON.stringify(row) + ")'>确认 </button>"
         ].join('');
 
     }
 
-    function showData(row) {
-//        console.log("aaa"+row);
-////        $('#exampleModal').modal('show');
-//        var data = JSON.parse(row);
-
-
-        showHistory(row.zdlsh)
-    }
-
-    function showHistory(zdlsh) {
-        $('#bil_history').bootstrapTable('destroy');
-        $('#bil_history').bootstrapTable({
-            url: '../paymentHistory/queryByZDLSH.action',         //请求后台的URL（*）
-            method: 'get',                      //请求方式（*）
-//            toolbar: '#toolbar',                //工具按钮用哪个容器
-            striped: true,                      //是否显示行间隔色
-            cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
-            pagination: true,                   //是否显示分页（*）
-            sortable: false,                     //是否启用排序
-            sortOrder: "asc",                   //排序方式
-            queryParams: function (params) {
-                return {
-                    pageNumber: params.offset + 1,
-                    pageSize: params.limit,
-                    zdlsh: zdlsh
-                };
-            },
-            //传递参数（*）
-            sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
-            pageNumber: 1,                       //初始化加载第一页，默认第一页
-            pageSize: 10,                       //每页的记录行数（*）
-            pageList: [10, 25, 50, 100, 1000],        //可供选择的每页的行数（*）
-            clickToSelect: true,
-            showExport: true,                     //是否显示导出
-            exportDataType: "all",              //basic', 'all', 'selected'.
-            columns: [
-                {
-                    field: 'SFZHM',
-                    title: '身份证号码',
-                    align: 'center',
-
-                }, {
-                    field: 'XM',
-                    title: '姓名',
-                    align: 'center',
+    function queryBill(row) {
+        if (type == '0') {
+            $.ajax({
+                type: "POST",
+                url: "../departmentBills/modifyStatusByZDLSH.action",
+                dataType: "JSON",
+                data: {
+                    dwid: dwid,
+                    zdlsh: row.zdlsh,
+                    djzt: '1'
 
                 },
-                {
-                    field: 'qsny',
-                    title: '起始年月',
-                    align: 'center',
+                async: true,
+                success: function (data, status) {
+                    console.log(data)
 
-                }, {
-                    field: 'zzny',
-                    title: '终止年月',
-                    align: 'center',
-
-                }, {
-                    field: 'xzbz',
-                    title: '险种标志',
-                    align: 'center',
-
-                }, {
-                    field: 'zje',
-                    title: '个人缴费额',
-                    align: 'center',
-
-                }, {
-                    field: 'lx',
-                    title: '利息',
-                    align: 'center',
-
-                }]
-        });
+                    Alert({
+                        msg: '确认成功',
+                        title: "提示",
+                    });
+                    queryBils();
+                },
+                error: function (err, status) {
+                    console.log(err)
+                    Alert({
+                        msg: '确认失败',
+                        title: "提示",
+                    })
+                }
+            });
+        } else {
+            Alert({
+                msg: '只能作废未确认的单据',
+                title: "提示",
+            });
+            queryBils();
+        }
     }
+
+
+    function cancelBill(row) {
+        if (type == '0') {
+            $.ajax({
+                type: "POST",
+                url: "../departmentBills/modifyStatusByZDLSH.action",
+                dataType: "JSON",
+                data: {
+                    dwid: dwid,
+                    zdlsh: row.zdlsh,
+                    djzt: '2'
+
+                },
+                async: true,
+                success: function (data, status) {
+                    console.log(data)
+
+                    Alert({
+                        msg: '作废成功',
+                        title: "提示",
+                    })
+                },
+                error: function (err, status) {
+                    console.log(err)
+                    Alert({
+                        msg: '作废失败',
+                        title: "提示",
+                    })
+                }
+            });
+        } else {
+            Alert({
+                msg: '只能作废未确认的单据',
+                title: "提示",
+            })
+        }
+    }
+
 
     function Todate(num) { //Fri Oct 31 18:00:00 UTC+0800 2008
         num = num + "";

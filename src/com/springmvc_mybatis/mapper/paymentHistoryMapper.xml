@@ -263,7 +263,12 @@
         WHERE ROWNUM &lt; ${next}
         ) WHERE RN >=${pre}
     </select>
-
+    <select id="extportHistoryByDWID" resultMap="paymentHistoryResult">
+       select *  from
+        si3.aged_pay_his a
+        WHERE  a.dwid =#{dwid,jdbcType=VARCHAR}
+        ORDER BY a.ryid DESC
+    </select>
     <select id="queryCountWithRebackByDWID" resultType="int">
         SELECT  COUNT (*)  FROM   si3.aged_pay_his  WHERE dwid =#{dwid,jdbcType=VARCHAR}
         AND tfbz='1'
@@ -316,4 +321,8 @@
         WHERE ROWNUM &lt; ${next}
         ) WHERE RN >=${pre}
     </select>
+
+    <update id="cancelBill">
+        UPDATE si3.aged_pay_his set tfzt='0' WHERE dwid=#{dwid,jdbcType=VARCHAR}
+    </update>
 </mapper>

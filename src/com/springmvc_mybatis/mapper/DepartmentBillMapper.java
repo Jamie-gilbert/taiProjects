@@ -19,7 +19,7 @@ public interface DepartmentBillMapper {
                    @Param(value = "txsj") String time,
                    @Param(value = "djzt") String type);
 
-    void modifyStatusByDwid(@Param("zdlshs") List<DepartmentBill> zdlshs,
+    void modifyStatusByZDLSH(@Param("zdlsh") String zdlsh,
                             @Param("dwid") String dwid,
                             @Param("djzt") String djzt);
 
