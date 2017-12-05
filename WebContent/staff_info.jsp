@@ -52,14 +52,14 @@
     </div>
     <div class="container-fluid" id="unitButton">
         <%--<a id="rytf" class="page-action btn btn-primary btn-sm" href="#" title="人员退费">--%>
-            <%--人员退费--%>
+        <%--人员退费--%>
         <%--</a>--%>
         <a id="grjx" class="page-action btn btn-primary btn-sm" href="#" title="个人计息">
             个人计息
         </a>
         <a id="cxgrjx" class="page-action btn btn-primary btn-sm" href="#" title="撤销个人计息">
-        撤销个人计息
-         </a>
+            撤销个人计息
+        </a>
         <a class="btn btn-primary btn-sm" onclick="setData()" data-toggle="modal" data-target="#exampleModal">
             修改个人信息
         </a>
@@ -67,12 +67,13 @@
             缴费历史维护
         </a>
         <%--<a id="grdjgl" class="page-action btn btn-primary btn-sm" href="#" title="个人单据管理">--%>
-            <%--个人单据管理--%>
+        <%--个人单据管理--%>
         <%--</a>--%>
     </div>
 </div>
 
-<div class="modal fade" id="personModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+<div class="modal fade" id="personModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+     data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -298,16 +299,65 @@
     var grsfzhm = "";
     var grxm = ""
     BUI.use('common/page');
-
+    var xbCode, mzCode;
     $(document).ready(function () {
+        debugger
         $('#query_person').click(function () {
             grbh = $('#grbh').val();
             grsfzhm = $('#grsfzhm').val();
             grxm = $('#grxm').val();
             person();
+
         });
+        getCode();
 
     });
+
+    function getCode() {
+        debugger;
+        $.ajax({
+            type: "POST",
+            url: "../codeconfig/queryAllCode.action",
+
+            dataType: "JSON",
+            async: true,
+            success: function (data, status) {
+                getXB(data);
+                getMZ(data);
+
+            },
+            error: function (err, status) {
+                console.log(err)
+
+            }
+        });
+
+    }
+
+
+    function getXB(data) {
+        debugger;
+        for (var i = 0; i < data.data.length; i++) {
+            if (data.data[i].dmbh == "XB") {
+                xbCode = data.data[i].value;
+                break;
+            }
+
+        }
+
+    }
+
+    function getMZ(data) {
+        debugger;
+        for (var i = 0; i < data.data.length; i++) {
+            if (data.data[i].dmbh == "MZ") {
+                mzCode = data.data[i].value;
+                break;
+            }
+
+        }
+
+    }
 
     function person() {
         $("#person_modal").bootstrapTable('destroy');
@@ -357,14 +407,14 @@
         var cym = $("#cym").val();
         var sfzhm = $("#sfzhm").val();
         var csrq = $("#csrq").val();
-        var grbh=$('#grbh').val();
+        var grbh = $('#grbh').val();
 
 
         $.ajax({
             type: "POST",
             url: "staff/modifyStaff.action",
             data: {
-                "xm": xm, "cym": cym, "sfzhm": sfzhm, "csrq": csrq,"grbh": grbh
+                "xm": xm, "cym": cym, "sfzhm": sfzhm, "csrq": csrq, "grbh": grbh
             },
             dataType: "JSON",
             async: false,
@@ -400,8 +450,21 @@
             $('#tcDwmc').val(row[0]["DWID"]);
             $('#tccsrq').val(row[0]["CSRQ"]);
             $('#tccbrylb').val(row[0]["CBRYLB"]);
-            $('#tcxb').val(row[0]["XB"]);
-            $('#tcmz').val(row[0]["MZ"]);
+            for (var i = 0; i < xbCode.length; i++) {
+                if (xbCode[i].code == row[0]["XB"]) {
+                    $('#tcxb').val(xbCode[i].content);
+                    break;
+                }
+            }
+
+            for (var i = 0; i < mzCode.length; i++) {
+                debugger;
+                if (mzCode[i].code == row[0]["MZ"]) {
+                    $('#tcmz').val(mzCode[i].content);
+                    break;
+                }
+            }
+
             $('#tcsfxz').val(row[0]["SFXZ"]);
             $('#tccjgzsj').val(row[0]["CJGZSJ"]);
             $('#tctblbmc').val(row[0]["TBLBMC"]);
@@ -420,22 +483,22 @@
 
         }
         dwid = row[0]["DWID"];
-        var grbh=$('#grbh').val();
-        var xm=$('#grxm').val();
-        var sfzhm=$('#grsfzhm').val();
-        var grbh1 = grbh.substr(0,5);
-        var grbh2 =grbh.substr(5,grbh.length);
-        var ryid1 =ryid.substr(0,5);
-        var ryid2 = ryid.substr(5,ryid.length);
-        $('#rytf').attr('data-href',"../staff_reback_payment.jsp?grbh1="+grbh1+"&xm="+"'"+xm+"'"+"&grbh2="+"'"+grbh2+"'");
-        $('#grjx').attr('data-href',"../person_interest.jsp?grbh1="+grbh1+"&xm="+"'"+xm+"'"+"&grbh2="+"'"+grbh2+"'"+"&dwid="+dwid
-        +"&ryid1="+ryid1+"&ryid2="+"'"+ryid2+"'");
-        $('#cxgrjx').attr('data-href',"../person_clear_interest.jsp?grbh1="+grbh1+"&xm="+xm+"&grbh2="+"'"+grbh2+"'");
-        $('#rytf').attr('data-href', "../staff_reback_payment.jsp?grbh1=" + grbh1 + "&xm=" + "'" + xm + "'" + "&grbh2=" + "'"+grbh2+"'");
-        $('#whjfls').attr('data-href', "../maintain_paymenthistory.jsp?grbh1=" + grbh1 + "&xm=" + "'" + xm + "'" + "&grbh2=" +"'"+grbh2+"'"+"&dwid="+dwid
-            +"&ryid1="+ryid1+"&ryid2="+"'"+ryid2+"'");
-        $('#grdjgl').attr('data-href', "../person_bill.jsp?grbh1=" + grbh1 + "&xm=" + "'" + xm + "'" + "&grbh2=" +"'"+grbh2+"'"+"&dwid="+dwid
-            +"&ryid1="+ryid1+"&ryid2="+"'"+ryid2+"'");
+        var grbh = $('#grbh').val();
+        var xm = $('#grxm').val();
+        var sfzhm = $('#grsfzhm').val();
+        var grbh1 = grbh.substr(0, 5);
+        var grbh2 = grbh.substr(5, grbh.length);
+        var ryid1 = ryid.substr(0, 5);
+        var ryid2 = ryid.substr(5, ryid.length);
+        $('#rytf').attr('data-href', "../staff_reback_payment.jsp?grbh1=" + grbh1 + "&xm=" + "'" + xm + "'" + "&grbh2=" + "'" + grbh2 + "'");
+        $('#grjx').attr('data-href', "../person_interest.jsp?grbh1=" + grbh1 + "&xm=" + "'" + xm + "'" + "&grbh2=" + "'" + grbh2 + "'" + "&dwid=" + dwid
+            + "&ryid1=" + ryid1 + "&ryid2=" + "'" + ryid2 + "'");
+        $('#cxgrjx').attr('data-href', "../person_clear_interest.jsp?grbh1=" + grbh1 + "&xm=" + xm + "&grbh2=" + "'" + grbh2 + "'");
+        $('#rytf').attr('data-href', "../staff_reback_payment.jsp?grbh1=" + grbh1 + "&xm=" + "'" + xm + "'" + "&grbh2=" + "'" + grbh2 + "'");
+        $('#whjfls').attr('data-href', "../maintain_paymenthistory.jsp?grbh1=" + grbh1 + "&xm=" + "'" + xm + "'" + "&grbh2=" + "'" + grbh2 + "'" + "&dwid=" + dwid
+            + "&ryid1=" + ryid1 + "&ryid2=" + "'" + ryid2 + "'");
+        $('#grdjgl').attr('data-href', "../person_bill.jsp?grbh1=" + grbh1 + "&xm=" + "'" + xm + "'" + "&grbh2=" + "'" + grbh2 + "'" + "&dwid=" + dwid
+            + "&ryid1=" + ryid1 + "&ryid2=" + "'" + ryid2 + "'");
         //
     }
 
