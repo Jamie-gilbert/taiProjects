@@ -90,7 +90,7 @@
             pageSize: 1000,                       //每页的记录行数（*）
             pageList: [1000],        //可供选择的每页的行数（*）
             clickToSelect: true,
-            showExport: true,                     //是否显示导出
+            showExport: false,                     //是否显示导出
             exportDataType: "all",              //basic', 'all', 'selected'.
 
             columns: [
