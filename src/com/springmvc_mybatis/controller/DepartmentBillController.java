@@ -108,7 +108,7 @@ public class DepartmentBillController {
        作废
         */
         if (djzt.equals("2")) {
-            paymentHistoryMapper.calPaymentByDWID(dwid);
+            paymentHistoryMapper.cancelBill(dwid);
         }
         PrintWriter out = response.getWriter();
         JSONObject jsonObject = new JSONObject();
