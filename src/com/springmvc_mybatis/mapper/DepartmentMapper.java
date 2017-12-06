@@ -23,7 +23,7 @@ public interface DepartmentMapper {
 
     Department queryByDWID(@Param(value = "dwid") String dwid);
 
-    String modifyDepartment(@Param(value = "dwid") String dwid,
+    void modifyDepartment(@Param(value = "dwid") String dwid,
                             @Param(value = "dwmc") String dwmc,
                             @Param(value = "tblb") String tblb,
                             @Param(value = "tblbmc") String tblbmc);

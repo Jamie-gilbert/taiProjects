@@ -55,7 +55,8 @@ SELECT * FROM (
                 INSERT INTO si3.per_reg(RYID,RYDJID,DWID,CZBM,YGRBH,GRBH,
                 SFZHM,XM,CYM,XB,CSRQ,SFXZ,cbrylb,MZ,TBLB,TBLBMC,CJGZSJ,
                 JFLY,HKXZ,DZ,DH,GRSF,RWSJ,DRSJ,ZYYY,JYYY,JBJGID,BZ,XMPY)
-                VALUES ('11'||SI3.SQ_RYID.NEXTVAL,'11'||SI3.SQ_RYDJID.NEXTVAL,#{dwid},#{czbm},#{sfzhm},#{sfzhm},#{sfzhm},
+                VALUES ('11'||SI3.SQ_RYID.NEXTVAL,'11'||SI3.SQ_RYDJID.NEXTVAL
+                ,#{dwid},#{czbm},'',#{sfzhm},#{sfzhm},
                 #{xm},#{cym},#{xb},#{csrq},#{sfxz},#{cbrylb},#{mz},#{tblb},#{tblbmc},
                 #{cjgzsj},#{jfly},#{hkxz},#{dz},#{dh},#{grsf},#{rwsj},#{drsj},
                 #{zyyy},#{jyyy},#{jbjgid},#{bz},#{xmpy})
@@ -65,7 +66,7 @@ SELECT * FROM (
                 SFZHM,XM,CYM,XB,CSRQ,SFXZ,cbrylb,MZ,TBLB,TBLBMC,CJGZSJ,
                 JFLY,HKXZ,DZ,DH,GRSF,RWSJ,DRSJ,ZYYY,JYYY,JBJGID,BZ,XMPY)
                 VALUES ('11'||SI3.SQ_RYID.NEXTVAL,'11'||SI3.SQ_RYDJID.NEXTVAL,#{dwid},#{czbm}
-                ,'11'||SI3.SQ_GRBH.NEXTVAL,'11'||SI3.SQ_GRBH.NEXTVAL,#{sfzhm},
+                ,'','11'||SI3.SQ_GRBH.NEXTVAL,#{sfzhm},
                 #{xm},#{cym},#{xb},#{csrq},#{sfxz},#{cbrylb},#{mz},#{tblb},#{tblbmc},
                 #{cjgzsj},#{jfly},#{hkxz},#{dz},#{dh},#{grsf},#{rwsj},#{drsj},
                 #{zyyy},#{jyyy},#{jbjgid},#{bz},#{xmpy})

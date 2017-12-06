@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="bootstrap-table/bootstrap-table.css" type="text/css">
 </head>
 <body>
-<%@include file="commonTop.jsp"%>
+<%@include file="commonTop.jsp" %>
 <div class="container-fluid">
 
 
@@ -31,11 +31,13 @@
 </div>
 <script type="text/javascript" src="../js/jquery.js"></script>
 <script type="text/javascript" src="../js/bootstrap.js"></script>
-<script type="text/javascript" src="../js/dialog.js"></script>
+
 <script type="text/javascript" src="bootstrap-table/bootstrap-table.js"></script>
 <script type="text/javascript" src="bootstrap-table/tableExport.js"></script>
 <script type="text/javascript" src="bootstrap-table/extensions/export/bootstrap-table-export.js"></script>
 <script type="text/javascript" src="bootstrap-table/bootstrap-table-zh-CN.js"></script>
+]
+<script type="text/javascript" src="../js/dialog.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $('#dwbh').val(dwbh);
@@ -119,7 +121,7 @@
 
                     }
                 })
-            }else {
+            } else {
                 Alert({
                     msg: '请先选择需要撤销计息的人员',
                     title: "提示",
@@ -157,13 +159,9 @@
             async: true,
             success: function (data, status) {
                 console.log(data)
-                Alert({
-                    msg: '撤销计息成功',
-                    title: "提示",
+                alert("撤销计息成功")
 
-                });
                 paymentHis_table();
-
             },
             error: function (err, status) {
                 console.log(err)
