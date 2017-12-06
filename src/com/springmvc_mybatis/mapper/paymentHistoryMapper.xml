@@ -283,7 +283,7 @@
     </select>
     <select id="queryDepartmentCountWithoutReback" resultType="int">
         SELECT  count(DISTINCT dwid) FROM   si3.aged_pay_his
-        WHERE tfbz='0'
+        WHERE '0'=NVL(tfbz,'0')
     </select>
 
     <select id="queryRebackHistory" resultType="com.springmvc_mybatis.bean.DepartmentHistory">
@@ -303,7 +303,7 @@
   select sum(nvl(grjfe,0)) as grjfes
         , sum(nvl(lx,0)) as lxs ,(sum(nvl(grjfe,0))+sum(nvl(lx,0))) as zje
         from si3.aged_pay_his
-        where tfbz = '0'
+        where '0' = NVL(tfbz,'0')
         and  dwid=#{dwid,jdbcType=VARCHAR}
 
     </select>
@@ -315,7 +315,7 @@
         (select org.dwmc,aph.dwid,org.dwbh as dwbh, sum(nvl(aph.grjfe,0)) as grjfes
         , sum(nvl(aph.lx,0)) as lxs ,(sum(nvl(aph.grjfe,0))+sum(nvl(aph.lx,0))) as zje
         from si3.aged_pay_his aph, si3.orgn_reg org
-        where aph.tfbz = '0'
+        where  '0'=NVL(aph.tfbz,'0')
         and org.dwid = aph.dwid
         group by aph.dwid, org.dwmc,org.dwbh) A
         WHERE ROWNUM &lt; ${next}
