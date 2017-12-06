@@ -27,6 +27,7 @@ public class DepartmentController {
 
     /**
      * 查询单位
+     *
      * @param request
      * @param response
      * @throws Exception
@@ -66,7 +67,8 @@ public class DepartmentController {
         JSONArray jsonArray = new JSONArray();
         for (Department department : departments) {
             JSONObject object = new JSONObject(department);
-            jsonArray.put(object); }
+            jsonArray.put(object);
+        }
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("total", num);
@@ -92,7 +94,7 @@ public class DepartmentController {
         String tblb = request.getParameter("tblb");
         String tblbmc = request.getParameter("tblbmc");
         try {
-            String result = departmentMapper.modifyDepartment(dwid + "", dwmc + "", tblb + "", tblbmc + "");
+            departmentMapper.modifyDepartment(dwid + "", dwmc + "", tblb + "", tblbmc + "");
 
         } catch (Exception e) {
             if (e instanceof ClassCastException) {
