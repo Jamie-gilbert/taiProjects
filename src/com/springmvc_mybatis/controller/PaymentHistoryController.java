@@ -1,9 +1,6 @@
 package com.springmvc_mybatis.controller;
 
-import com.springmvc_mybatis.bean.DepartmentBill;
-import com.springmvc_mybatis.bean.DepartmentHistory;
-import com.springmvc_mybatis.bean.PaymentHistory;
-import com.springmvc_mybatis.bean.Staff;
+import com.springmvc_mybatis.bean.*;
 import com.springmvc_mybatis.json.JSONArray;
 import com.springmvc_mybatis.json.JSONObject;
 import com.springmvc_mybatis.mapper.DepartmentBillMapper;
@@ -14,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -119,7 +117,6 @@ public class PaymentHistoryController {
         for (PaymentHistory paymentHistory : paymentHistories) {
             JSONObject object = new JSONObject(paymentHistory.getStaff());
             object.put("QSNY", paymentHistory.getQSNY());
-            object.put("QSNY", paymentHistory.getQSNY());
             object.put("ZZNY", paymentHistory.getZZNY());
             object.put("GRJFE", paymentHistory.getGRJFE());
             object.put("LX", paymentHistory.getLX());
@@ -133,6 +130,45 @@ public class PaymentHistoryController {
 
 
     }
+
+//    /**
+//     * 根据单位id查询缴费明细
+//     *
+//     * @param request
+//     * @return
+//     * @throws Exception
+//     */
+//    @RequestMapping("/extportHistory")
+//    public void extportHistory(HttpServletRequest request, HttpServletResponse response) throws Exception {
+//        response.setContentType("application/json");
+//        response.setHeader("Pragma", "No-cache");
+//        response.setHeader("Cache-Control", "no-cache");
+//        response.setCharacterEncoding("UTF-8");
+//
+//        String dwid = request.getParameter("dwid");
+//
+//        List<PaymentHistory> paymentHistories = new ArrayList<>();
+//
+//        paymentHistories = paymentHistoryMapper.extportHistoryByDWID(dwid);
+//        List<ExtportBean> extportBeans = new ArrayList<>();
+//        for (int i = 0; i < paymentHistories.size(); i++) {
+//            PaymentHistory paymentHistory = paymentHistories.get(i);
+//            ExtportBean bean = new ExtportBean();
+//            bean.setXh(String.valueOf(i));
+//            bean.setXm(paymentHistory.getStaff().getXM());
+//            bean.setGrjfe(paymentHistory.getGRJFE() + " 元");
+//            bean.setLx(paymentHistory.getLX() + " 元");
+//            bean.setQsny(paymentHistory.getQSNY());
+//            bean.setZzny(paymentHistory.getZZNY());
+//            extportBeans.add(bean);
+//
+//        }
+//        String[] headers = {"序号", "姓名", "起始年月", "终至年月","个人缴费额","利息"};
+//        String fileName = "个人缴费明细";
+//        ExportExcel<ExtportBean> exportExcel=new ExportExcel<>();
+//        exportExcel.exportExcel(headers,extportBeans,fileName,response);
+//
+//    }
 
 
     /**
@@ -258,7 +294,7 @@ public class PaymentHistoryController {
             departmentBill.setZje(zje);
             departmentBill.setDwid(dwid);
             departmentBill.setDjzt("0");
-            departmentBill.setDjlb("0");
+            departmentBill.setDjlb("SI1002");
             departmentBill.setZdlsh(zdlsh);
             departmentBill.setTxr(txr);
             departmentBill.setQrr(txr);

@@ -181,7 +181,7 @@
             INSERT INTO si3.aged_pay_his(JFLSID,RYID,RYDJID, DWID,FSRQ,JFRQ, QSNY, ZZNY,
             DWJFJS, GRJFJS, DWJFBL, GRJFBL, DWJFE,GRJFE, DWJFZE, GRJFZE, ZDLSH,JBJGID,
             JBR, JBSJ, FSYY ,XZBZ)
-            VALUES (SI3.SQ_JFLSID.NEXTVAL,${paymentHistoryResult.RYID},${paymentHistoryResult.RYDJID}
+            VALUES ('11'||SI3.SQ_JFLSID.NEXTVAL,${paymentHistoryResult.RYID},${paymentHistoryResult.RYDJID}
             , ${paymentHistoryResult.DWID},#{paymentHistoryResult.FSRQ,jdbcType=TIMESTAMP}
             ,#{paymentHistoryResult.JFRQ,jdbcType=TIMESTAMP}, ${paymentHistoryResult.QSNY}
             , ${paymentHistoryResult.ZZNY},

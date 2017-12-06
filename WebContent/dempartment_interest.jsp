@@ -17,7 +17,7 @@
 
 </head>
 <body>
-<%@include file="commonTop.jsp"%>
+<%@include file="commonTop.jsp" %>
 <div class="container-fluid">
 
 
@@ -30,7 +30,16 @@
     <table id="paymentHis"></table>
 
 </div>
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-sm">
+        <div style="width: 80%;height: 40%;background-color: #FFFFFF
+        ;text-align: center;border-radius: 15px">
+            <label style="text-align: center;margin-top: 20%">正在计息，请稍候...</label>
+        </div>
 
+
+    </div><!-- /.modal-dialog -->
+</div>
 
 <script src="../js/jquery.js"></script>
 <script src="../js/bootstrap.js"></script>
@@ -46,6 +55,15 @@
         $('#dwid').val(dwid);
         paymentHis_table();
     })
+
+
+    function hideModal() {
+        $('#myModal').modal('hide');
+    }
+
+    function showModal() {
+        $('#myModal').modal({backdrop: 'static', keyboard: false});
+    }
 
     function paymentHis_table() {
         var dwid =<%=request.getParameter("dwid")%>;
@@ -105,7 +123,7 @@
     }
 
     function interest(selectData) {
-
+        showModal();
         var dwid =<%=request.getParameter("dwid")%>;
         var infos = [];
 
@@ -124,6 +142,7 @@
             dataType: "JSON",
             async: true,
             success: function (data, status) {
+                hideModal();
                 console.log(data)
                 Alert({
                     msg: '计息成功',
@@ -134,6 +153,7 @@
             },
             error: function (err, status) {
                 console.log(err)
+                hideModal();
                 Alert({
                     msg: '计息失败',
                     title: "提示",
