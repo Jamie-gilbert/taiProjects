@@ -299,9 +299,9 @@
     var grsfzhm = "";
     var grxm = ""
     BUI.use('common/page');
-    var xbCode, mzCode;
+    var xbCode, mzCode, tcrylbCode,hkxzCode,grsfCode,sfxzCode;
     $(document).ready(function () {
-        debugger
+
         $('#query_person').click(function () {
             grbh = $('#grbh').val();
             grsfzhm = $('#grsfzhm').val();
@@ -314,7 +314,7 @@
     });
 
     function getCode() {
-        debugger;
+
         $.ajax({
             type: "POST",
             url: "../codeconfig/queryAllCode.action",
@@ -324,6 +324,10 @@
             success: function (data, status) {
                 getXB(data);
                 getMZ(data);
+                getTCRYLB(data);
+                getHKXZ(data);
+                getGRSF(data);
+                getSFXZ(data);
 
             },
             error: function (err, status) {
@@ -334,9 +338,56 @@
 
     }
 
+    function getHKXZ(data) {
+
+        for (var i = 0; i < data.data.length; i++) {
+            if (data.data[i].dmbh == "HKXZ") {
+                hkxzCode = data.data[i].value;
+                break;
+            }
+
+        }
+
+    }
+
+    function getGRSF(data) {
+
+        for (var i = 0; i < data.data.length; i++) {
+            if (data.data[i].dmbh == "GRSF") {
+                grsfCode = data.data[i].value;
+                break;
+            }
+
+        }
+
+    }
+
+    function getSFXZ(data) {
+
+        for (var i = 0; i < data.data.length; i++) {
+            if (data.data[i].dmbh == "SFXZ") {
+                sfxzCode = data.data[i].value;
+                break;
+            }
+
+        }
+
+    }
+
+    function getTCRYLB(data) {
+
+        for (var i = 0; i < data.data.length; i++) {
+            if (data.data[i].dmbh == "CBRYLB") {
+                tcrylbCode = data.data[i].value;
+                break;
+            }
+
+        }
+
+    }
 
     function getXB(data) {
-        debugger;
+
         for (var i = 0; i < data.data.length; i++) {
             if (data.data[i].dmbh == "XB") {
                 xbCode = data.data[i].value;
@@ -348,7 +399,7 @@
     }
 
     function getMZ(data) {
-        debugger;
+
         for (var i = 0; i < data.data.length; i++) {
             if (data.data[i].dmbh == "MZ") {
                 mzCode = data.data[i].value;
@@ -449,7 +500,24 @@
             $('#tcxm').val(row[0]["XM"]);
             $('#tcDwmc').val(row[0]["DWID"]);
             $('#tccsrq').val(row[0]["CSRQ"]);
-            $('#tccbrylb').val(row[0]["CBRYLB"]);
+            debugger
+            for (var i = 0; i < hkxzCode.length; i++) {
+
+                if (hkxzCode[i].code == row[0]["HKXZ"]) {
+                    $('#tchkxz').val(hkxzCode[i].content);
+                    break;
+                }
+            }
+
+
+            for (var i = 0; i < tcrylbCode.length; i++) {
+
+                if (tcrylbCode[i].code == row[0]["cbrylb"]) {
+                    $('#tctbrylb').val(tcrylbCode[i].content);
+                    break;
+                }
+            }
+
             for (var i = 0; i < xbCode.length; i++) {
                 if (xbCode[i].code == row[0]["XB"]) {
                     $('#tcxb').val(xbCode[i].content);
@@ -458,19 +526,36 @@
             }
 
             for (var i = 0; i < mzCode.length; i++) {
-                debugger;
+
                 if (mzCode[i].code == row[0]["MZ"]) {
                     $('#tcmz').val(mzCode[i].content);
                     break;
                 }
             }
 
-            $('#tcsfxz').val(row[0]["SFXZ"]);
+
+
+            for (var i = 0; i < sfxzCode.length; i++) {
+
+                if (sfxzCode[i].code == row[0]["SFXZ"]) {
+                    $('#tcsfxz').val(sfxzCode[i].content);
+                    break;
+                }
+            }
+
             $('#tccjgzsj').val(row[0]["CJGZSJ"]);
             $('#tctblbmc').val(row[0]["TBLBMC"]);
             $('#tcdz').val(row[0]["DZ"]);
             $('#tcdh').val(row[0]["DH"]);
-            $('#tcgrsf').val(row[0]["GRSF"]);
+
+            for (var i = 0; i < grsfCode.length; i++) {
+
+                if (grsfCode[i].code == row[0]["GRSF"]) {
+                    $('#tcgrsf').val(grsfCode[i].content);
+                    break;
+                }
+            }
+
             $('#tcrwsj').val(row[0]["RWSJ"]);
             $('#tcdrsj').val(row[0]["DRSJ"]);
             $('#tczyyy').val(row[0]["ZYYY"]);
