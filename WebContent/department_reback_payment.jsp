@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="css/bootstrap.css" type="text/css">
     <link rel="stylesheet" href="bootstrap/custom/department.css" type="text/css">
     <link rel="stylesheet" type="text/css" href="./bootstrap/custom/department.css">
-
+    <link rel="stylesheet" type="text/css" href="bootstrap-table/bootstrap-table.css">
 </head>
 <body>
 <%@include file="commonTop.jsp" %>
@@ -83,13 +83,29 @@
             clickToSelect: true,
             showExport: true,                     //是否显示导出
             exportDataType: "all",              //basic', 'all', 'selected'.
-            columns: [
+            columns: [   {
+                field:  'dwbh',
+                title: '单位编号',
+                align: 'center',
+                formatter : function (value, row, index) {
+                    return $('#dwbh').val();
+                }
+            },
                 {
-                    field: 'lxs',
-                    title: '总利息(单位:元)',
-                    align: 'center',
+                field: $('#dwmc').val(),
+                title: '单位名称',
+                align: 'center',
+                formatter : function (value, row, index) {
+                     return $('#dwmc').val();
+                }
+            },
+                {
+                field: 'lxs',
+                title: '总利息(单位:元)',
+                align: 'center',
 
-                }, {
+            }
+               , {
                     field: 'grjfes',
                     title: '个人缴费总额(单位:元)',
                     align: 'center',
@@ -108,7 +124,7 @@
         var size = $('#table_department').bootstrapTable('getData', false).length;
         if (size == 0) {
             Alert({
-                msg: '该单位没有缴费记录',
+                msg: '该单位没有需要退费记录',
                 title: "提示",
             })
         } else {
@@ -137,6 +153,7 @@
                             msg: '退费成功',
                             title: "提示",
                         })
+                        showHistory('../paymentHistory/queryNobackHistoryByDWID.action');
                     }
                 },
                 error: function (err, status) {

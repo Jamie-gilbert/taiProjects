@@ -416,7 +416,7 @@
                     docNames.push($('<div />').text(ssName).html());
 
                     if ( defaults.exportHiddenCells === false ) {
-                        $hiddenTableElements = $table.find("tr, th, td");
+                        $hiddenTableElements = $table.find("tr, th, td").filter(":hidden");
                         checkCellVisibilty = $hiddenTableElements.length > 0;
                     }
 
@@ -626,7 +626,7 @@
                     }
 
                     if ( defaults.exportHiddenCells === false ) {
-                        $hiddenTableElements = $table.find("tr, th, td");
+                        $hiddenTableElements = $table.find("tr, th, td").filter(":hidden");
                         checkCellVisibilty = $hiddenTableElements.length > 0;
                     }
 
@@ -682,7 +682,7 @@
 
                                     if ( typeof tdcss == 'undefined' && typeof defaults.onMsoNumberFormat === 'function' )
                                         tdcss = defaults.onMsoNumberFormat(cell, row, col);
-
+                                        else tdcss= "\\@"
                                     if ( typeof tdcss != 'undefined' && tdcss !== '' )
                                         tdstyle = 'style="mso-number-format:\'' + tdcss + '\'';
 
@@ -1081,7 +1081,7 @@
                             ranges       = [];
 
                             if ( defaults.exportHiddenCells === false ) {
-                                $hiddenTableElements = $(this).find("tr, th, td");
+                                $hiddenTableElements = $(this).find("tr, th, td").filter(":hidden");
                                 checkCellVisibilty = $hiddenTableElements.length > 0;
                             }
 
@@ -1114,7 +1114,7 @@
                             ranges   = [];
 
                             if ( defaults.exportHiddenCells === false ) {
-                                $hiddenTableElements = $(this).find("tr, th, td");
+                                $hiddenTableElements = $(this).find("tr, th, td").filter(":hidden");
                                 checkCellVisibilty = $hiddenTableElements.length > 0;
                             }
 

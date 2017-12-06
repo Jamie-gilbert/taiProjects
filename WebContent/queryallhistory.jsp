@@ -12,7 +12,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>单位缴费明细</title>
-    <link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="bootstrap-table/bootstrap-table.css">
 
 
 </head>
@@ -37,6 +38,7 @@
         <div class="col-xs-2 col-md-3">
             <button class="btn btn-primary btn-sm" data-toggle="modal" id="query"  data-target="#unitModal">查询</button>
             <button class="btn btn-primary btn-sm" id="resetBtn" type="reset">重置</button>
+            <button class="btn btn-primary btn-sm " id ="export" type="button"  style="display: none">导出</button>
         </div>
     </div>
 </div>
@@ -48,7 +50,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     <h4 class="modal-title" id="myModalLabel">单位信息</h4>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body  table-responsive">
                     <table id="unit_modal"></table>
                 </div>
                 <div class="modal-footer">
@@ -59,17 +61,17 @@
         </div>
     </div>
 </div>
-<div>
+<div style="margin-top: 1%">
     <div id="toolbar">
     </div>
     <table id="table_department">
-
     </table>
 </div>
 
 <script src="js/jquery.js"></script>
 <script src="js/bootstrap.js"></script>
 <script src="js/dialog.js"></script>
+<script type="text/javascript" src="bootstrap-table/xlsx.core.min.js"></script>
 <script type="text/javascript" src="bootstrap-table/bootstrap-table.js"></script>
 <script type="text/javascript" src="bootstrap-table/tableExport.js"></script>
 <script type="text/javascript" src="bootstrap-table/extensions/export/bootstrap-table-export.js"></script>
@@ -82,21 +84,27 @@
     $('#query').click(function () {
         dwbh = $('#dwbh').val();
         dwmc = $('#dwmc').val();
-        alert(dwid);
+        $('#export').show();
         unit();
     });
+
+    $("#export").click(function(){
+        $("#table_department").tableExport({
+            type: 'excel',
+            formats: ['xlsx']
+        })
+    });
+
+
 
     function showHistory() {
         $('#table_department').bootstrapTable('destroy');
         $('#table_department').bootstrapTable({
             url: '../paymentHistory/queryAllHistory.action',         //请求后台的URL（*）
             method: 'get',                      //请求方式（*）
-//            toolbar: '#toolbar',                //工具按钮用哪个容器
             striped: true,                      //是否显示行间隔色
             cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
             pagination: true,                   //是否显示分页（*）
-            sortable: false,                     //是否启用排序
-            sortOrder: "asc",                   //排序方式
             queryParams: function (params) {
                 return {
                     pageNumber: params.offset + 1,
@@ -108,11 +116,10 @@
             //传递参数（*）
             sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
             pageNumber: 1,                       //初始化加载第一页，默认第一页
-            pageSize: 10,                       //每页的记录行数（*）
-            pageList: [10, 25, 50, 100, 1000],        //可供选择的每页的行数（*）
+            pageSize: 100000000,                       //每页的记录行数（*）
+            pageList: ['all'],        //可供选择的每页的行数（*）
             clickToSelect: true,
-            showExport: true,                     //是否显示导出
-            exportDataType: "all",              //basic', 'all', 'selected'.
+            showExport: false,
             columns: [
                 {
                     field: 'XM',
@@ -151,7 +158,6 @@
             striped: true,                      //是否显示行间隔色
             cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
             pagination: true,                   //是否显示分页（*）
-            sortable: false,                     //是否启用排序
             queryParams: function (params) {
                 return {
                     pageNumber: params.offset + 1,
@@ -210,6 +216,8 @@
         $("#tblbmc").val("");
         $('#dwbh').attr("readonly", false)
         $('#dwmc').attr("readonly", false)
+        $('#table_department').bootstrapTable('destroy');
+        $('#export').hide()
     });
 
 </script>

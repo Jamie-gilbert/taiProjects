@@ -180,7 +180,7 @@
                 field: 'txsj',
                 title: '填写时间',
                 formatter: function (value, row, index) {
-                    return Todate(value)
+                    return Todate(row['txsj'])
                 }
             }, {
                 field: 'qrr',
@@ -192,7 +192,7 @@
                 field: 'qrsj',
                 title: '确认时间',
                 formatter: function (value, row, index) {
-                    return Todate(value)
+                    return Todate(row['qrsj'])
                 }
             }, {
                 field: 'zje',
@@ -203,7 +203,14 @@
                     title: '操作',
                     align: 'center',
                     width: 150,
-                    formatter: operateFormatter
+                    formatter: function (value, row, index) {
+                        if (row['djlb']==='SI1001'|| row['djzt'] ==='1'){
+                           return operateFormatter2(value, row, index);
+                        }else {
+                           return operateFormatter(value, row, index);
+                        }
+                        return value;
+                    }
 
                 }]
         });
@@ -225,6 +232,92 @@
         ].join('');
 
     }
+
+
+    function operateFormatter2(value, row, index)
+//row 获取这行的值 ，index 获取索引值
+    {
+        return [
+            "<button type='button' " +
+            "  class='btn btn-small btn-info' " +
+            "style='margin-right:15px;' id='m-callback-this-start' " +
+            "data-toggle='modal' id='query'  data-target='#exampleModal'" +
+            " onclick ='showData(" + JSON.stringify(row) + ")'>查看 </button>"
+        ].join('');
+
+    }
+
+    function showData(row) {
+        showHistory(row.zdlsh)
+    }
+
+    function showHistory(zdlsh) {
+        $('#bil_history').bootstrapTable('destroy');
+        $('#bil_history').bootstrapTable({
+            url: '../paymentHistory/queryByZDLSH.action',         //请求后台的URL（*）
+            method: 'get',                      //请求方式（*）
+//            toolbar: '#toolbar',                //工具按钮用哪个容器
+            striped: true,                      //是否显示行间隔色
+            cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+            pagination: true,                   //是否显示分页（*）
+            sortable: false,                     //是否启用排序
+            sortOrder: "asc",                   //排序方式
+            queryParams: function (params) {
+                return {
+                    pageNumber: params.offset + 1,
+                    pageSize: params.limit,
+                    zdlsh: zdlsh
+                };
+            },
+            //传递参数（*）
+            sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+            pageNumber: 1,                       //初始化加载第一页，默认第一页
+            pageSize: 10,                       //每页的记录行数（*）
+            pageList: [10, 25, 50, 100, 1000],        //可供选择的每页的行数（*）
+            clickToSelect: true,
+            showExport: true,                     //是否显示导出
+            exportDataType: "all",              //basic', 'all', 'selected'.
+            columns: [
+                {
+                    field: 'SFZHM',
+                    title: '身份证号码',
+                    align: 'center',
+
+                }, {
+                    field: 'XM',
+                    title: '姓名',
+                    align: 'center',
+
+                },
+                {
+                    field: 'qsny',
+                    title: '起始年月',
+                    align: 'center',
+
+                }, {
+                    field: 'zzny',
+                    title: '终止年月',
+                    align: 'center',
+
+                }, {
+                    field: 'xzbz',
+                    title: '险种标志',
+                    align: 'center',
+
+                }, {
+                    field: 'zje',
+                    title: '个人缴费额',
+                    align: 'center',
+
+                }, {
+                    field: 'lx',
+                    title: '利息',
+                    align: 'center',
+
+                }]
+        });
+    }
+
 
     function queryBill(row) {
         if (type == '0') {
@@ -285,7 +378,8 @@
                     Alert({
                         msg: '作废成功',
                         title: "提示",
-                    })
+                    });
+                    queryBils();
                 },
                 error: function (err, status) {
                     console.log(err)
@@ -305,32 +399,7 @@
 
 
     function Todate(num) { //Fri Oct 31 18:00:00 UTC+0800 2008
-        num = num + "";
-        var date = "";
-        var month = new Array();
-        month["Jan"] = 1;
-        month["Feb"] = 2;
-        month["Mar"] = 3;
-        month["Apr"] = 4;
-        month["May"] = 5;
-        month["Jun"] = 6;
-        month["Jul"] = 7;
-        month["Aug"] = 8;
-        month["Sep"] = 9;
-        month["Oct"] = 10;
-        month["Nov"] = 11;
-        month["Dec"] = 12;
-        var week = new Array();
-        week["Mon"] = "一";
-        week["Tue"] = "二";
-        week["Wed"] = "三";
-        week["Thu"] = "四";
-        week["Fri"] = "五";
-        week["Sat"] = "六";
-        week["Sun"] = "日";
-        str = num.split(" ");
-        date = str[5] + "-";
-        date = date + month[str[1]] + "-" + str[2];
+       var date = num.toString().substr(0,10)
         return date;
     }
 </script>

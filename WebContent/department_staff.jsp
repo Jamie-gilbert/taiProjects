@@ -33,6 +33,7 @@
             <button id="retiree" class="btn btn-primary" data-toggle="button">退休人员</button>
             <button id="unemployed" class="btn btn-primary" data-toggle="button">离职人员</button>
             <button id="add_staff" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">添加人员</button>
+            <button class="btn btn-primary btn-sm " id ="export" type="button"  style="display: none;margin-top: 10px;">导出</button>
         </div>
     </div>
 </div>
@@ -338,6 +339,7 @@
 
     $("#officer").click(function () {
         types = "A0A";
+        $('#export').show();
         per_table();
     });
 
@@ -350,6 +352,13 @@
 
         types = "A0F";
         per_table();
+    });
+
+    $("#export").click(function(){
+        $("#per_table").tableExport({
+            type: 'excel',
+            formats: ['xlsx']
+        })
     });
 
     function per_table() {
@@ -374,14 +383,12 @@
             //传递参数（*）
             sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
             pageNumber: 1,                       //初始化加载第一页，默认第一页
-            pageSize: 10,                       //每页的记录行数（*）
+            pageSize: 10000,                       //每页的记录行数（*）
             pageList: [10, 25, 50, 100, 1000],        //可供选择的每页的行数（*）
-            clickToSelect: true,
-            showExport: true,                     //是否显示导出
+            //clickToSelect: true,
+            showExport: false,                     //是否显示导出
             exportDataType: "all",              //basic', 'all', 'selected'.
             columns: [{
-                checkbox: true
-            }, {
                 field: 'XM',
                 title: '姓名',
             }, {
