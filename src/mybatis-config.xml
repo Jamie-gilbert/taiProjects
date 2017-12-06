@@ -26,7 +26,7 @@
         <mapper resource="com/springmvc_mybatis/mapper/staffMapper.xml"/>
         <mapper resource="com/springmvc_mybatis/mapper/departmentBillMapper.xml"/>
         <mapper resource="com/springmvc_mybatis/mapper/paymentHistoryMapper.xml"/>
-        <mapper resource="com/springmvc_mybatis/mapper/paymentHistoryMapper.xml"/>
+        <mapper resource="com/springmvc_mybatis/mapper/interestScaleMapper.xml"/>
         <mapper resource="com/springmvc_mybatis/mapper/codeConfigMapper.xml"/>
 
     </mappers>
