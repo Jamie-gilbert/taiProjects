@@ -323,6 +323,6 @@
     </select>
 
     <update id="cancelBill">
-        UPDATE si3.aged_pay_his set tfzt='0' WHERE dwid=#{dwid,jdbcType=VARCHAR}
+        UPDATE si3.aged_pay_his set tfbz='0' WHERE dwid=#{dwid,jdbcType=VARCHAR}
     </update>
 </mapper>
