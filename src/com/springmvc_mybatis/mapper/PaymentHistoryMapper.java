@@ -37,8 +37,11 @@ public interface PaymentHistoryMapper {
                                  @Param(value = "zzrq") String zzrq);
 
     int queryCountWithoutInterest(@Param(value = "dwid") String dwid);
+    int queryCountByDWID(@Param(value = "dwid") String dwid, @Param(value = "qsrq") String qsrq,
+                                 @Param(value = "zzrq") String zzrq);
 
-    int queryCountByDWID(@Param(value = "dwid") String dwid);
+    int queryCountByDWIDWithSjly(@Param(value = "dwid") String dwid, @Param(value = "qsrq") String qsrq,
+                         @Param(value = "zzrq") String zzrq, @Param(value = "sjly") String sjly);
 
     int queryCountWithInterest(@Param(value = "dwid") String dwid);
 
@@ -86,6 +89,14 @@ public interface PaymentHistoryMapper {
             @Param(value = "pre") String pre,
             @Param(value = "next") String next);
 
+    List<PaymentHistory> queryAllHistoryByDWIDWithSjly(
+            @Param(value = "dwid") String dwid,
+            @Param(value = "qsrq") String qsrq,
+            @Param(value = "zzrq") String zzrq,
+            @Param(value = "sjly") String sjly,
+            @Param(value = "pre") String pre,
+            @Param(value = "next") String next);
+
     List<PaymentHistory> queryPaymentHisByZDLSH(
             @Param(value = "zdlsh") String zdlsh,
             @Param(value = "pre") String pre,
@@ -109,6 +120,7 @@ public interface PaymentHistoryMapper {
 
     List<DepartmentHistory> queryRebackHistory(@Param(value = "pre") String pre,
                                                @Param(value = "next") String next);
+
     List<DepartmentHistory> exportRebackHistory();
 
     List<DepartmentHistory> queryNoRebackHistory(@Param(value = "pre") String pre,

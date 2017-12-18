@@ -101,24 +101,34 @@ public class PaymentHistoryController {
         String count = request.getParameter("pageSize");
         String sort = request.getParameter("sort");
         String sortOrder = request.getParameter("sortOrder");
-        String qsrq=request.getParameter("qsrq");
-        String zzrq=request.getParameter("qsrq");
+        String qsrq = request.getParameter("qsrq");
+        String zzrq = request.getParameter("zzrq");
+        String sjly = request.getParameter("sjly");
 
         int countNum = Integer.parseInt(count);
         int pageNum = Integer.parseInt(page);
+        int num = 0;
         List<PaymentHistory> paymentHistories = new ArrayList<>();
-        int num = paymentHistoryMapper.queryCountByDWID(dwid);
-        if (num > 0) {
+        if (sjly == null || "".equals(sjly)) {
+            num = paymentHistoryMapper.queryCountByDWID(dwid, qsrq, zzrq);
+            if (num > 0) {
 
-            paymentHistories = paymentHistoryMapper.queryAllHistoryByDWID(dwid,qsrq,zzrq, page, String.valueOf(countNum + pageNum));
+                paymentHistories = paymentHistoryMapper.queryAllHistoryByDWID(dwid, qsrq, zzrq, page, String.valueOf(countNum + pageNum));
+            }
+        } else {
+            num = paymentHistoryMapper.queryCountByDWIDWithSjly(dwid, qsrq, zzrq, sjly);
+            if (num > 0) {
+
+                paymentHistories = paymentHistoryMapper.queryAllHistoryByDWIDWithSjly(dwid, qsrq, zzrq, sjly, page, String.valueOf(countNum + pageNum));
+            }
         }
-
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("total", num);
         JSONArray jsonArray = new JSONArray();
 
         for (PaymentHistory paymentHistory : paymentHistories) {
             JSONObject object = new JSONObject(paymentHistory.getStaff());
+            object.put("ZDLSH", paymentHistory.getZDLSH());
             object.put("QSNY", paymentHistory.getQSNY());
             object.put("ZZNY", paymentHistory.getZZNY());
             object.put("GRJFE", paymentHistory.getGRJFE());
@@ -1127,6 +1137,7 @@ public class PaymentHistoryController {
         ExportExcel exportExcel = new ExportExcel();
         exportExcel.exportExcel(headers, extportBeans, fileName, response);
     }
+
     /**
      * 导出未退费的单位记录
      *

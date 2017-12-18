@@ -251,8 +251,16 @@
       select COUNT (*) from
         si3.aged_pay_his a
         WHERE  a.dwid =#{dwid,jdbcType=VARCHAR}
+          AND a.qsny>=#{qsrq,jdbcType=VARCHAR} AND a.qsny &lt;=#{zzrq,jdbcType=VARCHAR}
     </select>
-
+    <select id="queryCountByDWIDWithSjly" resultType="int">
+        select COUNT (*) from
+        si3.aged_pay_his a
+        WHERE  a.dwid =#{dwid,jdbcType=VARCHAR}
+        AND a.qsny>=#{qsrq,jdbcType=VARCHAR}
+         AND a.qsny &lt;=#{zzrq,jdbcType=VARCHAR}
+         AND a.sjly=#{sjly,jdbcType=VARCHAR}
+    </select>
     <select id="queryAllHistoryByDWID" resultMap="paymentHistoryResult">
         SELECT * FROM (
         SELECT A.*,ROWNUM RN FROM
@@ -261,6 +269,20 @@
         WHERE  a.dwid =#{dwid,jdbcType=VARCHAR}
         AND a.qsny>=#{qsrq,jdbcType=VARCHAR} AND a.qsny &lt;=#{zzrq,jdbcType=VARCHAR}
          ORDER BY a.ryid DESC ) A
+        WHERE ROWNUM &lt; ${next}
+        ) WHERE RN >=${pre}
+    </select>
+
+    <select id="queryAllHistoryByDWIDWithSjly" resultMap="paymentHistoryResult">
+        SELECT * FROM (
+        SELECT A.*,ROWNUM RN FROM
+        (select *  from
+        si3.aged_pay_his a
+        WHERE  a.dwid =#{dwid,jdbcType=VARCHAR}
+        AND a.qsny>=#{qsrq,jdbcType=VARCHAR}
+        AND a.qsny &lt;=#{zzrq,jdbcType=VARCHAR}
+          AND a.sjly=#{sjly,jdbcType=VARCHAR}
+        ORDER BY a.ryid DESC ) A
         WHERE ROWNUM &lt; ${next}
         ) WHERE RN >=${pre}
     </select>
