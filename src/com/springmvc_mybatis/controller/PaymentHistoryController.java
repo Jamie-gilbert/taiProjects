@@ -7,11 +7,11 @@ import com.springmvc_mybatis.mapper.DepartmentBillMapper;
 import com.springmvc_mybatis.mapper.InterestScaleMapper;
 import com.springmvc_mybatis.mapper.PaymentHistoryMapper;
 import com.springmvc_mybatis.mapper.StaffMapper;
+import com.springmvc_mybatis.utils.ExportExcel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -131,44 +131,53 @@ public class PaymentHistoryController {
 
     }
 
-//    /**
-//     * 根据单位id查询缴费明细
-//     *
-//     * @param request
-//     * @return
-//     * @throws Exception
-//     */
-//    @RequestMapping("/extportHistory")
-//    public void extportHistory(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    /**
+     * 根据单位id查询缴费明细
+     *
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/extportHistory")
+    public void extportHistory(HttpServletRequest request, HttpServletResponse response) throws Exception {
 //        response.setContentType("application/json");
-//        response.setHeader("Pragma", "No-cache");
-//        response.setHeader("Cache-Control", "no-cache");
-//        response.setCharacterEncoding("UTF-8");
-//
-//        String dwid = request.getParameter("dwid");
-//
-//        List<PaymentHistory> paymentHistories = new ArrayList<>();
-//
-//        paymentHistories = paymentHistoryMapper.extportHistoryByDWID(dwid);
-//        List<ExtportBean> extportBeans = new ArrayList<>();
-//        for (int i = 0; i < paymentHistories.size(); i++) {
-//            PaymentHistory paymentHistory = paymentHistories.get(i);
-//            ExtportBean bean = new ExtportBean();
-//            bean.setXh(String.valueOf(i));
-//            bean.setXm(paymentHistory.getStaff().getXM());
-//            bean.setGrjfe(paymentHistory.getGRJFE() + " 元");
-//            bean.setLx(paymentHistory.getLX() + " 元");
-//            bean.setQsny(paymentHistory.getQSNY());
-//            bean.setZzny(paymentHistory.getZZNY());
-//            extportBeans.add(bean);
-//
-//        }
-//        String[] headers = {"序号", "姓名", "起始年月", "终至年月","个人缴费额","利息"};
-//        String fileName = "个人缴费明细";
-//        ExportExcel<ExtportBean> exportExcel=new ExportExcel<>();
-//        exportExcel.exportExcel(headers,extportBeans,fileName,response);
-//
-//    }
+        response.setHeader("Pragma", "No-cache");
+        response.setHeader("Cache-Control", "no-cache");
+        response.setCharacterEncoding("UTF-8");
+
+        String dwid = request.getParameter("dwid");
+
+        List<PaymentHistory> paymentHistories = new ArrayList<>();
+
+        paymentHistories = paymentHistoryMapper.extportHistoryByDWID(dwid);
+        List<ExtportBean> extportBeans = new ArrayList<>();
+        String[] headers = {"序号", "姓名", "起始年月", "终至年月", "个人缴费额", "利息"};
+        ExtportBean extportBean = new ExtportBean();
+        extportBean.setXh(headers[0]);
+        extportBean.setZzny(headers[3]);
+        extportBean.setQsny(headers[2]);
+        extportBean.setLx(headers[5]);
+        extportBean.setGrjfe(headers[4]);
+        extportBean.setXm(headers[1]);
+        extportBeans.add(extportBean);
+        for (int i = 0; i < paymentHistories.size(); i++) {
+            PaymentHistory paymentHistory = paymentHistories.get(i);
+            ExtportBean bean = new ExtportBean();
+            bean.setXh(String.valueOf((i + 1)));
+            bean.setXm(paymentHistory.getStaff().getXM());
+            bean.setGrjfe(paymentHistory.getGRJFE() + " 元");
+            bean.setLx(paymentHistory.getLX() + " 元");
+            bean.setQsny(paymentHistory.getQSNY());
+            bean.setZzny(paymentHistory.getZZNY());
+            extportBeans.add(bean);
+
+        }
+
+        String fileName = "dwjfmx.xlsx";
+        ExportExcel exportExcel = new ExportExcel();
+        exportExcel.exportExcel(headers, extportBeans, fileName, response);
+
+    }
 
 
     /**
@@ -304,9 +313,9 @@ public class PaymentHistoryController {
             departmentBill.setTxsj(dateStr);
             departmentBill.setQrsj(dateStr);
             departmentBill.setJbjgid(jbjgid);
-            SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("yyyyMM");
-            departmentBillMapper.addBillDel(zdlsh, "102", "AL1", simpleDateFormat1.format(date)
-                    , simpleDateFormat1.format(date), (float) zje);
+//            SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("yyyyMM");
+//            departmentBillMapper.addBillDel(zdlsh, "102", "AL1", simpleDateFormat1.format(date)
+//                    , simpleDateFormat1.format(date), (float) zje);
             departmentBillMapper.rebackPaymentByDWID(departmentBill);
             int rebackCount = paymentHistoryMapper.queryCountWithRebackByDWID(dwid);
             jsonObject.put("errorCode", "0");
@@ -849,7 +858,7 @@ public class PaymentHistoryController {
         String zdlsh = departmentBillMapper.queryZDLSH();
         departmentBillMapper.addRebackBill(zdlsh, staff.getDWID()
                 , staff.getJBJGID(), txr, dateStr, txr, dateStr, amount, ryid);
-        departmentBillMapper.addBillDel(zdlsh, "102", "AL1", qsny, zzny, amount);
+//        departmentBillMapper.addBillDel(zdlsh, "102", "AL1", qsny, zzny, amount);
         paymentHistoryMapper.rebackPaymentByRyId(ryid, list);
 
         JSONObject jsonObject = new JSONObject();
@@ -1076,6 +1085,85 @@ public class PaymentHistoryController {
         writer.close();
     }
 
+    /**
+     * 导出未退费的单位记录
+     *
+     * @param request
+     * @param response
+     * @throws IOException
+     */
+    @RequestMapping("/exportNoRebackHistory")
+    public void exportNoRebackHistory(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+
+        List<DepartmentHistory> departmentHistories = paymentHistoryMapper.exportNoRebackHistory();
+        List<ExtportBean> extportBeans = new ArrayList<>();
+        String[] headers = {"序号", "单位编号", "单位名称", "总利息", "个人缴费额", "总计"};
+        ExtportBean extportBean = new ExtportBean();
+        extportBean.setXh(headers[0]);
+        extportBean.setZzny(headers[3]);
+        extportBean.setQsny(headers[2]);
+        extportBean.setLx(headers[5]);
+        extportBean.setGrjfe(headers[4]);
+        extportBean.setXm(headers[1]);
+        extportBeans.add(extportBean);
+        for (int i = 0; i < departmentHistories.size(); i++) {
+            DepartmentHistory paymentHistory = departmentHistories.get(i);
+            ExtportBean bean = new ExtportBean();
+            bean.setXh(String.valueOf((i + 1)));
+            bean.setXm(paymentHistory.getDwbh());
+            bean.setGrjfe(paymentHistory.getGrjfes() + "");
+            bean.setLx(paymentHistory.getZje() + "");
+            bean.setQsny(paymentHistory.getDwmc());
+            bean.setZzny(paymentHistory.getLxs() + "");
+            extportBeans.add(bean);
+
+        }
+
+        String fileName = "wtfdwmx.xlsx";
+        ExportExcel exportExcel = new ExportExcel();
+        exportExcel.exportExcel(headers, extportBeans, fileName, response);
+    }
+    /**
+     * 导出未退费的单位记录
+     *
+     * @param request
+     * @param response
+     * @throws IOException
+     */
+    @RequestMapping("/exportRebackHistory")
+    public void exportRebackHistory(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+
+        List<DepartmentHistory> departmentHistories = paymentHistoryMapper.exportRebackHistory();
+        List<ExtportBean> extportBeans = new ArrayList<>();
+        String[] headers = {"序号", "单位编号", "单位名称", "总利息", "个人缴费额", "总计"};
+        ExtportBean extportBean = new ExtportBean();
+        extportBean.setXh(headers[0]);
+        extportBean.setZzny(headers[3]);
+        extportBean.setQsny(headers[2]);
+        extportBean.setLx(headers[5]);
+        extportBean.setGrjfe(headers[4]);
+        extportBean.setXm(headers[1]);
+        extportBeans.add(extportBean);
+
+        for (int i = 0; i < departmentHistories.size(); i++) {
+            DepartmentHistory paymentHistory = departmentHistories.get(i);
+            ExtportBean bean = new ExtportBean();
+            bean.setXh(String.valueOf((i + 1)));
+            bean.setXm(paymentHistory.getDwbh());
+            bean.setGrjfe(paymentHistory.getGrjfes() + "");
+            bean.setLx(paymentHistory.getZje() + "");
+            bean.setQsny(paymentHistory.getDwmc());
+            bean.setZzny(paymentHistory.getLxs() + "");
+            extportBeans.add(bean);
+
+        }
+
+        String fileName = "ytffdwmx.xlsx";
+        ExportExcel exportExcel = new ExportExcel();
+        exportExcel.exportExcel(headers, extportBeans, fileName, response);
+    }
 
     /**
      * 根据ryid 查询退费记录

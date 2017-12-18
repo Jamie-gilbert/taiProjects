@@ -298,7 +298,14 @@
         WHERE ROWNUM &lt; ${next}
         ) WHERE RN >=${pre}
     </select>
-
+    <select id="exportRebackHistory" resultType="com.springmvc_mybatis.bean.DepartmentHistory">
+       select org.dwmc,org.dwbh as dwbh, sum(nvl(aph.grjfe,0)) as grjfes
+        , sum(nvl(aph.lx,0)) as lxs ,(sum(nvl(aph.grjfe,0))+sum(nvl(aph.lx,0))) as zje
+        from si3.aged_pay_his aph, si3.orgn_reg org
+        where aph.tfbz = '1'
+        and org.dwid = aph.dwid
+        group by aph.dwid, org.dwmc,org.dwbh
+    </select>
     <select id="queryNobackHistoryByDWID" resultType="com.springmvc_mybatis.bean.DepartmentHistory">
   select sum(nvl(grjfe,0)) as grjfes
         , sum(nvl(lx,0)) as lxs ,(sum(nvl(grjfe,0))+sum(nvl(lx,0))) as zje
@@ -322,6 +329,14 @@
         ) WHERE RN >=${pre}
     </select>
 
+    <select id="exportNoRebackHistory" resultType="com.springmvc_mybatis.bean.DepartmentHistory">
+      select org.dwmc,aph.dwid,org.dwbh as dwbh, sum(nvl(aph.grjfe,0)) as grjfes
+        , sum(nvl(aph.lx,0)) as lxs ,(sum(nvl(aph.grjfe,0))+sum(nvl(aph.lx,0))) as zje
+        from si3.aged_pay_his aph, si3.orgn_reg org
+        where  '0'=NVL(aph.tfbz,'0')
+        and org.dwid = aph.dwid
+        group by aph.dwid, org.dwmc,org.dwbh
+    </select>
     <update id="cancelBill">
         UPDATE si3.aged_pay_his set tfbz='0' WHERE dwid=#{dwid,jdbcType=VARCHAR}
     </update>

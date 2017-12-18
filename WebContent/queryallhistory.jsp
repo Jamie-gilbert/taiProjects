@@ -43,7 +43,9 @@
     </div>
 </div>
 </div>
-<div class="modal fade" id="unitModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+<div class="modal fade" id="unitModal" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static"
+     data-keyboard="false" style="height: 600px">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -89,10 +91,20 @@
     });
 
     $("#export").click(function(){
-        $("#table_department").tableExport({
-            type: 'excel',
-            formats: ['xlsx']
-        })
+        debugger;
+        var form=$("<form>");//定义一个form表单
+        form.attr("style","display:none");
+        form.attr("target","");
+        form.attr("method","post");
+        form.attr("action",'../paymentHistory/extportHistory.action');
+        var fileInput=$("<input>");
+        fileInput.attr("type","hidden");
+        fileInput.attr("id","dwid");//设置属性的名字
+        fileInput.attr("name","dwid");//设置属性的名字
+        fileInput.attr("value",dwid);//设置属性的值
+        $("body").append(form);//将表单放置在web中
+        form.append(fileInput);
+        form.submit();//表单提交
     });
 
 
@@ -116,9 +128,9 @@
             //传递参数（*）
             sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
             pageNumber: 1,                       //初始化加载第一页，默认第一页
-            pageSize: 10000,                       //每页的记录行数（*）
-            pageSize: 10000,                       //每页的记录行数（*）
-            pageList: [10,25,100,200,100000],        //可供选择的每页的行数（*）
+            pageSize: 10,                       //每页的记录行数（*）
+
+            pageList: [10,25,50,100,200],        //可供选择的每页的行数（*）
             clickToSelect: true,
             showExport: false,
             columns: [

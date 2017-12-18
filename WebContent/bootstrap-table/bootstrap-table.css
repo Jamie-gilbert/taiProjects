@@ -54,7 +54,7 @@
 .fixed-table-body {
     overflow-x: auto;
     overflow-y: auto;
-    height: 100%;
+    height: 80%;
 }
 
 .fixed-table-container table {
@@ -293,7 +293,7 @@
 /* calculate scrollbar width */
 p.fixed-table-scroll-inner {
     width: 100%;
-    height: 200px;
+    height: 160px;
 }
 
 div.fixed-table-scroll-outer {

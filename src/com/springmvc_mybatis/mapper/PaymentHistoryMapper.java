@@ -107,9 +107,12 @@ public interface PaymentHistoryMapper {
 
     List<DepartmentHistory> queryRebackHistory(@Param(value = "pre") String pre,
                                                @Param(value = "next") String next);
+    List<DepartmentHistory> exportRebackHistory();
 
     List<DepartmentHistory> queryNoRebackHistory(@Param(value = "pre") String pre,
                                                  @Param(value = "next") String next);
+
+    List<DepartmentHistory> exportNoRebackHistory();
 
     DepartmentHistory queryNobackHistoryByDWID(@Param(value = "dwid") String dwid);
 

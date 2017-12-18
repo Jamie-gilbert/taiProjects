@@ -20,35 +20,35 @@
 <div class="container-fluid">
     <div class="row department" style="border-bottom:1px solid cornflowerblue;padding-bottom: 5px;margin-top: 1%">
         <div class="row">
-        <div class="col-xs-3 col-md-4">
-            <div class="input-group">
-                <span class="input-group-addon">单位总数:</span>
-                <input id="allCount" class="form-control" readonly="readonly">
+            <div class="col-xs-3 col-md-4">
+                <div class="input-group">
+                    <span class="input-group-addon">单位总数:</span>
+                    <input id="allCount" class="form-control" readonly="readonly">
+                </div>
             </div>
-        </div>
-        <div class="col-xs-3 col-md-4">
-            <div class="input-group">
-                <span class="input-group-addon">未退费数:</span>
-                <input id="noBack" class="form-control" readonly="readonly">
+            <div class="col-xs-3 col-md-4">
+                <div class="input-group">
+                    <span class="input-group-addon">未退费数:</span>
+                    <input id="noBack" class="form-control" readonly="readonly">
+                </div>
             </div>
-        </div>
-        <div class="col-xs-3 col-md-4">
-            <div class="input-group">
-                <span class="input-group-addon">已退费数:</span>
-                <input id="backed" class="form-control" readonly="readonly">
+            <div class="col-xs-3 col-md-4">
+                <div class="input-group">
+                    <span class="input-group-addon">已退费数:</span>
+                    <input id="backed" class="form-control" readonly="readonly">
+                </div>
             </div>
-        </div>
         </div>
         <div class="container-fluid" style="margin-top: 1%;padding-left: 0px">
-        <div class="col-xs-2 col-md-3">
+            <div class="col-xs-2 col-md-3">
                 <button class="btn btn-primary" onclick="rebackedDepartment()" data-toggle="button">已退费单位</button>
                 <button class="btn btn-primary" onclick="noRebackDeparment()" data-toggle="button">未退费单位</button>
 
-         </div>
+            </div>
         </div>
-     </div>
+    </div>
     <div class="modal-body table-responsive">
-        <button class="btn btn-primary btn-sm " id ="export" type="button"  style="margin-top: 5px;">导出</button>
+        <button class="btn btn-primary btn-sm " id="export" type="button" style="margin-top: 5px;">导出</button>
         <table id="table_department">
 
         </table>
@@ -64,16 +64,20 @@
 <script type="text/javascript" src="bootstrap-table/extensions/export/bootstrap-table-export.js"></script>
 <script type="text/javascript" src="bootstrap-table/bootstrap-table-zh-CN.js"></script>
 <script type="text/javascript">
+    var types = 1;
     $(document).ready(function () {
+        types = 1
         queryCount();
         showHistory('../paymentHistory/queryNoRebackHistory.action');
     });
 
     function noRebackDeparment() {
+        types = 1;
         showHistory('../paymentHistory/queryNoRebackHistory.action');
     }
 
     function rebackedDepartment() {
+        types = 2;
         showHistory('../paymentHistory/queryRebackHistory.action');
     }
 
@@ -119,11 +123,10 @@
             //传递参数（*）
             sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
             pageNumber: 1,                       //初始化加载第一页，默认第一页
-            pageSize: 100000,                       //每页的记录行数（*）
+            pageSize: 10,                       //每页的记录行数（*）
             pageList: [10, 25, 50, 100, 1000],        //可供选择的每页的行数（*）
             clickToSelect: true,
             showExport: false,                     //是否显示导出
-            exportDataType: "all",              //basic', 'all', 'selected'.
             columns: [
                 {
                     field: 'dwbh',
@@ -154,11 +157,34 @@
         });
     }
 
-    $("#export").click(function(){
-        $("#table_department").tableExport({
-            type: 'excel',
-            formats: ['xlsx']
-        })
+    $("#export").click(function () {
+            if (types==1) {
+                var form = $("<form>");//定义一个form表单
+                form.attr("style", "display:none");
+                form.attr("target", "");
+                form.attr("method", "post");
+
+                form.attr("action", '../paymentHistory/exportNoRebackHistory.action');
+                var fileInput = $("<input>");
+                fileInput.attr("type", "hidden");
+                $("body").append(form);//将表单放置在web中
+                form.append(fileInput);
+                form.submit();//表单提交
+            }else {
+                var form = $("<form>");//定义一个form表单
+                form.attr("style", "display:none");
+                form.attr("target", "");
+                form.attr("method", "post");
+
+                form.attr("action", '../paymentHistory/exportRebackHistory.action');
+                var fileInput = $("<input>");
+                fileInput.attr("type", "hidden");
+
+                $("body").append(form);//将表单放置在web中
+                form.append(fileInput);
+                form.submit();//表单提交
+            }
+
     });
 </script>
 </body>
