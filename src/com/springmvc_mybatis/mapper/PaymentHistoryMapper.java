@@ -81,6 +81,8 @@ public interface PaymentHistoryMapper {
 
     List<PaymentHistory> queryAllHistoryByDWID(
             @Param(value = "dwid") String dwid,
+            @Param(value = "qsrq") String qsrq,
+            @Param(value = "zzrq") String zzrq,
             @Param(value = "pre") String pre,
             @Param(value = "next") String next);
 

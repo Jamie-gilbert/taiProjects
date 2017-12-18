@@ -101,13 +101,16 @@ public class PaymentHistoryController {
         String count = request.getParameter("pageSize");
         String sort = request.getParameter("sort");
         String sortOrder = request.getParameter("sortOrder");
+        String qsrq=request.getParameter("qsrq");
+        String zzrq=request.getParameter("qsrq");
 
         int countNum = Integer.parseInt(count);
         int pageNum = Integer.parseInt(page);
         List<PaymentHistory> paymentHistories = new ArrayList<>();
         int num = paymentHistoryMapper.queryCountByDWID(dwid);
         if (num > 0) {
-            paymentHistories = paymentHistoryMapper.queryAllHistoryByDWID(dwid, page, String.valueOf(countNum + pageNum));
+
+            paymentHistories = paymentHistoryMapper.queryAllHistoryByDWID(dwid,qsrq,zzrq, page, String.valueOf(countNum + pageNum));
         }
 
         JSONObject jsonObject = new JSONObject();

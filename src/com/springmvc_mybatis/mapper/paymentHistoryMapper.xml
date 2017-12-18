@@ -259,6 +259,7 @@
         (select *  from
         si3.aged_pay_his a
         WHERE  a.dwid =#{dwid,jdbcType=VARCHAR}
+        AND a.qsny>=#{qsrq,jdbcType=VARCHAR} AND a.qsny &lt;=#{zzrq,jdbcType=VARCHAR}
          ORDER BY a.ryid DESC ) A
         WHERE ROWNUM &lt; ${next}
         ) WHERE RN >=${pre}
