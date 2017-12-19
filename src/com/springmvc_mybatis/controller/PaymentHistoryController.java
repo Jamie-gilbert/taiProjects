@@ -159,10 +159,12 @@ public class PaymentHistoryController {
         response.setCharacterEncoding("UTF-8");
 
         String dwid = request.getParameter("dwid");
+        String qsrq = request.getParameter("qsrq");
+        String zzrq = request.getParameter("zzrq");
 
         List<PaymentHistory> paymentHistories = new ArrayList<>();
 
-        paymentHistories = paymentHistoryMapper.extportHistoryByDWID(dwid);
+        paymentHistories = paymentHistoryMapper.extportHistoryByDWID(dwid,qsrq,zzrq);
         List<ExtportBean> extportBeans = new ArrayList<>();
         String[] headers = {"序号", "姓名", "起始年月", "终至年月", "个人缴费额", "利息"};
         ExtportBean extportBean = new ExtportBean();
