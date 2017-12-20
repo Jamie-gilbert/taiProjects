@@ -103,6 +103,8 @@
     var dwid ="";
     var starttime="";
     var endtime="";
+    var qsrq ="";
+    var zzrq = "";
     $('#query').click(function () {
         dwbh = $('#dwbh').val();
         dwmc = $('#dwmc').val();
@@ -110,8 +112,10 @@
         endtime = $('#endtime').val().toString();
         sTime = starttime.split('-');
         eTime = endtime.split('-');
-        qsny = starttime.replace('-','').substr(0,6)
-        zzny = endtime.replace('-','').substr(0,6)
+        qsny = starttime.replace('-','').substr(0,6);
+        zzny = endtime.replace('-','').substr(0,6);
+        qsrq =qsny;
+        zzrq =zzny;
         if (starttime =="" || endtime==""){
             myAlert("开始时间终止时间不能为空！",true,true);
 
@@ -140,6 +144,8 @@
         fileInput.attr("id","dwid");//设置属性的名字
         fileInput.attr("name","dwid");//设置属性的名字
         fileInput.attr("value",dwid);//设置属性的值
+        fileInput.attr("value",qsrq);
+        fileInput.attr("value",zzrq);
         $("body").append(form);//将表单放置在web中
         form.append(fileInput);
         form.submit();//表单提交
