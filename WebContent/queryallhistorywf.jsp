@@ -104,6 +104,8 @@
     var sjly ="1";
     var starttime="";
     var endtime="";
+    var qsrq ="";
+    var zzrq = "";
     $('#query').click(function () {
         dwbh = $('#dwbh').val();
         dwmc = $('#dwmc').val();
@@ -133,21 +135,41 @@
 
     $("#export").click(function(){
         debugger;
+        starttime = $('#starttime').val().toString();
+        endtime = $('#endtime').val().toString();
+        qsrq = starttime.replace('-','').substr(0,6);
+        zzrq = endtime.replace('-','').substr(0,6);
+        dwid =$("#dwid").val();
         var form=$("<form>");//定义一个form表单
         form.attr("style","display:none");
         form.attr("target","");
         form.attr("method","post");
         form.attr("action",'../paymentHistory/extportHistory.action');
-        var fileInput=$("<input>");
-        fileInput.attr("type","hidden");
-        fileInput.attr("id","dwid");//设置属性的名字
-        fileInput.attr("name","dwid");//设置属性的名字
-        fileInput.attr("value",dwid);//设置属性的值
-        fileInput.attr("value",qsrq);
-        fileInput.attr("value",zzrq);
-        fileInput.attr("value",sjly);
+        var fileInput1=$("<input>");
+        fileInput1.attr("type","hidden");
+        fileInput1.attr("id","dwid");//设置属性的名字
+        fileInput1.attr("name","dwid");//设置属性的名字
+        fileInput1.attr("value",dwid);
+        var fileInput2=$("<input>");
+        fileInput2.attr("type","hidden");
+        fileInput2.attr("id","qsrq");//设置属性的值
+        fileInput2.attr("name","qsrq");
+        fileInput2.attr("value",qsrq);
+        var fileInput3=$("<input>");
+        fileInput3.attr("type","hidden");
+        fileInput3.attr("id","zzrq");//设置属性的值
+        fileInput3.attr("name","zzrq");
+        fileInput3.attr("value",zzrq);
+        var fileInput4=$("<input>");
+        fileInput4.attr("type","hidden");
+        fileInput4.attr("id","sjly");//设置属性的值
+        fileInput4.attr("name","sjly");
+        fileInput4.attr("value",sjly);
         $("body").append(form);//将表单放置在web中
-        form.append(fileInput);
+        form.append(fileInput1);
+        form.append(fileInput2);
+        form.append(fileInput3);
+        form.append(fileInput4);
         form.submit();//表单提交
     });
 

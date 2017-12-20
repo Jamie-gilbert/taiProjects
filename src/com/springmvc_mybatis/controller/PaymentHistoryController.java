@@ -196,7 +196,7 @@ public class PaymentHistoryController {
         } else {
             paymentHistories = paymentHistoryMapper.extportHistoryByDWIDWithSjly(dwid, qsrq, zzrq);
             List<ExtportBean> extportBeans = new ArrayList<>();
-            String[] headers = {"自动流水", "姓名", "起始年月", "终至年月", "个人缴费额", "利息"};
+            String[] headers = {"自动流水号", "姓名", "起始年月", "终至年月", "个人缴费额", "利息"};
             ExtportBean extportBean = new ExtportBean();
             extportBean.setXh(headers[0]);
             extportBean.setZzny(headers[3]);

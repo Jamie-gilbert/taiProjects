@@ -143,9 +143,16 @@
         fileInput.attr("type","hidden");
         fileInput.attr("id","dwid");//设置属性的名字
         fileInput.attr("name","dwid");//设置属性的名字
-        fileInput.attr("value",dwid);//设置属性的值
+        fileInput.attr("value",dwid);
+        fileInput.attr("id","qsrq");//设置属性的值
+        fileInput.attr("name","qsrq");
         fileInput.attr("value",qsrq);
+        fileInput.attr("id","zzrq");//设置属性的值
+        fileInput.attr("name","zzrq");
         fileInput.attr("value",zzrq);
+        fileInput.attr("id","sjly");//设置属性的值
+        fileInput.attr("name","sjly");
+        fileInput.attr("value",sjly);
         $("body").append(form);//将表单放置在web中
         form.append(fileInput);
         form.submit();//表单提交
