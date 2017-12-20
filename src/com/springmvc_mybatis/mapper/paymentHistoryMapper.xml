@@ -251,7 +251,9 @@
       select COUNT (*) from
         si3.aged_pay_his a
         WHERE  a.dwid =#{dwid,jdbcType=VARCHAR}
-          AND a.qsny>=#{qsrq,jdbcType=VARCHAR} AND a.qsny &lt;=#{zzrq,jdbcType=VARCHAR}
+          AND a.qsny>=#{qsrq,jdbcType=VARCHAR}
+          AND a.qsny &lt;=#{zzrq,jdbcType=VARCHAR}
+          AND a.sjly&lt;>'01'
     </select>
     <select id="queryCountByDWIDWithSjly" resultType="int">
         select COUNT (*) from
@@ -259,7 +261,7 @@
         WHERE  a.dwid =#{dwid,jdbcType=VARCHAR}
         AND a.qsny>=#{qsrq,jdbcType=VARCHAR}
          AND a.qsny &lt;=#{zzrq,jdbcType=VARCHAR}
-         AND a.sjly=#{sjly,jdbcType=VARCHAR}
+         AND a.sjly='01'
     </select>
     <select id="queryAllHistoryByDWID" resultMap="paymentHistoryResult">
         SELECT * FROM (
@@ -267,7 +269,9 @@
         (select *  from
         si3.aged_pay_his a
         WHERE  a.dwid =#{dwid,jdbcType=VARCHAR}
-        AND a.qsny>=#{qsrq,jdbcType=VARCHAR} AND a.qsny &lt;=#{zzrq,jdbcType=VARCHAR}
+        AND a.qsny>=#{qsrq,jdbcType=VARCHAR}
+         AND a.qsny &lt;=#{zzrq,jdbcType=VARCHAR}
+        AND a.sjly&lt;>'01'
          ORDER BY a.ryid DESC ) A
         WHERE ROWNUM &lt; ${next}
         ) WHERE RN >=${pre}
@@ -281,7 +285,7 @@
         WHERE  a.dwid =#{dwid,jdbcType=VARCHAR}
         AND a.qsny>=#{qsrq,jdbcType=VARCHAR}
         AND a.qsny &lt;=#{zzrq,jdbcType=VARCHAR}
-          AND a.sjly=#{sjly,jdbcType=VARCHAR}
+          AND a.sjly='01'
         ORDER BY a.ryid DESC ) A
         WHERE ROWNUM &lt; ${next}
         ) WHERE RN >=${pre}
@@ -292,6 +296,16 @@
         WHERE  a.dwid =#{dwid,jdbcType=VARCHAR}
           AND a.qsny>=#{qsrq,jdbcType=VARCHAR}
         AND a.qsny &lt;=#{zzrq,jdbcType=VARCHAR}
+          AND a.sjly&lt;>'01'
+        ORDER BY a.ryid DESC
+    </select>
+    <select id="extportHistoryByDWIDWithSjly" resultMap="paymentHistoryResult">
+        select *  from
+        si3.aged_pay_his a
+        WHERE  a.dwid =#{dwid,jdbcType=VARCHAR}
+        AND a.qsny>=#{qsrq,jdbcType=VARCHAR}
+        AND a.qsny &lt;=#{zzrq,jdbcType=VARCHAR}
+        AND a.sjly='01'
         ORDER BY a.ryid DESC
     </select>
     <select id="queryCountWithRebackByDWID" resultType="int">

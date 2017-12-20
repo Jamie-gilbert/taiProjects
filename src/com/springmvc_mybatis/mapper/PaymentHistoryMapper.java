@@ -88,7 +88,7 @@ public interface PaymentHistoryMapper {
             @Param(value = "zzrq") String zzrq,
             @Param(value = "pre") String pre,
             @Param(value = "next") String next);
-
+    //
     List<PaymentHistory> queryAllHistoryByDWIDWithSjly(
             @Param(value = "dwid") String dwid,
             @Param(value = "qsrq") String qsrq,
@@ -131,6 +131,10 @@ public interface PaymentHistoryMapper {
     DepartmentHistory queryNobackHistoryByDWID(@Param(value = "dwid") String dwid);
 
     List<PaymentHistory> extportHistoryByDWID(@Param(value = "dwid") String dwid,
+                                              @Param(value = "qsrq") String qsrq,
+                                              @Param(value = "zzrq") String zzrq);
+
+    List<PaymentHistory> extportHistoryByDWIDWithSjly(@Param(value = "dwid") String dwid,
                                               @Param(value = "qsrq") String qsrq,
                                               @Param(value = "zzrq") String zzrq);
 

@@ -161,36 +161,68 @@ public class PaymentHistoryController {
         String dwid = request.getParameter("dwid");
         String qsrq = request.getParameter("qsrq");
         String zzrq = request.getParameter("zzrq");
-
+        String sjly = request.getParameter("sjly");
         List<PaymentHistory> paymentHistories = new ArrayList<>();
 
-        paymentHistories = paymentHistoryMapper.extportHistoryByDWID(dwid,qsrq,zzrq);
-        List<ExtportBean> extportBeans = new ArrayList<>();
-        String[] headers = {"序号", "姓名", "起始年月", "终至年月", "个人缴费额", "利息"};
-        ExtportBean extportBean = new ExtportBean();
-        extportBean.setXh(headers[0]);
-        extportBean.setZzny(headers[3]);
-        extportBean.setQsny(headers[2]);
-        extportBean.setLx(headers[5]);
-        extportBean.setGrjfe(headers[4]);
-        extportBean.setXm(headers[1]);
-        extportBeans.add(extportBean);
-        for (int i = 0; i < paymentHistories.size(); i++) {
-            PaymentHistory paymentHistory = paymentHistories.get(i);
-            ExtportBean bean = new ExtportBean();
-            bean.setXh(String.valueOf((i + 1)));
-            bean.setXm(paymentHistory.getStaff().getXM());
-            bean.setGrjfe(paymentHistory.getGRJFE() + " 元");
-            bean.setLx(paymentHistory.getLX() + " 元");
-            bean.setQsny(paymentHistory.getQSNY());
-            bean.setZzny(paymentHistory.getZZNY());
-            extportBeans.add(bean);
+        if (sjly == null || "".equals(sjly)) {
+            paymentHistories = paymentHistoryMapper.extportHistoryByDWID(dwid, qsrq, zzrq);
+            List<ExtportBean> extportBeans = new ArrayList<>();
+            String[] headers = {"序号", "姓名", "起始年月", "终至年月", "个人缴费额", "利息"};
+            ExtportBean extportBean = new ExtportBean();
+            extportBean.setXh(headers[0]);
+            extportBean.setZzny(headers[3]);
+            extportBean.setQsny(headers[2]);
+            extportBean.setLx(headers[5]);
+            extportBean.setGrjfe(headers[4]);
+            extportBean.setXm(headers[1]);
+            extportBeans.add(extportBean);
+            for (int i = 0; i < paymentHistories.size(); i++) {
+                PaymentHistory paymentHistory = paymentHistories.get(i);
+                ExtportBean bean = new ExtportBean();
+                bean.setXh(String.valueOf((i + 1)));
+                bean.setXm(paymentHistory.getStaff().getXM());
+                bean.setGrjfe(paymentHistory.getGRJFE() + " 元");
+                bean.setLx(paymentHistory.getLX() + " 元");
+                bean.setQsny(paymentHistory.getQSNY());
+                bean.setZzny(paymentHistory.getZZNY());
+                extportBeans.add(bean);
 
+            }
+
+
+            String fileName = "dwjfmx.xlsx";
+            ExportExcel exportExcel = new ExportExcel();
+            exportExcel.exportExcel(headers, extportBeans, fileName, response);
+        } else {
+            paymentHistories = paymentHistoryMapper.extportHistoryByDWIDWithSjly(dwid, qsrq, zzrq);
+            List<ExtportBean> extportBeans = new ArrayList<>();
+            String[] headers = {"自动流水", "姓名", "起始年月", "终至年月", "个人缴费额", "利息"};
+            ExtportBean extportBean = new ExtportBean();
+            extportBean.setXh(headers[0]);
+            extportBean.setZzny(headers[3]);
+            extportBean.setQsny(headers[2]);
+            extportBean.setLx(headers[5]);
+            extportBean.setGrjfe(headers[4]);
+            extportBean.setXm(headers[1]);
+            extportBeans.add(extportBean);
+            for (int i = 0; i < paymentHistories.size(); i++) {
+                PaymentHistory paymentHistory = paymentHistories.get(i);
+                ExtportBean bean = new ExtportBean();
+                bean.setXh(paymentHistory.getZDLSH());
+                bean.setXm(paymentHistory.getStaff().getXM());
+                bean.setGrjfe(paymentHistory.getGRJFE() + " 元");
+                bean.setLx(paymentHistory.getLX() + " 元");
+                bean.setQsny(paymentHistory.getQSNY());
+                bean.setZzny(paymentHistory.getZZNY());
+                extportBeans.add(bean);
+
+            }
+
+
+            String fileName = "dwjfmx.xlsx";
+            ExportExcel exportExcel = new ExportExcel();
+            exportExcel.exportExcel(headers, extportBeans, fileName, response);
         }
-
-        String fileName = "dwjfmx.xlsx";
-        ExportExcel exportExcel = new ExportExcel();
-        exportExcel.exportExcel(headers, extportBeans, fileName, response);
 
     }
 
