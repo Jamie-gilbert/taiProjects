@@ -17,7 +17,7 @@
 
 
 </head>
-<body style="height: 60%">
+<body>
 <div>
 <div>
 <div class="row" style="margin-top: 1%;border-bottom:1px solid cornflowerblue;">
@@ -58,14 +58,14 @@
 </div>
 <div class="modal fade" id="unitModal" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static"
-     data-keyboard="false">
+     data-keyboard="false" style="height: 600px">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     <h4 class="modal-title" id="myModalLabel">单位信息</h4>
                 </div>
-                <div class="modal-body  table-responsive" style="height:300px;overflow:auto; ">
+                <div class="modal-body  table-responsive">
                     <table id="unit_modal"></table>
                 </div>
                 <div class="modal-footer">
@@ -101,6 +101,7 @@
     var dwmc ="";
     var dwbh ="";
     var dwid ="";
+    var sjly ="1";
     var starttime="";
     var endtime="";
     $('#query').click(function () {
@@ -162,6 +163,7 @@
                     dwid:dwid,
                     qsrq:qsny,
                     zzrq:zzny,
+                    sjly:sjly
                 };
             },
             //传递参数（*）
@@ -173,6 +175,12 @@
             clickToSelect: true,
             showExport: false,
             columns: [
+                {
+                    field: 'ZDLSH',
+                    title: '自动流水号',
+                    align: 'center',
+
+                },
                 {
                     field: 'XM',
                     title: '姓名',
@@ -220,8 +228,8 @@
             },
             sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
             pageNumber: 1,                       //初始化加载第一页，默认第一页
-            pageSize: 5,                       //每页的记录行数（*）
-            pageList: [5],        //可供选择的每页的行数（*）
+            pageSize: 10,                       //每页的记录行数（*）
+            pageList: [10, 25, 50],        //可供选择的每页的行数（*）
             clickToSelect: true,
             showExport: false,
             columns: [{

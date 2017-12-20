@@ -24,7 +24,7 @@
 </head>
 <body>
 <div class="unit">
-    <div style="border-bottom:1px solid cornflowerblue;padding-bottom: 5px">
+<div style="border-bottom:1px solid cornflowerblue;padding-bottom: 5px">
     <div class="row department" style="margin-left: 1%;margin-top: 1%">
         <div class="col-xs-3 col-md-4">
             <div class="input-group">
@@ -65,7 +65,6 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     <h4 class="modal-title" id="myModalLabel">单位信息</h4>
                 </div>
                 <div class="modal-body">
@@ -186,8 +185,8 @@
             //传递参数（*）
             sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
             pageNumber: 1,                       //初始化加载第一页，默认第一页
-            pageSize: 10,                       //每页的记录行数（*）
-            pageList: [10, 25, 50],        //可供选择的每页的行数（*）
+            pageSize: 5,                       //每页的记录行数（*）
+            pageList: [5,10, 25, 50],        //可供选择的每页的行数（*）
             clickToSelect: true,
             columns: [{
                 checkbox: true

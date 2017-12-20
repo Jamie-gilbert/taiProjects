@@ -85,6 +85,7 @@
             }]
         }, {
             id:'personWork',
+            collapsed:false, //默认左侧菜单收缩
             homePage:'personQuery',
             menu:[{text:'个人业务',
                 items:[
@@ -93,15 +94,18 @@
             }]
         }, {
             id:'search',
+            collapsed:false, //默认左侧菜单收缩
             homePage:'unitSearch',
             menu:[{text:'查询统计',
                 items:[
                     {id:'unitSearch',text:'单位明细',href:'/queryallhistory.jsp'},
+                    {id:'unitSearchwf',text:'单位明细(潍坊)',href:'/queryallhistorywf.jsp'},
                     {id:'refund',text:'退费明细',href:'/department_payment_history.jsp'}
                 ]
             }]
         },{
             id:'systemSet',
+            collapsed:false, //默认左侧菜单收缩
             homePage:'parameter',
             menu:[{text:'系统管理',
                 items:[
