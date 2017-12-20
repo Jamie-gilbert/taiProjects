@@ -253,7 +253,7 @@
         WHERE  a.dwid =#{dwid,jdbcType=VARCHAR}
           AND a.qsny>=#{qsrq,jdbcType=VARCHAR}
           AND a.qsny &lt;=#{zzrq,jdbcType=VARCHAR}
-          AND a.sjly&lt;>'01'
+          AND nvl(a.sjly,0)&lt;>'01'
     </select>
     <select id="queryCountByDWIDWithSjly" resultType="int">
         select COUNT (*) from
@@ -271,7 +271,7 @@
         WHERE  a.dwid =#{dwid,jdbcType=VARCHAR}
         AND a.qsny>=#{qsrq,jdbcType=VARCHAR}
          AND a.qsny &lt;=#{zzrq,jdbcType=VARCHAR}
-        AND a.sjly&lt;>'01'
+        AND nvl(a.sjly,0)&lt;>'01'
          ORDER BY a.ryid DESC ) A
         WHERE ROWNUM &lt; ${next}
         ) WHERE RN >=${pre}
@@ -296,7 +296,7 @@
         WHERE  a.dwid =#{dwid,jdbcType=VARCHAR}
           AND a.qsny>=#{qsrq,jdbcType=VARCHAR}
         AND a.qsny &lt;=#{zzrq,jdbcType=VARCHAR}
-          AND a.sjly&lt;>'01'
+          AND nvl(a.sjly,0)&lt;>'01'
         ORDER BY a.ryid DESC
     </select>
     <select id="extportHistoryByDWIDWithSjly" resultMap="paymentHistoryResult">
