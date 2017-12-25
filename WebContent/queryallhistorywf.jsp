@@ -200,9 +200,22 @@
             clickToSelect: true,
             showExport: false,
             columns: [
+
                 {
                     field: 'ZDLSH',
                     title: '自动流水号',
+                    align: 'center',
+
+                },
+                {
+                    field: 'GRBH',
+                    title: '个人编号',
+                    align: 'center',
+
+                },
+                {
+                    field: 'SFZHM',
+                    title: '身份证号码',
                     align: 'center',
 
                 },
