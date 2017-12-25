@@ -80,7 +80,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 <h4 class="modal-title" id="myModalLabel">个人信息</h4>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" style="height:300px;overflow:auto;">
                 <table id="person_modal"></table>
             </div>
             <div class="modal-footer">

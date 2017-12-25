@@ -73,6 +73,7 @@
             pagination: true,                   //是否显示分页（*）
             sortable: false,                     //是否启用排序
             sortOrder: "asc",                   //排序方式
+            showExport:false,
             queryParams: function (params) {
                 return {
                     pageNumber: params.offset + 1,

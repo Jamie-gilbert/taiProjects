@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="css/bootstrap.css" type="text/css">
     <link rel="stylesheet" href="bootstrap/custom/department.css" type="text/css">
     <link rel="stylesheet" type="text/css" href="./bootstrap/custom/department.css">
+    <link rel="stylesheet" type="text/css" href="./bootstrap-table/bootstrap-table.css">
 
 </head>
 <body>
@@ -63,7 +64,7 @@
                         aria-hidden="true">×</span></button>
                 <h4 class="modal-title" id="exampleModalLabel">缴费历史</h4>
             </div>
-            <div class="modal-body table-responsive">
+            <div class="modal-body table-responsive" style="height:100%;overflow:auto;">
                 <table id="bil_history">
 
                 </table>
@@ -126,7 +127,7 @@
             pageSize: 10,                       //每页的记录行数（*）
             pageList: [10, 25, 50, 100, 1000],        //可供选择的每页的行数（*）
             clickToSelect: true,
-            showExport: true,                     //是否显示导出
+            showExport: false,                     //是否显示导出
             exportDataType: "all",              //basic', 'all', 'selected'.
             columns: [{
                 field: 'zdlsh',

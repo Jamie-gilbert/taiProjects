@@ -15,51 +15,11 @@
     <link rel="stylesheet" href="../bootstrap/custom/register.css" type="text/css">
     <script src="../js/jquery.js"></script>
     <script src="../js/bootstrap.js"></script>
-
     <script src="../js/jquery.form.js"></script>
     <title>注册</title>
 </head>
-<body>
-<%--<div class="register">--%>
-<%--<form action="/user/register.action" method="post" >--%>
-<%--<table>--%>
-<%--<tr>--%>
-<%--<td>&nbsp;&nbsp;&nbsp;&nbsp;用户名:</td>--%>
-<%--<td><input type="text" name="yhxm"></td>--%>
-<%--</tr>--%>
-<%--<tr>--%>
-<%--<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;密码:</td>--%>
-<%--<td><input type="password" name="kl"></td>--%>
-<%--</tr>--%>
-<%--<tr>--%>
-<%--<td>确认密码:</td>--%>
-<%--<td><input type="password" name="kl"></td>--%>
-<%--</tr>--%>
-<%--<tr>--%>
-<%--<td>身份证号:</td>--%>
-<%--<td><input type="text" name="sfzhm"></td>--%>
-<%--</tr>--%>
-<%--<tr>--%>
-<%--<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;性别:</td>--%>
-<%--<td>--%>
-<%--<input type="radio" name="optionsRadiosinline" id="sexBoy" value="1" checked>男--%>
-<%--<input type="radio" name="optionsRadiosinline" id="sexGirl" value="2" >女--%>
-<%--</td>--%>
-<%--</tr>--%>
-<%--<tr>--%>
-<%--<td>联系电话:</td>--%>
-<%--<td><input type="text" name="lxdh"></td>--%>
-<%--</tr>--%>
-<%--</table>--%>
-<%--<table>--%>
-<%--<tr>--%>
-<%--<td><button class="btn btn-primary btn-sm" type="submit" name="submit">确认</button></td>--%>
-<%--<td><button class="btn btn-primary btn-sm" type="reset" name="cancle" id="cancle">重置</button></td>--%>
-<%--</tr>--%>
-<%--</table>--%>
-<%--</form>--%>
-<%--</div>--%>
-<div class="container">
+<body >
+<div class="container" style ="height: 50%;">
     <div class="col-md-6 col-md-offset-3">
         <form class="form-horizontal" id="registerForm" action="../user/register.action" method="post">
             <table>

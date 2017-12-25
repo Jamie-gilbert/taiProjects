@@ -39,13 +39,13 @@
         <div class="col-xs-2 col-md-3">
             <div class="input-group">
                 <span class="input-group-addon">开始时间:</span>
-                <input type="date" class="form-control" id="starttime"/>
+                <input type="month" class="form-control" id="starttime"/>
             </div>
         </div>
         <div class="col-xs-1 col-md-2">
             <div class="input-group">
                 <span class="input-group-addon">结束时间:</span>
-                <input type="date" class="form-control" id="endtime"/>
+                <input type="month" class="form-control" id="endtime"/>
             </div>
         </div>
         <div class="col-xs-3 col-md-4" style="margin-top: 1%">
@@ -65,7 +65,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     <h4 class="modal-title" id="myModalLabel">单位信息</h4>
                 </div>
-                <div class="modal-body  table-responsive" style="height:300px;overflow:auto; ">
+                <div class="modal-body " style="height:300px;overflow:auto; ">
                     <table id="unit_modal"></table>
                 </div>
                 <div class="modal-footer">
@@ -101,6 +101,7 @@
     var dwmc ="";
     var dwbh ="";
     var dwid ="";
+    var sjly ="";
     var starttime="";
     var endtime="";
     var qsrq ="";
@@ -114,8 +115,6 @@
         eTime = endtime.split('-');
         qsny = starttime.replace('-','').substr(0,6);
         zzny = endtime.replace('-','').substr(0,6);
-        qsrq =qsny;
-        zzrq =zzny;
         if (starttime =="" || endtime==""){
             myAlert("开始时间终止时间不能为空！",true,true);
 
@@ -133,28 +132,41 @@
     });
 
     $("#export").click(function(){
-        debugger;
+        starttime = $('#starttime').val().toString();
+        endtime = $('#endtime').val().toString();
+        qsrq = starttime.replace('-','').substr(0,6);
+        zzrq = endtime.replace('-','').substr(0,6);
+        dwid =$("#dwid").val();
         var form=$("<form>");//定义一个form表单
         form.attr("style","display:none");
         form.attr("target","");
         form.attr("method","post");
         form.attr("action",'../paymentHistory/extportHistory.action');
-        var fileInput=$("<input>");
-        fileInput.attr("type","hidden");
-        fileInput.attr("id","dwid");//设置属性的名字
-        fileInput.attr("name","dwid");//设置属性的名字
-        fileInput.attr("value",dwid);
-        fileInput.attr("id","qsrq");//设置属性的值
-        fileInput.attr("name","qsrq");
-        fileInput.attr("value",qsrq);
-        fileInput.attr("id","zzrq");//设置属性的值
-        fileInput.attr("name","zzrq");
-        fileInput.attr("value",zzrq);
-        fileInput.attr("id","sjly");//设置属性的值
-        fileInput.attr("name","sjly");
-        fileInput.attr("value",sjly);
+        var fileInput1=$("<input>");
+        fileInput1.attr("type","hidden");
+        fileInput1.attr("id","dwid");//设置属性的名字
+        fileInput1.attr("name","dwid");//设置属性的名字
+        fileInput1.attr("value",dwid);
+        var fileInput2=$("<input>");
+        fileInput2.attr("type","hidden");
+        fileInput2.attr("id","qsrq");//设置属性的值
+        fileInput2.attr("name","qsrq");
+        fileInput2.attr("value",qsrq);
+        var fileInput3=$("<input>");
+        fileInput3.attr("type","hidden");
+        fileInput3.attr("id","zzrq");//设置属性的值
+        fileInput3.attr("name","zzrq");
+        fileInput3.attr("value",zzrq);
+        var fileInput4=$("<input>");
+        fileInput4.attr("type","hidden");
+        fileInput4.attr("id","sjly");//设置属性的值
+        fileInput4.attr("name","sjly");
+        fileInput4.attr("value",sjly);
         $("body").append(form);//将表单放置在web中
-        form.append(fileInput);
+        form.append(fileInput1);
+        form.append(fileInput2);
+        form.append(fileInput3);
+        form.append(fileInput4);
         form.submit();//表单提交
     });
 

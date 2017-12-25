@@ -251,7 +251,7 @@
       select COUNT (*) from
         si3.aged_pay_his a
         WHERE  a.dwid =#{dwid,jdbcType=VARCHAR}
-          AND a.qsny>=#{qsrq,jdbcType=VARCHAR}
+          AND a.zzny>=#{qsrq,jdbcType=VARCHAR}
           AND a.qsny &lt;=#{zzrq,jdbcType=VARCHAR}
           AND nvl(a.sjly,0)&lt;>'01'
     </select>
@@ -259,7 +259,7 @@
         select COUNT (*) from
         si3.aged_pay_his a
         WHERE  a.dwid =#{dwid,jdbcType=VARCHAR}
-        AND a.qsny>=#{qsrq,jdbcType=VARCHAR}
+        AND a.zzny>=#{qsrq,jdbcType=VARCHAR}
          AND a.qsny &lt;=#{zzrq,jdbcType=VARCHAR}
          AND a.sjly='01'
     </select>
@@ -269,7 +269,7 @@
         (select *  from
         si3.aged_pay_his a
         WHERE  a.dwid =#{dwid,jdbcType=VARCHAR}
-        AND a.qsny>=#{qsrq,jdbcType=VARCHAR}
+        AND a.zzny>=#{qsrq,jdbcType=VARCHAR}
          AND a.qsny &lt;=#{zzrq,jdbcType=VARCHAR}
         AND nvl(a.sjly,0)&lt;>'01'
          ORDER BY a.ryid DESC ) A
@@ -283,7 +283,7 @@
         (select *  from
         si3.aged_pay_his a
         WHERE  a.dwid =#{dwid,jdbcType=VARCHAR}
-        AND a.qsny>=#{qsrq,jdbcType=VARCHAR}
+        AND a.zzny>=#{qsrq,jdbcType=VARCHAR}
         AND a.qsny &lt;=#{zzrq,jdbcType=VARCHAR}
           AND a.sjly='01'
         ORDER BY a.ryid DESC ) A
@@ -294,7 +294,7 @@
        select *  from
         si3.aged_pay_his a
         WHERE  a.dwid =#{dwid,jdbcType=VARCHAR}
-          AND a.qsny>=#{qsrq,jdbcType=VARCHAR}
+          AND a.zzny>=#{qsrq,jdbcType=VARCHAR}
         AND a.qsny &lt;=#{zzrq,jdbcType=VARCHAR}
           AND nvl(a.sjly,0)&lt;>'01'
         ORDER BY a.ryid DESC
@@ -303,7 +303,7 @@
         select *  from
         si3.aged_pay_his a
         WHERE  a.dwid =#{dwid,jdbcType=VARCHAR}
-        AND a.qsny>=#{qsrq,jdbcType=VARCHAR}
+        AND a.zzny>=#{qsrq,jdbcType=VARCHAR}
         AND a.qsny &lt;=#{zzrq,jdbcType=VARCHAR}
         AND a.sjly='01'
         ORDER BY a.ryid DESC

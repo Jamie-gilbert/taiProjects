@@ -39,13 +39,13 @@
         <div class="col-xs-2 col-md-3">
             <div class="input-group">
                 <span class="input-group-addon">开始时间:</span>
-                <input type="date" class="form-control" id="starttime"/>
+                <input type="month" class="form-control" id="starttime"/>
             </div>
         </div>
         <div class="col-xs-1 col-md-2">
             <div class="input-group">
                 <span class="input-group-addon">结束时间:</span>
-                <input type="date" class="form-control" id="endtime"/>
+                <input type="month" class="form-control" id="endtime"/>
             </div>
         </div>
         <div class="col-xs-3 col-md-4" style="margin-top: 1%">
@@ -65,7 +65,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     <h4 class="modal-title" id="myModalLabel">单位信息</h4>
                 </div>
-                <div class="modal-body  table-responsive">
+                <div class="modal-body" style="height:300px;overflow:auto; ">
                     <table id="unit_modal"></table>
                 </div>
                 <div class="modal-footer">
@@ -115,8 +115,6 @@
         eTime = endtime.split('-');
         qsny = starttime.replace('-','').substr(0,6);
         zzny = endtime.replace('-','').substr(0,6);
-        qsrq =qsny;
-        zzrq =zzny;
         if (starttime =="" || endtime==""){
             myAlert("开始时间终止时间不能为空！",true,true);
 

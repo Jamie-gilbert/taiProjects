@@ -67,7 +67,7 @@
                 <div class="modal-header">
                     <h4 class="modal-title" id="myModalLabel">单位信息</h4>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" style="height:300px;overflow:auto;">
                     <table id="unit_modal"></table>
                 </div>
                 <div class="modal-footer">
