@@ -200,7 +200,7 @@ public class PaymentHistoryController {
         } else {
             paymentHistories = paymentHistoryMapper.extportHistoryByDWIDWithSjly(dwid, qsrq, zzrq);
             List<ExtportBean> extportBeans = new ArrayList<>();
-            String[] headers = {"序号", "个人编号", "身份证号码", "姓名", "起始年月", "终至年月", "个人缴费额", "利息"};
+            String[] headers = {"自动流水号", "个人编号", "身份证号码", "姓名", "起始年月", "终至年月", "个人缴费额", "利息"};
             ExtportBean extportBean = new ExtportBean();
             extportBean.setXh(headers[0]);
             extportBean.setZzny(headers[5]);
@@ -214,7 +214,7 @@ public class PaymentHistoryController {
             for (int i = 0; i < paymentHistories.size(); i++) {
                 PaymentHistory paymentHistory = paymentHistories.get(i);
                 ExtportBean bean = new ExtportBean();
-                bean.setXh(String.valueOf((i + 1)));
+                bean.setXh(paymentHistory.getZDLSH());
                 bean.setXm(paymentHistory.getStaff().getXM());
                 bean.setGrbh(paymentHistory.getStaff().getGRBH());
                 bean.setSfzhm(paymentHistory.getStaff().getSFZHM());
