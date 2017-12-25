@@ -167,20 +167,24 @@ public class PaymentHistoryController {
         if (sjly == null || "".equals(sjly)) {
             paymentHistories = paymentHistoryMapper.extportHistoryByDWID(dwid, qsrq, zzrq);
             List<ExtportBean> extportBeans = new ArrayList<>();
-            String[] headers = {"序号", "姓名", "起始年月", "终至年月", "个人缴费额", "利息"};
+            String[] headers = {"序号", "个人编号", "身份证号码", "姓名", "起始年月", "终至年月", "个人缴费额", "利息"};
             ExtportBean extportBean = new ExtportBean();
             extportBean.setXh(headers[0]);
-            extportBean.setZzny(headers[3]);
-            extportBean.setQsny(headers[2]);
-            extportBean.setLx(headers[5]);
-            extportBean.setGrjfe(headers[4]);
-            extportBean.setXm(headers[1]);
+            extportBean.setZzny(headers[5]);
+            extportBean.setQsny(headers[4]);
+            extportBean.setLx(headers[7]);
+            extportBean.setGrjfe(headers[6]);
+            extportBean.setXm(headers[3]);
+            extportBean.setGrbh(headers[1]);
+            extportBean.setSfzhm(headers[2]);
             extportBeans.add(extportBean);
             for (int i = 0; i < paymentHistories.size(); i++) {
                 PaymentHistory paymentHistory = paymentHistories.get(i);
                 ExtportBean bean = new ExtportBean();
                 bean.setXh(String.valueOf((i + 1)));
                 bean.setXm(paymentHistory.getStaff().getXM());
+                bean.setGrbh(paymentHistory.getStaff().getGRBH());
+                bean.setSfzhm(paymentHistory.getStaff().getSFZHM());
                 bean.setGrjfe(paymentHistory.getGRJFE() + " 元");
                 bean.setLx(paymentHistory.getLX() + " 元");
                 bean.setQsny(paymentHistory.getQSNY());
@@ -196,20 +200,24 @@ public class PaymentHistoryController {
         } else {
             paymentHistories = paymentHistoryMapper.extportHistoryByDWIDWithSjly(dwid, qsrq, zzrq);
             List<ExtportBean> extportBeans = new ArrayList<>();
-            String[] headers = {"自动流水号", "姓名", "起始年月", "终至年月", "个人缴费额", "利息"};
+            String[] headers = {"序号", "个人编号", "身份证号码", "姓名", "起始年月", "终至年月", "个人缴费额", "利息"};
             ExtportBean extportBean = new ExtportBean();
             extportBean.setXh(headers[0]);
-            extportBean.setZzny(headers[3]);
-            extportBean.setQsny(headers[2]);
-            extportBean.setLx(headers[5]);
-            extportBean.setGrjfe(headers[4]);
-            extportBean.setXm(headers[1]);
+            extportBean.setZzny(headers[5]);
+            extportBean.setQsny(headers[4]);
+            extportBean.setLx(headers[7]);
+            extportBean.setGrjfe(headers[6]);
+            extportBean.setXm(headers[3]);
+            extportBean.setGrbh(headers[1]);
+            extportBean.setSfzhm(headers[2]);
             extportBeans.add(extportBean);
             for (int i = 0; i < paymentHistories.size(); i++) {
                 PaymentHistory paymentHistory = paymentHistories.get(i);
                 ExtportBean bean = new ExtportBean();
-                bean.setXh(paymentHistory.getZDLSH());
+                bean.setXh(String.valueOf((i + 1)));
                 bean.setXm(paymentHistory.getStaff().getXM());
+                bean.setGrbh(paymentHistory.getStaff().getGRBH());
+                bean.setSfzhm(paymentHistory.getStaff().getSFZHM());
                 bean.setGrjfe(paymentHistory.getGRJFE() + " 元");
                 bean.setLx(paymentHistory.getLX() + " 元");
                 bean.setQsny(paymentHistory.getQSNY());
@@ -1158,11 +1166,11 @@ public class PaymentHistoryController {
             DepartmentHistory paymentHistory = departmentHistories.get(i);
             ExtportBean bean = new ExtportBean();
             bean.setXh(String.valueOf((i + 1)));
-            bean.setXm(paymentHistory.getDwbh());
-            bean.setGrjfe(paymentHistory.getGrjfes() + "");
-            bean.setLx(paymentHistory.getZje() + "");
-            bean.setQsny(paymentHistory.getDwmc());
-            bean.setZzny(paymentHistory.getLxs() + "");
+            bean.setGrbh(paymentHistory.getDwbh());
+            bean.setQsny(paymentHistory.getGrjfes() + "");
+            bean.setZzny(paymentHistory.getZje() + "");
+            bean.setSfzhm(paymentHistory.getDwmc());
+            bean.setXm(paymentHistory.getLxs() + "");
             extportBeans.add(bean);
 
         }
@@ -1198,13 +1206,12 @@ public class PaymentHistoryController {
             DepartmentHistory paymentHistory = departmentHistories.get(i);
             ExtportBean bean = new ExtportBean();
             bean.setXh(String.valueOf((i + 1)));
-            bean.setXm(paymentHistory.getDwbh());
-            bean.setGrjfe(paymentHistory.getGrjfes() + "");
-            bean.setLx(paymentHistory.getZje() + "");
-            bean.setQsny(paymentHistory.getDwmc());
-            bean.setZzny(paymentHistory.getLxs() + "");
+            bean.setGrbh(paymentHistory.getDwbh());
+            bean.setQsny(paymentHistory.getGrjfes() + "");
+            bean.setZzny(paymentHistory.getZje() + "");
+            bean.setSfzhm(paymentHistory.getDwmc());
+            bean.setXm(paymentHistory.getLxs() + "");
             extportBeans.add(bean);
-
         }
 
         String fileName = "ytffdwmx.xlsx";

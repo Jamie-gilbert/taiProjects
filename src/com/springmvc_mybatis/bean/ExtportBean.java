@@ -7,6 +7,8 @@ public class ExtportBean {
     private String zzny;
     private String grjfe;
     private String lx;
+    private String grbh;
+    private String sfzhm;
 
     public String getXh() {
         return xh;
@@ -56,5 +58,19 @@ public class ExtportBean {
         this.lx = lx;
     }
 
+    public String getGrbh() {
+        return grbh;
+    }
 
+    public void setGrbh(String grbh) {
+        this.grbh = grbh;
+    }
+
+    public String getSfzhm() {
+        return sfzhm;
+    }
+
+    public void setSfzhm(String sfzhm) {
+        this.sfzhm = sfzhm;
+    }
 }

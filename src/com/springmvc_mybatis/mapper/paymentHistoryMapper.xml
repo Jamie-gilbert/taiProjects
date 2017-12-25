@@ -272,7 +272,7 @@
         AND a.zzny>=#{qsrq,jdbcType=VARCHAR}
          AND a.qsny &lt;=#{zzrq,jdbcType=VARCHAR}
         AND nvl(a.sjly,0)&lt;>'01'
-         ORDER BY a.ryid DESC ) A
+         ORDER BY a.ryid DESC ,a.qsny) A
         WHERE ROWNUM &lt; ${next}
         ) WHERE RN >=${pre}
     </select>
@@ -286,7 +286,7 @@
         AND a.zzny>=#{qsrq,jdbcType=VARCHAR}
         AND a.qsny &lt;=#{zzrq,jdbcType=VARCHAR}
           AND a.sjly='01'
-        ORDER BY a.ryid DESC ) A
+        ORDER BY a.ryid DESC ,a.qsny) A
         WHERE ROWNUM &lt; ${next}
         ) WHERE RN >=${pre}
     </select>
@@ -297,7 +297,7 @@
           AND a.zzny>=#{qsrq,jdbcType=VARCHAR}
         AND a.qsny &lt;=#{zzrq,jdbcType=VARCHAR}
           AND nvl(a.sjly,0)&lt;>'01'
-        ORDER BY a.ryid DESC
+        ORDER BY a.ryid DESC,a.qsny
     </select>
     <select id="extportHistoryByDWIDWithSjly" resultMap="paymentHistoryResult">
         select *  from
@@ -306,7 +306,7 @@
         AND a.zzny>=#{qsrq,jdbcType=VARCHAR}
         AND a.qsny &lt;=#{zzrq,jdbcType=VARCHAR}
         AND a.sjly='01'
-        ORDER BY a.ryid DESC
+        ORDER BY a.ryid DESC,a.qsny
     </select>
     <select id="queryCountWithRebackByDWID" resultType="int">
         SELECT  COUNT (*)  FROM   si3.aged_pay_his  WHERE dwid =#{dwid,jdbcType=VARCHAR}

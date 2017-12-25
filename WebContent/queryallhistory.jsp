@@ -199,6 +199,19 @@
             showExport: false,
             columns: [
                 {
+                    field: 'GRBH',
+                    title: '个人编号',
+                    align: 'center',
+
+                },
+                {
+                    field: 'SFZHM',
+                    title: '身份证号码',
+                    align: 'center',
+
+                },
+
+                {
                     field: 'XM',
                     title: '姓名',
                     align: 'center',

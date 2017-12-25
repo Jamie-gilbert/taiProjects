@@ -31,18 +31,24 @@ public class ExportExcel {
                         cell.setCellValue(dataset.get(rownum).getXh());
                         break;
                     case 1:
-                        cell.setCellValue(dataset.get(rownum).getXm());
+                        cell.setCellValue(dataset.get(rownum).getGrbh());
                         break;
                     case 2:
-                        cell.setCellValue(dataset.get(rownum).getQsny());
+                        cell.setCellValue(dataset.get(rownum).getSfzhm());
                         break;
                     case 3:
-                        cell.setCellValue(dataset.get(rownum).getZzny());
+                        cell.setCellValue(dataset.get(rownum).getXm());
                         break;
                     case 4:
-                        cell.setCellValue(dataset.get(rownum).getGrjfe());
+                        cell.setCellValue(dataset.get(rownum).getQsny());
                         break;
                     case 5:
+                        cell.setCellValue(dataset.get(rownum).getZzny());
+                        break;
+                    case 6:
+                        cell.setCellValue(dataset.get(rownum).getGrjfe());
+                        break;
+                    case 7:
                         cell.setCellValue(dataset.get(rownum).getLx());
                         break;
 
