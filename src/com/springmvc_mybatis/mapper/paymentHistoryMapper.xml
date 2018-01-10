@@ -91,7 +91,7 @@
         SELECT A.*,ROWNUM RN FROM
         (select * from
         si3.aged_pay_his a
-        WHERE  a.RYID =#{ryid,jdbcType=VARCHAR} and a.QSNY>= ${qsrq} AND a.QSNY&lt;=${zzrq}) A
+        WHERE  a.RYID =#{ryid,jdbcType=VARCHAR} and a.QSNY>= ${qsrq} AND a.QSNY&lt;${zzrq} order by qsny) A
         WHERE ROWNUM &lt; ${next}
         ) WHERE RN >=${pre}
     </select>

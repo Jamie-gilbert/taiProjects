@@ -44,9 +44,7 @@
             <div class="col-xs-6 col-md-6">
                 <button type="button" class="btn btn-primary" onclick="queryData()"> 查 询</button>
             </div>
-
         </div>
-
 
     </div>
 
@@ -57,6 +55,10 @@
 
         <button onclick="save()" type="button" class="btn btn-default">
             <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>保存
+        </button>
+
+        <button id="btn_exp"  type="button" class="btn btn-default" onclick="dataExport()">
+            <span class="glyphicon glyphicon-export" aria-hidden="true"></span>导出
         </button>
     </div>
     <div class="row">
@@ -143,6 +145,7 @@
 <script type="text/javascript" src="bootstrap-table/bootstrap-table.js"></script>
 <script type="text/javascript" src="bootstrap-table/bootstrap-table-zh-CN.js"></script>
 <script type="text/javascript" src="bootstrap/js/bootstrap-datetimepicker.js"></script>
+<script type="text/javascript" src="bootstrap-table/tableExport.js"></script>
 <script type="text/javascript" src="bootstrap/editable/bootstrap-table-editable.js"></script>
 <script src="../x-editable/dist/bootstrap3-editable/js/bootstrap-editable.js"></script>
 <script type="text/javascript">
@@ -299,8 +302,12 @@
         if (zzrq == "" || zzrq == null) {
             var mydate = new Date();
             var str = "" + mydate.getFullYear();
-            str += (mydate.getMonth() + 1);
-
+            var month = mydate.getMonth() + 1
+            if (month>0 && month<= 9){
+                str +=( "0" + month)
+            }else {
+                str +=month
+            }
             zzrq = $.trim(str);
         }
         $('#person_jfls').bootstrapTable("destroy");
@@ -387,7 +394,13 @@
         });
     }
 
-
+    function dataExport() {
+        $('#person_jfls').tableExport({
+            type:'excel',
+            escape:'false',
+            filename:'缴费历史'}
+            );
+    }
 </script>
 </body>
 </html>
